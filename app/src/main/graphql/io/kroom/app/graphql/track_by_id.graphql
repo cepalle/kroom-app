@@ -1,0 +1,17 @@
+query track($id: Int!){
+  track(id: $id) {
+    title
+    artist {
+      name
+    }
+    album {
+      title
+      genre {
+        name
+      }
+    }
+    contributors {
+      name
+    }
+  }
+}
