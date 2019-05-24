@@ -26,8 +26,10 @@ class MainActivity : AppCompatActivity() {
         StrictMode.setThreadPolicy(policy)
         tokenTextView = findViewById(R.id.tokenView) as TextView
 
-        SimpleSession.setAuthProvider(IdpType.GOOGLE,  "795222071121-ugorkmpng7smt6v8akb25s7n08hqp826.apps.googleusercontent.com")
-
+       // SimpleSession.setAuthProvider(IdpType.GOOGLE,  "795222071121-ugorkmpng7smt6v8akb25s7n08hqp826.apps.googleusercontent.com")
+        //SimpleSession.setAuthProvider(IdpType.GOOGLE,  "795222071121-r8frsfild7amcomj2c9hb6qn682mjchj.apps.googleusercontent.com")
+         //SimpleSession.setAuthProvider(IdpType.GOOGLE,  "795222071121-uak962mcfle3pv0pd9vinkpu9l5ri740.apps.googleusercontent.com")
+        SimpleSession.setAuthProvider(IdpType.GOOGLE,  "795222071121-p1fbtb3mv3cjo9priggduc335rd8ng4d.apps.googleusercontent.com")
 
         buttonSuperYolo.setOnClickListener {
             KroomClient.trackById(3135556)
