@@ -24,7 +24,7 @@ object KroomClient {
             TrackQuery.builder().id(3135556).build()
         ).enqueue(object : ApolloCall.Callback<TrackQuery.Data>() {
             override fun onResponse(response: Response<TrackQuery.Data>) {
-                Log.println(Log.INFO, "test", response.data()!!.track().toString())
+                Log.println(Log.INFO, "test", response.data()!!.DeezerTrack().toString())
             }
 
             override fun onFailure(e: ApolloException) {

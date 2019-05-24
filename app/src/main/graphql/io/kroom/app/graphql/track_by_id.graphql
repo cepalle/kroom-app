@@ -1,5 +1,5 @@
-query track($id: Int!){
-  track(id: $id) {
+query track($id: Int!) {
+  DeezerTrack(id: $id) {
     title
     artist {
       name
