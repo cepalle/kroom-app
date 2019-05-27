@@ -1,35 +1,51 @@
 package io.kroom.app.client
 
 import android.support.annotation.UiThread
-import android.util.Log
 import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
-import io.kroom.app.graphql.TrackQuery
+import io.kroom.app.Main
+import io.kroom.app.graphql.UserSignUpMutation
 import okhttp3.OkHttpClient
 
 
+typealias Result<T, E> = (track: T?, exception: E?) -> Unit
+
 object KroomClient {
-    private const val baseUrl = "https://407df380.ngrok.io/graphql"
+
+
+    var url = "https://0a83ab96.ngrok.io/graphql"
+
     private val okHttpClient = OkHttpClient.Builder().build()
     private val apolloClient = ApolloClient.builder()
-        .serverUrl(baseUrl)
+        .serverUrl(url)
         .okHttpClient(okHttpClient)
         .build()
 
-    @UiThread
-    fun trackById(id: Int) {
-        apolloClient.query(
-            TrackQuery.builder().id(3135556).build()
-        ).enqueue(object : ApolloCall.Callback<TrackQuery.Data>() {
-            override fun onResponse(response: Response<TrackQuery.Data>) {
-                Log.println(Log.INFO, "test", response.data()!!.DeezerTrack().toString())
-            }
+    object UsersRepo {
 
-            override fun onFailure(e: ApolloException) {
-                Log.println(Log.INFO, "test", e.message)
-            }
-        })
+        data class UserSignUpRequest(val email: String, val pass: String, val userName: String)
+
+        @UiThread
+        fun signUp(req: UserSignUpRequest, res: Result<UserSignUpMutation.UserSignUp, ApolloException>) {
+            apolloClient.mutate(
+                UserSignUpMutation.builder()
+                    .email(req.email)
+                    .pass(req.pass)
+                    .userName(req.userName)
+                    .build()
+            ).enqueue(object : ApolloCall.Callback<UserSignUpMutation.Data>() {
+                override fun onResponse(response: Response<UserSignUpMutation.Data>) {
+                    Main.app.runOnUiThread { res(response.data()!!.UserSignUp(), null) }
+                }
+
+                override fun onFailure(e: ApolloException) {
+                    Main.app.runOnUiThread { res(null, e) }
+                }
+            })
+        }
     }
+
+
 }
