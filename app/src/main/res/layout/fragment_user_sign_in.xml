@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.UserSignInFragment">
+        tools:context=".fragments.UserSignInFragment">
 
     <EditText
             android:layout_width="395dp"
@@ -15,33 +15,44 @@
             android:id="@+id/signInUsername"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:hint="Username"
-            tools:layout_editor_absoluteY="16dp"/>
+            android:hint="@string/user_name_sign_in"
+            android:layout_marginTop="24dp"
+            android:autofillHints=""
+            app:layout_constraintTop_toTopOf="parent" tools:targetApi="o"/>
+
     <EditText
             android:layout_width="395dp"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/signInPassword"
-            android:hint="Password"
+            android:hint="@string/password_sign_in"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/signInUsername"/>
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/signInUsername"
+            android:autofillHints="" tools:targetApi="o"/>
     <Button
-            android:text="Sign in to kroom"
+            android:text="@string/sign_in_to_kroom"
             android:layout_width="395dp"
             android:layout_height="wrap_content"
             android:id="@+id/signInAction" android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@+id/signInPassword" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signInPassword"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
     <ProgressBar
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/signInLoading" android:layout_marginTop="8dp"
+            android:id="@+id/signInLoading"
+            android:layout_marginTop="8dp"
+            android:visibility="invisible"
+            android:layout_marginBottom="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="invisible" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/signInAction"/>
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signInAction"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -2,4 +2,27 @@
     <string name="app_name">kroom-app</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="sign_in_to_kroom">Sign in to kroom</string>
+    <string name="signup_to_kroom">Signup to Kroom</string>
+
+    <!-- user_sign_up -->
+    <string name="sign_up">Sign up</string>
+    <string name="user_name_sign_up">username</string>
+    <string name="password_sign_up">password</string>
+    <string name="email_sign_up">Email</string>
+
+    <!-- user_sign_in -->
+    <string name="sign_in">Sign In</string>
+    <string name="user_name_sign_in">username</string>
+    <string name="password_sign_in">password</string>
+
+    <!-- log_google -->
+    <string name="google_login">Google Login</string>
+    <string name="google_logout">Google Logout</string>
+    <string name="is_loged_in">Is Loged in</string>
+    <string name="get_curret_idp_type">Get Curret IDP Type</string>
+    <string name="get_access_token">Get Access Token</string>
+    <string name="get_email">Get Email</string>
+
 </resources>

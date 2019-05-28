@@ -18,7 +18,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" tools:targetApi="o"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
             android:layout_width="395dp"
@@ -31,7 +31,7 @@
             android:layout_marginTop="24dp"
             app:layout_constraintTop_toBottomOf="@+id/signUpUsername"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" tools:targetApi="o"/>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
             android:layout_width="395dp"
@@ -44,7 +44,7 @@
             android:layout_marginTop="24dp"
             app:layout_constraintTop_toBottomOf="@+id/signUpEmail"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" tools:targetApi="o"/>
+            app:layout_constraintEnd_toEndOf="parent"/>
     <Button
             android:text="@string/signup_to_kroom"
             android:layout_width="395dp"
