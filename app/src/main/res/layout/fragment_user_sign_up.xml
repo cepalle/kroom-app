@@ -8,20 +8,20 @@
         tools:context=".fragments.UserSignUpFragment">
 
     <EditText
-            android:layout_width="395dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/signUpUsername"
             android:autofillHints=""
             android:hint="@string/user_name_sign_up"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="300dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" tools:targetApi="o"/>
 
     <EditText
-            android:layout_width="395dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
@@ -34,7 +34,7 @@
             app:layout_constraintEnd_toEndOf="parent" tools:targetApi="o"/>
 
     <EditText
-            android:layout_width="395dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
@@ -47,7 +47,7 @@
             app:layout_constraintEnd_toEndOf="parent" tools:targetApi="o"/>
     <Button
             android:text="@string/signup_to_kroom"
-            android:layout_width="395dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:id="@+id/signUpAction"
             android:layout_marginTop="24dp"

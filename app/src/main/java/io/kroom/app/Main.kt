@@ -2,12 +2,14 @@ package io.kroom.app
 
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.StrictMode
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import com.apollographql.apollo.subscription.OperationClientMessage
 
 import io.kroom.app.fragments.UserSignInFragment
@@ -22,19 +24,26 @@ import org.jetbrains.annotations.Nullable
 
 class Main : AppCompatActivity() {
 
-    private var fragmentStart:  StartFragment? = null
-  //  private lateinit var bt: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         app = this
-
         setContentView(R.layout.activity_main)
-        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
-      /*  fragmentStart = StartFragment()
 
-        supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragmentStart!!, null).commit()*/
+        val internetconnect = baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as  ConnectivityManager
+        val networkInfo = internetconnect.activeNetworkInfo
+        if (networkInfo != null && networkInfo.isConnected)
+        {
+            // connected to internet
+        }
+        else
+        {
+            Toast.makeText(baseContext, "it seems you are not connected to the Internet", Toast.LENGTH_LONG).show()
+        }
+
+        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
+
         bottom_navigation.setOnNavigationItemReselectedListener {
             Routes.fromInt(it.itemId)?.let { route ->
                 goToRoute(route)
@@ -43,13 +52,12 @@ class Main : AppCompatActivity() {
         }
 
         if (savedInstanceState == null) {
-            changeFragment(HomeFragment())
+            changeFragment(StartFragment())
         }
     }
 
     fun goToRoute(route: Routes) {
         when (route) {
-            Routes.START -> changeFragment(StartFragment())
             Routes.HOME -> changeFragment(HomeFragment())
             Routes.MUSICS -> TODO()
             Routes.SETTINGS -> TODO()
@@ -117,7 +125,6 @@ class Main : AppCompatActivity() {
 }
 
 enum class Routes(val id: Int) {
-    START(R.id.startConnexion),
     HOME(R.id.bottomNavigationHome),
     MUSICS(R.id.bottomNavigationMusics),
     SETTINGS(R.id.bottomNavigationSettings),
