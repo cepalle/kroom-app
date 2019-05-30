@@ -24,5 +24,7 @@
     <string name="get_curret_idp_type">Get Curret IDP Type</string>
     <string name="get_access_token">Get Access Token</string>
     <string name="get_email">Get Email</string>
+    <string name="start_connexion">CONNEXION</string>
+    <string name="start_inscription">INSCRIPTION</string>
 
 </resources>

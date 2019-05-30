@@ -6,34 +6,24 @@ import android.os.Bundle
 import android.os.StrictMode
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.view.View
+
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
-
-
-import com.jk.simple.*
-import com.jk.simple.idp.IdpType
-import com.jk.simple.SimpleSession
-
-
+import com.apollographql.apollo.subscription.OperationClientMessage
 
 import io.kroom.app.fragments.UserSignInFragment
 import io.kroom.app.fragments.UserSignUpFragment
-import kotlinx.android.synthetic.main.activity_main.*
-
 import io.kroom.app.fragments.HomeFragment
-import kotlinx.android.synthetic.main.fragment_home.*
+import io.kroom.app.fragments.StartFragment
 
+import kotlinx.android.synthetic.main.activity_main.*
 
 import org.jetbrains.annotations.Nullable
 
 
 class Main : AppCompatActivity() {
 
-    private var tokenTextView: TextView? = null
-    private lateinit var bt: Button
+    private var fragmentStart:  StartFragment? = null
+  //  private lateinit var bt: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +32,9 @@ class Main : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
         StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
+      /*  fragmentStart = StartFragment()
 
-        tokenTextView = findViewById(R.id.tokenView)
-        SimpleSession.setAuthProvider(IdpType.GOOGLE,  "795222071121-p1fbtb3mv3cjo9priggduc335rd8ng4d.apps.googleusercontent.com")
-
+        supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragmentStart!!, null).commit()*/
         bottom_navigation.setOnNavigationItemReselectedListener {
             Routes.fromInt(it.itemId)?.let { route ->
                 goToRoute(route)
@@ -60,6 +49,7 @@ class Main : AppCompatActivity() {
 
     fun goToRoute(route: Routes) {
         when (route) {
+            Routes.START -> changeFragment(StartFragment())
             Routes.HOME -> changeFragment(HomeFragment())
             Routes.MUSICS -> TODO()
             Routes.SETTINGS -> TODO()
@@ -89,55 +79,45 @@ class Main : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        SimpleSession.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun onLoginCallback(result: SimpleAuthResult<Void>) {
-        val builder = StringBuilder()
-        builder.append(if (result.isSuccess) SimpleSession.getCurrentIdpType().name + " Login is succeed" else "FAIL / " + result.errorCode + " / " + result.errorMessaage)
-        tokenTextView?.setText(builder.toString())
+    override fun onStart() {
+        super.onStart()
+        getDelegate().onStart()
     }
 
-    fun onClick(v: View) {
-       bt = v as Button
-        when (bt.id) {
+    protected override fun onRestart() {
+        super.onRestart()
 
-            R.id.homeGoogleLogin -> {
-                SimpleSession.login(
-                    this, IdpType.GOOGLE
-                ) { result -> onLoginCallback(result) }
-            }
+    }
 
-            R.id.homeGoogleLogout -> {
-                SimpleSession.logout()
-                tokenTextView?.setText("Logout!")
-                Toast.makeText(this, "Logout!", Toast.LENGTH_LONG ).show()
-            }
+    protected override fun onResume() {
+        super.onResume()
+    }
 
-            R.id.homeLogedIn -> {
-                val builder = StringBuilder()
-                builder.append(if (SimpleSession.isSignedIn(this)) "Yes! Idp Type Is " + SimpleSession.getCurrentIdpType() else "No..")
-                tokenTextView?.setText(builder.toString())
-            }
+    protected override fun onPause() {
+        super.onPause()
+    }
 
-            R.id.homeIdpType -> {
-                val idpType = SimpleSession.getCurrentIdpType()
-                this.tokenTextView?.setText(idpType?.name ?: "Null")
-            }
+    protected override fun onStop() {
+        super.onStop()
+        getDelegate().onStop()
 
-            R.id.homeAccessToken -> {
-                this.tokenTextView?.setText(SimpleSession.getAccessToken())
-            }
-            R.id.homeEmail -> {
-                this.tokenTextView?.setText(SimpleSession.getEmail())
+    }
 
-            }
+    protected override fun onDestroy() {
+        super.onDestroy()
+        getDelegate().onDestroy()
+    }
 
-        }
+    override fun onBackPressed() {
+        super.onBackPressed()
+
     }
 }
 
 enum class Routes(val id: Int) {
+    START(R.id.startConnexion),
     HOME(R.id.bottomNavigationHome),
     MUSICS(R.id.bottomNavigationMusics),
     SETTINGS(R.id.bottomNavigationSettings),
@@ -154,6 +134,5 @@ enum class Routes(val id: Int) {
             return values().find { it.id == n }
         }
     }
-
 
 }
