@@ -1,6 +1,7 @@
 package io.kroom.app.fragments
 
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -92,6 +93,20 @@ class HomeFragment : Fragment() {
         homeEmail.setOnClickListener{
             this.tokenTextView?.setText(SimpleSession.getEmail())
         }
+
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        activity!!.onBackPressed()
 
     }
 }

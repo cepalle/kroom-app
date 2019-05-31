@@ -30,5 +30,7 @@
     <string name="todo">TODO</string>
     <string name="misspassword">forgot password ?</string>
     <string name="ou">OU</string>
+    <string name="email_adress">Email adress</string>
+    <string name="send_email">Send email</string>
 
 </resources>
