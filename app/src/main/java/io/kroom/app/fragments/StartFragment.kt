@@ -45,7 +45,7 @@ class StartFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        activity!!.onBackPressed()
+
 
     }
 }
