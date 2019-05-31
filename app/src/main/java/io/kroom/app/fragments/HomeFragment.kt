@@ -106,7 +106,7 @@ class HomeFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        activity!!.onBackPressed()
+
 
     }
 }
