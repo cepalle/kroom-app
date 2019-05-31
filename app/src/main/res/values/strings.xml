@@ -32,5 +32,8 @@
     <string name="ou">OU</string>
     <string name="email_adress">Email adress</string>
     <string name="send_email">Send email</string>
-
+    <string name="music_control_delegation">Music Control Delegation</string>
+    <string name="music_track_vote">Music Track Vote</string>
+    <string name="music_playlist_editor">Music Playlist Editor</string>
+    Music Playlist Editor
 </resources>

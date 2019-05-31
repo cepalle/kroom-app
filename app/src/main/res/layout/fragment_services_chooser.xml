@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <Button
+            android:id="@+id/musicTrackVote"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:text="@string/music_track_vote"
+            android:layout_gravity="center_vertical|center_horizontal|center"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/musicControlDelegation"/>
+    <Button
+            android:id="@+id/musicControlDelegation"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:text="@string/music_control_delegation"
+            android:layout_gravity="center_vertical|center_horizontal|center"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    <Button
+            android:id="@+id/musicPlaylistEditor"
+            android:text="@string/music_playlist_editor"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            app:layout_constraintTop_toBottomOf="@+id/musicControlDelegation"
+            android:layout_gravity="center_vertical|center_horizontal|center"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+</android.support.constraint.ConstraintLayout>

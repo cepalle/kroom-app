@@ -12,7 +12,7 @@
             android:text="@string/google"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:src="@mipmap/signgoogle_hdpi"
+            android:src="@drawable/signgoogle_xxxhdpi"
             android:layout_marginTop="70dp"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,8 +71,10 @@
             android:layout_marginTop="40dp"
             android:background="@color/buttonConnexion"
             app:layout_constraintTop_toBottomOf="@+id/signInPassword"
-            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.497"/>
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" />
     <ProgressBar
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
