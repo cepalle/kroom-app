@@ -134,11 +134,7 @@ enum class Routes(val id: Int) {
     SETTINGS(R.id.bottomNavigationSettings),
 
     USER_SIGN_IN(-1),
-    USER_SIGN_UP(-2),
-
-
-
-    ;
+    USER_SIGN_UP(-2);
 
     companion object {
         fun fromInt(n: Int): Routes? {
