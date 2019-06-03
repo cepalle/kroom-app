@@ -96,7 +96,10 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
 
     override fun onSuccess(s: UserSignUpMutation.UserSignUp) {
         Log.println(Log.INFO, "success-sign-up", "user sign up: $s")
-        Dialogs.successDialog(Main.app, "Your user id = ${s.id()} email = ${s.email()} token = ${s.token()}")
+        // TODO errors
+        val user = s.user()
+
+        Dialogs.successDialog(Main.app, "Your user id = ${user?.id()} email = ${user?.email()} token = ${user?.token()}")
             .show()
     }
 

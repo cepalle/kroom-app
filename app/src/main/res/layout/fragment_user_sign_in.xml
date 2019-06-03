@@ -12,7 +12,7 @@
             android:text="@string/google"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:src="@drawable/signgoogle_xxxhdpi"
+            android:src="@mipmap/signgoogle_xxxhdpi"
             android:layout_marginTop="70dp"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
