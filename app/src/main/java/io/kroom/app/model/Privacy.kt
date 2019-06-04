@@ -1,16 +1,7 @@
 package io.kroom.app.model
 
-class Privacy (val email: PrivacyEnum){
+data class Privacy (val email: PrivacyEnum,
+                    val location: PrivacyEnum,
+                    val friends: PrivacyEnum,
+                    val musicalPreferencesGenre: PrivacyEnum)
 
-
-        location: PrivacyEnum!
-        friends: PrivacyEnum!
-        musicalPreferencesGenre: PrivacyEnum!
-    }*/
-}
-
-enum class PrivacyEnum {
-    PUBLIC,
-    FRIENDS,
-    PRIVATE;
-}
