@@ -25,15 +25,15 @@ object KroomClient {
 
     object UsersRepo {
 
-        data class UserSignUpRequest(val email: String, val pass: String, val userName: String)
+        data class UserSignUpRequest(val userName: String,val email: String, val pass: String )
 
         @UiThread
         fun signUp(req: UserSignUpRequest, res: Result<UserSignUpMutation.UserSignUp, ApolloException>) {
             apolloClient.mutate(
                 UserSignUpMutation.builder()
+                    .userName(req.userName)
                     .email(req.email)
                     .pass(req.pass)
-                    .userName(req.userName)
                     .build()
             ).enqueue(object : ApolloCall.Callback<UserSignUpMutation.Data>() {
                 override fun onResponse(response: Response<UserSignUpMutation.Data>) {
