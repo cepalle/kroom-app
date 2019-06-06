@@ -1,0 +1,11 @@
+mutation UserSignWhithGoolgeMutation($token:String!){
+    UserSignWithGoogle(token: $token){
+        user{
+            token
+        }
+        errors {
+            field
+            messages
+        }
+    }
+}

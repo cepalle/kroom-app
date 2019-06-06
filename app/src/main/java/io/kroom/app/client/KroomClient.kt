@@ -7,6 +7,7 @@ import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import io.kroom.app.Main
 import io.kroom.app.graphql.UserSignUpMutation
+import io.kroom.app.graphql.UserSignWhithGoolgeMutation
 import okhttp3.OkHttpClient
 
 
@@ -15,7 +16,7 @@ typealias Result<T, E> = (track: T?, exception: E?) -> Unit
 object KroomClient {
 
 
-    var url = "https://5cb03324.ngrok.io/graphql"
+    var url = "https://5cb03324.ngrok.io"
 
     private val okHttpClient = OkHttpClient.Builder().build()
     private val apolloClient = ApolloClient.builder()
@@ -45,5 +46,21 @@ object KroomClient {
                 }
             })
         }
+        @UiThread
+        fun signGoogleRequest(token: String, res: Result<UserSignWhithGoolgeMutation.UserSignWithGoogle, ApolloException>) {
+            apolloClient.mutate(
+                UserSignWhithGoolgeMutation.builder()
+                    .token(token)
+                    .build()
+            ).enqueue(object : ApolloCall.Callback<UserSignWhithGoolgeMutation.Data>(){
+                override fun onResponse(response: Response<UserSignWhithGoolgeMutation.Data>) {
+                    Main.app.runOnUiThread { res(response.data()!!.UserSignWithGoogle(),null) }
+                }
+                override fun onFailure(e: ApolloException){
+                    Main.app.runOnUiThread { res(null, e) }
+                }
+            })
+        }
+
     }
 }

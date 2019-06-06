@@ -58,6 +58,7 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
         builder.append(if (result.isSuccess) SimpleSession.getCurrentIdpType().name + " Login is succeed" else "FAIL / " + result.errorCode + " / " + result.errorMessaage)
         if (result.isSuccess)
         {
+            //Toast.makeText(context, "" + builder.toString(), Toast.LENGTH_LONG).show()
             googletoken = SimpleSession.getAccessToken()
         }
         else

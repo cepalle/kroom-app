@@ -31,7 +31,6 @@ class Main : AppCompatActivity() {
         val connectivityManager = baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as  ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
 
-
         if (!(networkInfo != null && networkInfo.isConnected))
             Toast.makeText(baseContext, "it seems you are not connected to the Internet", Toast.LENGTH_LONG).show()
 
@@ -56,8 +55,6 @@ class Main : AppCompatActivity() {
             Routes.SETTINGS -> TODO()
             Routes.USER_SIGN_IN -> changeFragment(UserSignInFragment())
             Routes.USER_SIGN_UP -> changeFragment(UserSignUpFragment())
-
-
         }
     }
 
@@ -76,7 +73,10 @@ class Main : AppCompatActivity() {
     companion object {
         lateinit var app: Main
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+    }
 
     override fun onStart() {
         super.onStart()
