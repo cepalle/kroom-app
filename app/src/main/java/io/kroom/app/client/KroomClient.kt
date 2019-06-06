@@ -7,6 +7,9 @@ import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import io.kroom.app.Main
 import io.kroom.app.graphql.UserSignUpMutation
+import io.kroom.app.model.User
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 
 
@@ -15,7 +18,7 @@ typealias Result<T, E> = (track: T?, exception: E?) -> Unit
 object KroomClient {
 
 
-    var url = "https://0a83ab96.ngrok.io/graphql"
+    var url = "https://0357bafc.ngrok.io"
 
     private val okHttpClient = OkHttpClient.Builder().build()
     private val apolloClient = ApolloClient.builder()
@@ -45,9 +48,7 @@ object KroomClient {
                 }
             })
         }
+
     }
-
-
-
 
 }
