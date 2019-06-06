@@ -7,7 +7,7 @@ mutation UserSignUpMutation($userName: String!, $email: String!, $pass: String!)
         }
         errors {
             field
-            errors
+            messages
         }
     }
 }

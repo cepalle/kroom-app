@@ -1620,7 +1620,7 @@
             "deprecationReason": null
           },
           {
-            "name": "errors",
+            "name": "messages",
             "description": null,
             "args": [],
             "type": {

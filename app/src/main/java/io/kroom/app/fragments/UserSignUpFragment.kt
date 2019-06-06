@@ -78,7 +78,7 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
             .show()
 
         users.signUp(getRequest()) { res, exception ->
-            res?.let(this::onSuccess)
+            res?.let {}
             exception?.let(this::onFail)
 
             signUpLoading.visibility = View.INVISIBLE
@@ -97,8 +97,9 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
     override fun onSuccess(s: UserSignUpMutation.UserSignUp) {
         Log.println(Log.INFO, "success-sign-up", "user sign up: $s")
         // TODO errors
-        val user = s.user()
 
+
+        val user = s.user()
         Dialogs.successDialog(Main.app, "Your user id = ${user?.id()} email = ${user?.email()} token = ${user?.token()}")
             .show()
     }

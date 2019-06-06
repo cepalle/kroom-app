@@ -6,13 +6,10 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.StrictMode
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import com.apollographql.apollo.subscription.OperationClientMessage
 
 import io.kroom.app.fragments.UserSignInFragment
 import io.kroom.app.fragments.UserSignUpFragment
@@ -26,25 +23,17 @@ import org.jetbrains.annotations.Nullable
 
 class Main : AppCompatActivity() {
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = this
         setContentView(R.layout.activity_main)
 
-        val internetconnect = baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as  ConnectivityManager
-        val networkInfo = internetconnect.activeNetworkInfo
+        val connectivityManager = baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as  ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
 
 
-        if (networkInfo != null && networkInfo.isConnected)
-        {
-            // connected to internet
-        }
-        else
-        {
+        if (!(networkInfo != null && networkInfo.isConnected))
             Toast.makeText(baseContext, "it seems you are not connected to the Internet", Toast.LENGTH_LONG).show()
-        }
 
         StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
 
@@ -88,43 +77,21 @@ class Main : AppCompatActivity() {
         lateinit var app: Main
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-    }
 
     override fun onStart() {
         super.onStart()
-        getDelegate().onStart()
+        delegate.onStart()
     }
 
-    protected override fun onRestart() {
-        super.onRestart()
-
-    }
-
-    protected override fun onResume() {
-        super.onResume()
-    }
-
-    protected override fun onPause() {
-        super.onPause()
-    }
-
-    protected override fun onStop() {
+    override fun onStop() {
         super.onStop()
-        getDelegate().onStop()
+        delegate.onStop()
 
     }
 
-    protected override fun onDestroy() {
+    override fun onDestroy() {
         super.onDestroy()
-        getDelegate().onDestroy()
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-
+        delegate.onDestroy()
     }
 }
 
