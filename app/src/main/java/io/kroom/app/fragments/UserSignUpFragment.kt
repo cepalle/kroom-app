@@ -25,12 +25,15 @@ import org.jetbrains.annotations.Nullable
 class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSignUp, ApolloException> {
 
     private val users = KroomClient.UsersRepo
-    private lateinit var googletoken : String
+    private lateinit var googletoken: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Sign up"
         val view = inflater.inflate(R.layout.fragment_user_sign_up, container, false)
-        SimpleSession.setAuthProvider(IdpType.GOOGLE,  "795222071121-p1fbtb3mv3cjo9priggduc335rd8ng4d.apps.googleusercontent.com")
+        SimpleSession.setAuthProvider(
+            IdpType.GOOGLE,
+            "795222071121-0opmpk9tj064mgu8st78jbpirq004m00.apps.googleusercontent.com"
+        )
         return view
     }
 
@@ -41,28 +44,24 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
             this.onSignUp()
         }
 
-        googleLogin.setOnClickListener{
+        googleLogin.setOnClickListener {
             SimpleSession.login(
                 this.activity!!, IdpType.GOOGLE
             ) { result -> onLoginCallback(result) }
         }
     }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
         SimpleSession.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun onLoginCallback(result: SimpleAuthResult<Void>){
+    private fun onLoginCallback(result: SimpleAuthResult<Void>) {
         val builder = StringBuilder()
         builder.append(if (result.isSuccess) SimpleSession.getCurrentIdpType().name + " Login is succeed" else "FAIL / " + result.errorCode + " / " + result.errorMessaage)
-        if (result.isSuccess)
-        {
+        if (result.isSuccess) {
             //Toast.makeText(context, "" + builder.toString(), Toast.LENGTH_LONG).show()
             googletoken = SimpleSession.getAccessToken()
-        }
-        else
-        {
+        } else {
             Toast.makeText(context, "" + builder.toString(), Toast.LENGTH_LONG).show()
         }
     }
@@ -101,7 +100,10 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
 
 
         val user = s.user()
-        Dialogs.successDialog(Main.app, "Your user id = ${user?.id()} email = ${user?.email()} token = ${user?.token()}")
+        Dialogs.successDialog(
+            Main.app,
+            "Your user id = ${user?.id()} email = ${user?.email()} token = ${user?.token()}"
+        )
             .show()
     }
 

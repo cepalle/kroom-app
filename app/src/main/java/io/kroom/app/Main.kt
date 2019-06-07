@@ -18,8 +18,6 @@ import io.kroom.app.fragments.StartFragment
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-import org.jetbrains.annotations.Nullable
-
 
 class Main : AppCompatActivity() {
 
@@ -28,7 +26,7 @@ class Main : AppCompatActivity() {
         app = this
         setContentView(R.layout.activity_main)
 
-        val connectivityManager = baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as  ConnectivityManager
+        val connectivityManager = baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
 
         if (!(networkInfo != null && networkInfo.isConnected))
@@ -73,8 +71,11 @@ class Main : AppCompatActivity() {
     companion object {
         lateinit var app: Main
     }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        for (fragment in supportFragmentManager.fragments) {
+            fragment.onActivityResult(requestCode, resultCode, data)
+        }
 
     }
 

@@ -22,19 +22,22 @@ class StartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        startConnexion.setOnClickListener{
-            fragmentTransaction = fragmentManager!!.beginTransaction().replace(R.id.fragment_container, UserSignInFragment())
+        startConnexion.setOnClickListener {
+            fragmentTransaction =
+                fragmentManager!!.beginTransaction().replace(R.id.fragment_container, UserSignInFragment())
             fragmentTransaction!!.addToBackStack(null)
             fragmentTransaction!!.commit()
         }
-        startInscription.setOnClickListener{
-            fragmentTransaction = fragmentManager!!.beginTransaction().replace(R.id.fragment_container, UserSignUpFragment())
+        startInscription.setOnClickListener {
+            fragmentTransaction =
+                fragmentManager!!.beginTransaction().replace(R.id.fragment_container, UserSignUpFragment())
             fragmentTransaction!!.addToBackStack(null)
             fragmentTransaction!!.commit()
         }
 
 
     }
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
     }
