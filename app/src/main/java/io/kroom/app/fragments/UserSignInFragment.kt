@@ -20,7 +20,7 @@ import io.kroom.app.utils.SuccessOrFail
 
 import kotlinx.android.synthetic.main.fragment_user_sign_in.*
 import kotlinx.android.synthetic.main.fragment_user_sign_in.googleLogin
-import kotlinx.android.synthetic.main.fragment_user_sign_up.*
+
 import org.jetbrains.annotations.Nullable
 
 class UserSignInFragment : Fragment(), SuccessOrFail<String, ApolloException> {
