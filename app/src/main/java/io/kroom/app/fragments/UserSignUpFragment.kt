@@ -16,9 +16,8 @@ import io.kroom.app.Main
 import io.kroom.app.R
 import io.kroom.app.client.KroomClient
 import io.kroom.app.graphql.UserSignUpMutation
-import io.kroom.app.views.util.Dialogs
-import io.kroom.app.views.util.SuccessOrFail
-import kotlinx.android.synthetic.main.fragment_home.*
+import io.kroom.app.utils.Dialogs
+import io.kroom.app.utils.SuccessOrFail
 import kotlinx.android.synthetic.main.fragment_user_sign_up.*
 import org.jetbrains.annotations.Nullable
 
@@ -26,6 +25,7 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
 
     private val users = KroomClient.UsersRepo
     private lateinit var googletoken: String
+    private lateinit var googleEmail :String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Sign up"
@@ -60,7 +60,10 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
         builder.append(if (result.isSuccess) SimpleSession.getCurrentIdpType().name + " Login is succeed" else "FAIL / " + result.errorCode + " / " + result.errorMessaage)
         if (result.isSuccess) {
             //Toast.makeText(context, "" + builder.toString(), Toast.LENGTH_LONG).show()
-            googletoken = SimpleSession.getAccessToken()
+            googletoken = SimpleSession.getAccessToken().toString()
+            googleEmail = SimpleSession.getEmail().toString()
+
+            this.onGoogleSignUp()
         } else {
             Toast.makeText(context, "" + builder.toString(), Toast.LENGTH_LONG).show()
         }
@@ -70,9 +73,6 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
         Main.app.hideKeyboard()
         signUpAction.isEnabled = false
         signUpLoading.visibility = View.VISIBLE
-
-
-
         Toast
             .makeText(Main.app.applicationContext, "Registering your account...", Toast.LENGTH_SHORT)
             .show()
@@ -98,7 +98,6 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
         Log.println(Log.INFO, "success-sign-up", "user sign up: $s")
         // TODO errors
 
-
         val user = s.user()
         Dialogs.successDialog(
             Main.app,
@@ -113,4 +112,38 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
             .show()
 
     }
+    private fun onGoogleSignUp(){
+        Main.app.hideKeyboard()
+        signUpAction.isEnabled = false
+        signUpLoading.visibility = View.VISIBLE
+        Toast
+            .makeText(Main.app.applicationContext, "Registering your account...", Toast.LENGTH_SHORT)
+            .show()
+        users.signGoogleRequest(getGoogleRequest()){
+            res, exception ->
+            res?.let{this::onGoogleSuccess}
+            exception?.let(this::onFail)
+
+            signUpLoading.visibility = View.INVISIBLE
+            signUpAction.isEnabled = true
+        }
+    }
+
+    private fun getGoogleRequest():KroomClient.UsersRepo.UserGoogleSignRequest{
+        val token = googletoken
+        return KroomClient.UsersRepo.UserGoogleSignRequest(token)
+    }
+
+    override fun onGoogleSuccess(s: UserSignUpMutation.UserSignUp) {
+        Log.println(Log.INFO, "success-sign-in", "user sign in: $s")
+        // TODO errors
+
+        val user = s.user()
+        Dialogs.successDialog(
+            Main.app,
+            "Your user email = ${googleEmail} token = ${user?.token()}"
+        )
+            .show()
+    }
+
 }

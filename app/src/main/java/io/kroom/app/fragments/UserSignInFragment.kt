@@ -11,15 +11,22 @@ import com.apollographql.apollo.exception.ApolloException
 import com.jk.simple.SimpleAuthResult
 import com.jk.simple.SimpleSession
 import com.jk.simple.idp.IdpType
+import io.kroom.app.Main
 
 import io.kroom.app.R
-import io.kroom.app.views.util.SuccessOrFail
+import io.kroom.app.Routes
+import io.kroom.app.client.KroomClient
+import io.kroom.app.utils.SuccessOrFail
 
 import kotlinx.android.synthetic.main.fragment_user_sign_in.*
+import kotlinx.android.synthetic.main.fragment_user_sign_in.googleLogin
+import kotlinx.android.synthetic.main.fragment_user_sign_up.*
 import org.jetbrains.annotations.Nullable
 
 class UserSignInFragment : Fragment(), SuccessOrFail<String, ApolloException> {
 
+
+    private val users = KroomClient.UsersRepo
     private lateinit var googletoken: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -56,10 +63,37 @@ class UserSignInFragment : Fragment(), SuccessOrFail<String, ApolloException> {
         builder.append(if (result.isSuccess) SimpleSession.getCurrentIdpType().name + " Login is succeed" else "FAIL / " + result.errorCode + " / " + result.errorMessaage)
         if (result.isSuccess) {
             googletoken = SimpleSession.getAccessToken()
+            this.onGoogleSignIn()
         } else {
             Toast.makeText(context, "" + builder.toString(), Toast.LENGTH_LONG).show()
         }
 
+    }
+    private fun onGoogleSignIn(){
+
+       /* Main.app.hideKeyboard()
+        signInAction.isEnabled = false
+        signInLoading.visibility = View.VISIBLE
+        Toast
+            .makeText(Main.app.applicationContext, "connection...", Toast.LENGTH_SHORT)
+            .show()*/
+        users.signGoogleRequest(getGoogleRequest()){
+                res, exception ->
+            res?.let{this::onGoogleSuccess}
+            exception?.let(this::onFail)
+
+          /*  signInLoading.visibility = View.INVISIBLE
+            signInAction.isEnabled = true*/
+        }
+    }
+
+    private fun getGoogleRequest():KroomClient.UsersRepo.UserGoogleSignRequest{
+        val token = googletoken
+        return KroomClient.UsersRepo.UserGoogleSignRequest(token)
+    }
+    override fun onGoogleSuccess(s: String) {
+        Main.app.goToRoute(Routes.HOME)
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun onSignIn() {

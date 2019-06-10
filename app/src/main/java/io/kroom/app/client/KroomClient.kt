@@ -16,7 +16,7 @@ typealias Result<T, E> = (track: T?, exception: E?) -> Unit
 object KroomClient {
 
 
-    var url = "https://5cb03324.ngrok.io"
+    var url = "https://83fe4813.ngrok.io/graphql"
 
     private val okHttpClient = OkHttpClient.Builder().build()
     private val apolloClient = ApolloClient.builder()
@@ -46,11 +46,13 @@ object KroomClient {
                 }
             })
         }
+        data class UserGoogleSignRequest(val token: String)
+
         @UiThread
-        fun signGoogleRequest(token: String, res: Result<UserSignWhithGoolgeMutation.UserSignWithGoogle, ApolloException>) {
+        fun signGoogleRequest(req: UserGoogleSignRequest, res: Result<UserSignWhithGoolgeMutation.UserSignWithGoogle, ApolloException>) {
             apolloClient.mutate(
                 UserSignWhithGoolgeMutation.builder()
-                    .token(token)
+                    .token(req.token)
                     .build()
             ).enqueue(object : ApolloCall.Callback<UserSignWhithGoolgeMutation.Data>(){
                 override fun onResponse(response: Response<UserSignWhithGoolgeMutation.Data>) {
