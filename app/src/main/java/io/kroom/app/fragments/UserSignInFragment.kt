@@ -16,6 +16,8 @@ import io.kroom.app.Main
 import io.kroom.app.R
 import io.kroom.app.Routes
 import io.kroom.app.client.KroomClient
+import io.kroom.app.graphql.UserSignInMutation
+import io.kroom.app.graphql.UserSignWhithGoolgeMutation
 import io.kroom.app.utils.SuccessOrFail
 
 import kotlinx.android.synthetic.main.fragment_user_sign_in.*
@@ -23,11 +25,12 @@ import kotlinx.android.synthetic.main.fragment_user_sign_in.googleLogin
 
 import org.jetbrains.annotations.Nullable
 
-class UserSignInFragment : Fragment(), SuccessOrFail<String, ApolloException> {
+class UserSignInFragment : Fragment(), SuccessOrFail<UserSignInMutation.UserSignIn, ApolloException> {
 
 
     private val users = KroomClient.UsersRepo
     private lateinit var googletoken: String
+    private lateinit var token :String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Sign in"
@@ -71,19 +74,19 @@ class UserSignInFragment : Fragment(), SuccessOrFail<String, ApolloException> {
     }
     private fun onGoogleSignIn(){
 
-       /* Main.app.hideKeyboard()
+      Main.app.hideKeyboard()
         signInAction.isEnabled = false
         signInLoading.visibility = View.VISIBLE
         Toast
             .makeText(Main.app.applicationContext, "connection...", Toast.LENGTH_SHORT)
-            .show()*/
+            .show()
         users.signGoogleRequest(getGoogleRequest()){
                 res, exception ->
             res?.let{this::onGoogleSuccess}
             exception?.let(this::onFail)
 
-          /*  signInLoading.visibility = View.INVISIBLE
-            signInAction.isEnabled = true*/
+            signInLoading.visibility = View.INVISIBLE
+            signInAction.isEnabled = true
         }
     }
 
@@ -91,7 +94,10 @@ class UserSignInFragment : Fragment(), SuccessOrFail<String, ApolloException> {
         val token = googletoken
         return KroomClient.UsersRepo.UserGoogleSignRequest(token)
     }
-    override fun onGoogleSuccess(s: String) {
+
+    fun onGoogleSuccess(s: UserSignWhithGoolgeMutation.UserSignWithGoogle) {
+        token = s.user()?.token().toString()
+        Toast.makeText(context, "" + token, Toast.LENGTH_LONG).show()
         Main.app.goToRoute(Routes.HOME)
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -100,7 +106,7 @@ class UserSignInFragment : Fragment(), SuccessOrFail<String, ApolloException> {
         TODO("not implemented") //send googletoken to authenticate on server
     }
 
-    override fun onSuccess(s: String) {
+    override fun onSuccess(s: UserSignInMutation.UserSignIn) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

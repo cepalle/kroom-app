@@ -16,7 +16,7 @@ typealias Result<T, E> = (track: T?, exception: E?) -> Unit
 object KroomClient {
 
 
-    var url = "https://83fe4813.ngrok.io/graphql"
+    var url = "https://d2a9ebe1.ngrok.io/graphql"
 
     private val okHttpClient = OkHttpClient.Builder().build()
     private val apolloClient = ApolloClient.builder()

@@ -16,6 +16,7 @@ import io.kroom.app.Main
 import io.kroom.app.R
 import io.kroom.app.client.KroomClient
 import io.kroom.app.graphql.UserSignUpMutation
+import io.kroom.app.graphql.UserSignWhithGoolgeMutation
 import io.kroom.app.utils.Dialogs
 import io.kroom.app.utils.SuccessOrFail
 import kotlinx.android.synthetic.main.fragment_user_sign_up.*
@@ -26,6 +27,7 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
     private val users = KroomClient.UsersRepo
     private lateinit var googletoken: String
     private lateinit var googleEmail :String
+    private lateinit var token :String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Sign up"
@@ -77,8 +79,8 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
             .makeText(Main.app.applicationContext, "Registering your account...", Toast.LENGTH_SHORT)
             .show()
 
-        users.signUp(getRequest()) { res, exception ->
-            res?.let {}
+        users.signUp(getRequest()) { res: UserSignUpMutation.UserSignUp?, exception: ApolloException? ->
+            res?.let(this::onSuccess)
             exception?.let(this::onFail)
 
             signUpLoading.visibility = View.INVISIBLE
@@ -121,7 +123,7 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
             .show()
         users.signGoogleRequest(getGoogleRequest()){
             res, exception ->
-            res?.let{this::onGoogleSuccess}
+            res?.let(this::onSuccessGoogle)
             exception?.let(this::onFail)
 
             signUpLoading.visibility = View.INVISIBLE
@@ -134,8 +136,10 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
         return KroomClient.UsersRepo.UserGoogleSignRequest(token)
     }
 
-    override fun onGoogleSuccess(s: UserSignUpMutation.UserSignUp) {
-        Log.println(Log.INFO, "success-sign-in", "user sign in: $s")
+    fun onSuccessGoogle(s: UserSignWhithGoolgeMutation.UserSignWithGoogle) {
+        token = s.user()?.token().toString()
+        Toast.makeText(context, "" + token, Toast.LENGTH_LONG).show()
+       // Log.println(Log.INFO, "success-sign-in-Google", "user sign in: $s")
         // TODO errors
 
         val user = s.user()
@@ -145,5 +149,4 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
         )
             .show()
     }
-
 }
