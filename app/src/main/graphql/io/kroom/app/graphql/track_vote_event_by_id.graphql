@@ -1,0 +1,13 @@
+query TrackVoteEventById($id: Int!){
+    TrackVoteEventById(id: $id){
+        trackVoteEvent{
+            id
+            name
+        }
+        errors {
+            field
+            messages
+        }
+    }
+}
+

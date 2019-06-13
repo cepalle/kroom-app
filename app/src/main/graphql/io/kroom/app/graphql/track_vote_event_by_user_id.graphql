@@ -1,0 +1,15 @@
+query TrackVoteEventByUserId($userId: Int!){
+    TrackVoteEventByUserId( userId: $userId)
+    {
+        trackVoteEvents{
+            id
+            name
+        }
+        errors {
+            field
+            messages
+        }
+    }
+
+}
+

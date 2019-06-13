@@ -1,0 +1,9 @@
+query {
+    TrackVoteEventsPublic {
+        id
+        userMaster {
+            email
+        }
+        name
+    }
+}

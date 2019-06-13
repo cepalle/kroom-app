@@ -1,34 +1,39 @@
-mutation TrackVoteEventAddOrUpdateVoteMutation($eventId: Int!, $userId: Int!, $musicId: Int!, $up: Boolean!){
-    TrackVoteEventAddOrUpdateVote(eventId: $eventId, userId:$userId, musicId:$musicId, up:$up){
-    trackVoteEvent{
-        id
-        userMaster{
+mutation TrackVoteEventAddOrUpdateVoteMutation(
+    $eventId: Int!
+    $userId: Int!
+    $musicId: Int!
+    $up: Boolean!
+) {
+    TrackVoteEventAddOrUpdateVote(
+        eventId: $eventId
+        userId: $userId
+        musicId: $musicId
+        up: $up
+    ) {
+        trackVoteEvent {
             id
-        }
-        name
-        public
-        currentTrack
-        {
-            id
-        }
-        trackWithVote
-        {
-            track{
+            userMaster {
+                id
+            }
+            name
+            public
+            currentTrack {
+                id
+            }
+            trackWithVote {
+                track {
+                    id
+                }
+            }
+            schedule
+            location
+            userInvited {
                 id
             }
         }
-        schedule
-        location
-        userInvited{
-            id
-        }
-    }
-        errors{
+        errors {
             field
             messages
-
         }
-
-
     }
 }
