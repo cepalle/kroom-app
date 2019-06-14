@@ -11,6 +11,6 @@ import io.kroom.app.R
 class MusicTrackVoteFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Vote tracks"
-        return inflater.inflate(R.layout.fragment_services_chooser, container, false)
+        return inflater.inflate(R.layout.fragment_music_track_vote, container, false)
     }
 }

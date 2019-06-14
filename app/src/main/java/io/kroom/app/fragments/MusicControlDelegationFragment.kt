@@ -10,6 +10,6 @@ import io.kroom.app.R
 class MusicControlDelegationFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Control delegation"
-        return inflater.inflate(R.layout.fragment_services_chooser, container, false)
+        return inflater.inflate(R.layout.fragment_music_control_delegation, container, false)
     }
 }
