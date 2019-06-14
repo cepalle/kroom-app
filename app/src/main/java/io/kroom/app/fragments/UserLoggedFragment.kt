@@ -33,6 +33,6 @@ class UserLoggedFragment : Fragment() {
         }
 
 
-        loggedWelcomeText.text = "Welcome back ${Session.getUsername()} !"
+        loggedWelcomeText.text = "Welcome ${Session.getUsername()} !"
     }
 }

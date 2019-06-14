@@ -16,7 +16,7 @@ typealias Result<T, E> = (track: T?, exception: E?) -> Unit
 object KroomClient {
 
 
-    var url = "https://50ba15ac.ngrok.io/graphql"
+    var url = "https://a72b4d4f.ngrok.io/graphql"
 
     private val okHttpClient = OkHttpClient.Builder().build()
     private val apolloClient = ApolloClient.builder()
@@ -26,7 +26,7 @@ object KroomClient {
 
     object Users {
 
-        data class UserSignUpRequest(val userName: String,val email: String, val pass: String )
+        data class UserSignUpRequest(val userName: String, val email: String, val pass: String)
 
         @UiThread
         fun signUp(req: UserSignUpRequest, res: Result<UserSignUpMutation.UserSignUp, ApolloException>) {
@@ -47,7 +47,7 @@ object KroomClient {
             })
         }
 
-        data class UserSignInRequest(val userName: String, val pass: String )
+        data class UserSignInRequest(val userName: String, val pass: String)
 
         @UiThread
         fun signIn(req: UserSignInRequest, res: Result<UserSignInMutation.UserSignIn, ApolloException>) {
