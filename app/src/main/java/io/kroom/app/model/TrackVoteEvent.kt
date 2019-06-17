@@ -2,7 +2,7 @@ package io.kroom.app.model
 
 import io.kroom.app.graphql.TrackVoteEventAddOrUpdateVoteMutation
 
-data class TrackVoteEvent (
+ class TrackVoteEvent (
     val id: Int,
     val userMaster: User,
     val name: String,

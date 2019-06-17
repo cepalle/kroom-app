@@ -1,5 +1,6 @@
 package io.kroom.app.client
 
+import android.arch.lifecycle.MutableLiveData
 import android.support.annotation.UiThread
 import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.ApolloClient
@@ -161,7 +162,7 @@ class KroomClient {
     }
 
     @UiThread
-    fun getTrackVoteEventsPublic (res: (MutableList<TrackVoteEventsPublicQuery.TrackVoteEventsPublic?>, ApolloException)-> io.kroom.app.model.TrackVoteEvent)  {
+    fun getTrackVoteEventsPublic (res: (MutableLiveData<TrackVoteEventsPublicQuery.TrackVoteEventsPublic?>, ApolloException)-> io.kroom.app.model.TrackVoteEvent)  {
         val queryCall = TrackVoteEventsPublicQuery
             .builder()
             .build()
