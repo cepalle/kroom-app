@@ -1,4 +1,4 @@
-query TrackVoteEventById($id: Int!){
+query TrackVoteEventByIdQuery($id: Int!){
     TrackVoteEventById(id: $id){
         trackVoteEvent{
             id
@@ -10,4 +10,3 @@ query TrackVoteEventById($id: Int!){
         }
     }
 }
-

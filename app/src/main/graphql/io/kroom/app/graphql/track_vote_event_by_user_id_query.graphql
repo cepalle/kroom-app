@@ -1,4 +1,4 @@
-query TrackVoteEventByUserId($userId: Int!){
+query TrackVoteEventByUserIdQuery($userId: Int!){
     TrackVoteEventByUserId( userId: $userId)
     {
         trackVoteEvents{

@@ -6,14 +6,12 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import io.kroom.app.Main
+import io.kroom.app.graphql.*
 
-import io.kroom.app.graphql.UserSignUpMutation
-import io.kroom.app.graphql.UserSignWhithGoolgeMutation
-import io.kroom.app.graphql.TrackVoteEventAddOrUpdateVoteMutation
-import io.kroom.app.graphql.TrackVoteEventById
 import okhttp3.Interceptor
 
 import okhttp3.OkHttpClient
+import java.lang.Error
 import java.util.concurrent.TimeUnit
 
 
@@ -23,7 +21,7 @@ class KroomClient {
 
     companion object {
 
-        var url = "https://d38770e0.ngrok.io/graphql"
+        var url = "https://5416773b.ngrok.io/graphql"
 
         private val okHttpClient: OkHttpClient by lazy {
             OkHttpClient.Builder()
@@ -92,6 +90,7 @@ class KroomClient {
             })
         }
 
+
         data class TrackVoteEventRequest(val eventId: Int, val userId: Int, val musicId: Int, val up: Boolean)
 
         @UiThread
@@ -118,29 +117,66 @@ class KroomClient {
                 }
             })
         }
+
     }
 
-    fun getTrackVoteEventById(completion: (res: Pair<TrackVoteEventById.Edge?, ApolloException>) -> Unit) {
-        val queryCall = TrackVoteEventById
+    @UiThread
+    fun getTrackVoteEventById(id: Int, res: Result<TrackVoteEventByIdQuery.TrackVoteEvent, ApolloException>) {
+        val queryCall = TrackVoteEventByIdQuery
             .builder()
-            .id(1)
+            .id(id)
             .build()
-        apolloClient.query(queryCall).enqueue(object : ApolloCall.Callback<TrackVoteEventById.Data>() {
-            override fun onFailure(e: ApolloException) {
-                completion(Pair(null, Error(e.message)))
+        apolloClient.query(queryCall).enqueue(object : ApolloCall.Callback<TrackVoteEventByIdQuery.Data>() {
+
+            override fun onResponse(response: Response<TrackVoteEventByIdQuery.Data>) {
+                res(response.data()!!.TrackVoteEventById().trackVoteEvent(), null)
             }
 
-            override fun onResponse(response: Response<TrackVoteEventById.Data>) {
-                val errors = response.errors()
-                if (!errors.isEmpty()) {
-                    val message = errors[0]?.message() ?: ""
-                    completion(Pair(null, Error(message)))
-                } else {
-                    completion(Pair(response.data()?.search()?.edges() ?: lazy {  }, null))
-                }
+            override fun onFailure(e: ApolloException) {
+                Main.app.runOnUiThread { res(null, e) }
             }
 
         })
     }
-}
 
+    @UiThread
+    fun getTrackVoteEventByUserId(
+        userId: Int,
+        res: Result<TrackVoteEventByUserIdQuery.TrackVoteEventByUserId, ApolloException>
+    ) {
+        val queryCall = TrackVoteEventByUserIdQuery
+            .builder()
+            .userId(userId)
+            .build()
+        apolloClient.query(queryCall).enqueue(object : ApolloCall.Callback<TrackVoteEventByUserIdQuery.Data>() {
+
+            override fun onResponse(response: Response<TrackVoteEventByUserIdQuery.Data>) {
+                res(response.data()!!.TrackVoteEventByUserId(), null)
+            }
+
+            override fun onFailure(e: ApolloException) {
+                Main.app.runOnUiThread { res(null, e) }
+            }
+        })
+    }
+
+    @UiThread
+    fun getTrackVoteEventsPublic (res: (MutableList<TrackVoteEventsPublicQuery.TrackVoteEventsPublic?>, ApolloException)-> io.kroom.app.model.TrackVoteEvent)  {
+        val queryCall = TrackVoteEventsPublicQuery
+            .builder()
+            .build()
+        apolloClient.query(queryCall).enqueue(object : ApolloCall.Callback<TrackVoteEventsPublicQuery.Data?>() {
+
+
+            override fun onResponse(response: Response<TrackVoteEventsPublicQuery.Data?>) {
+                Pair(response.data()?.TrackVoteEventsPublic()?: listOf(), null)
+            }
+
+            override fun onFailure(e: ApolloException) {
+               // Main.app.runOnUiThread { res(null, e) }
+            }
+
+        })
+
+    }
+}
