@@ -46,7 +46,7 @@ class KroomClient {
 
     }
 
-    object UsersRepo {
+    object Users {
 
         data class UserSignUpRequest(val userName: String, val email: String, val pass: String)
 
@@ -61,6 +61,26 @@ class KroomClient {
             ).enqueue(object : ApolloCall.Callback<UserSignUpMutation.Data>() {
                 override fun onResponse(response: Response<UserSignUpMutation.Data>) {
                     Main.app.runOnUiThread { res(response.data()!!.UserSignUp(), null) }
+                }
+
+                override fun onFailure(e: ApolloException) {
+                    Main.app.runOnUiThread { res(null, e) }
+                }
+            })
+        }
+        
+        data class UserSignInRequest(val userName: String, val pass: String)
+
+        @UiThread
+        fun signIn(req: UserSignInRequest, res: Result<UserSignInMutation.UserSignIn, ApolloException>) {
+            apolloClient.mutate(
+                UserSignInMutation.builder()
+                    .userName(req.userName)
+                    .pass(req.pass)
+                    .build()
+            ).enqueue(object : ApolloCall.Callback<UserSignInMutation.Data>() {
+                override fun onResponse(response: Response<UserSignInMutation.Data>) {
+                    Main.app.runOnUiThread { res(response.data()!!.UserSignIn(), null) }
                 }
 
                 override fun onFailure(e: ApolloException) {
@@ -161,7 +181,7 @@ class KroomClient {
         })
     }
 
-    @UiThread
+    /*@UiThread
     fun getTrackVoteEventsPublic (res: (MutableLiveData<TrackVoteEventsPublicQuery.TrackVoteEventsPublic?>, ApolloException)-> io.kroom.app.model.TrackVoteEvent)  {
         val queryCall = TrackVoteEventsPublicQuery
             .builder()
@@ -179,5 +199,5 @@ class KroomClient {
 
         })
 
-    }
+    }*/
 }

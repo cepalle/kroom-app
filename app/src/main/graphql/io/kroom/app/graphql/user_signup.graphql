@@ -4,6 +4,7 @@ mutation UserSignUpMutation($userName: String!, $email: String!, $pass: String!)
             id
             token
             email
+            userName
         }
         errors {
             field
