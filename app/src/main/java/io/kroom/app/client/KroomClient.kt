@@ -22,7 +22,7 @@ class KroomClient {
 
     companion object {
 
-        var url = "https://5416773b.ngrok.io/graphql"
+        var url = "https://da5ef2a4.ngrok.io/graphql"
 
         private val okHttpClient: OkHttpClient by lazy {
             OkHttpClient.Builder()
@@ -180,6 +180,7 @@ class KroomClient {
             }
         })
     }
+
 
     /*@UiThread
     fun getTrackVoteEventsPublic (res: (MutableLiveData<TrackVoteEventsPublicQuery.TrackVoteEventsPublic?>, ApolloException)-> io.kroom.app.model.TrackVoteEvent)  {

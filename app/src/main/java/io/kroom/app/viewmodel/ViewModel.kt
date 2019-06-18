@@ -12,16 +12,22 @@ import io.kroom.app.model.TrackVoteEvent
 class ViewModel : ViewModel() {
 
     private val kroomClient = KroomClient()
-    var reposResultTrackVoteEventAddOrUpdateVoteMutation = MutableLiveData<Pair<List<TrackVoteEventAddOrUpdateVoteMutation.Data?>, ApolloException?>>()
-  //  var reposResult = MutableLiveData<TrackVoteEventsPublicQuery.TrackVoteEventsPublic>(), ApolloException?>>()
- //   var reposResult = MutableLiveData<TrackVoteEventsPublicQuery.TrackVoteEventsPublic?>, ApolloException
-   // var repoResult = MutableLiveData<TrackVoteEvent>
+    var reposResultTrackVoteEventAddOrUpdateVoteMutation =
+        MutableLiveData<Pair<List<TrackVoteEventAddOrUpdateVoteMutation.Data?>, ApolloException?>>()
+   var reposResult = MutableLiveData<TrackVoteEventsPublicQuery.TrackVoteEventsPublic>()
 
-    init{
-        loadRepository()
+    //   var reposResult = MutableLiveData<TrackVoteEventsPublicQuery.TrackVoteEventsPublic?>, ApolloException
+
+   // var repoResult = MutableLiveData<TrackVoteEvent>()
+
+  /*  init {
+        getTrackVoteEventByIdVm()
+    }*/
+
+    fun getTrackVoteEventByIdVm(id: Int, trackVoteEvent: TrackVoteEvent){
+       // kroomClient.getTrackVoteEventById(id,)
+
     }
 
-    fun loadRepository(){
-      //  kroomClient.UsersRepo.trackVoteEvent()
-    }
+
 }
