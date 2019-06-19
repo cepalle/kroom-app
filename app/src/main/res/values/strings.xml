@@ -49,5 +49,11 @@
     <string name="music_track_vote_duration">00 : 00</string>
     <string name="list_music_track_vote">list_music_track_vote</string>
 
+    <!-- row_item_music_track_vote-events-->
+    <string name="event_user_master">User Master</string>
+    <string name="event_name">Event Name</string>
+    <string name="event_schedule">19/06/2019</string>
+    <string name="event_location">Location</string>
+
 
 </resources>

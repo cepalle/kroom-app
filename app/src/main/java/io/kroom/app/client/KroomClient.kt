@@ -12,7 +12,6 @@ import io.kroom.app.graphql.*
 import okhttp3.Interceptor
 
 import okhttp3.OkHttpClient
-import java.lang.Error
 import java.util.concurrent.TimeUnit
 
 
@@ -22,7 +21,7 @@ class KroomClient {
 
     companion object {
 
-        var url = "https://da5ef2a4.ngrok.io/graphql"
+        var url = "https://ffd697f5.ngrok.io/graphql"
 
         private val okHttpClient: OkHttpClient by lazy {
             OkHttpClient.Builder()
@@ -182,8 +181,8 @@ class KroomClient {
     }
 
 
-    /*@UiThread
-    fun getTrackVoteEventsPublic (res: (MutableLiveData<TrackVoteEventsPublicQuery.TrackVoteEventsPublic?>, ApolloException)-> io.kroom.app.model.TrackVoteEvent)  {
+    @UiThread
+    fun getTrackVoteEventsPublic (res: (MutableLiveData<TrackVoteEventsPublicQuery.TrackVoteEventsPublic?>) -> Unit)  {
         val queryCall = TrackVoteEventsPublicQuery
             .builder()
             .build()
@@ -200,5 +199,5 @@ class KroomClient {
 
         })
 
-    }*/
+    }
 }
