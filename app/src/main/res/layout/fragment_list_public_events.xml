@@ -8,11 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/list_music_track_vote"
-        tools:context="io.kroom.app.fragments.MusicTrackVoteFragment">
+        tools:context="io.kroom.app.fragment.MusicTrackVoteFragment">
 
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/listPublicEvents"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"

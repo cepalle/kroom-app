@@ -1,8 +1,7 @@
-package io.kroom.app.fragments
+package io.kroom.app.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import io.kroom.app.Main
 import io.kroom.app.R
 import io.kroom.app.Routes
 import kotlinx.android.synthetic.main.fragment_services_chooser.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 class ServicesChooserFragment : Fragment() {
 

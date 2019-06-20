@@ -1,4 +1,4 @@
-package io.kroom.app.fragments
+package io.kroom.app.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

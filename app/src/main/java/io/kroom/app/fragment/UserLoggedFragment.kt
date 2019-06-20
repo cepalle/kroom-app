@@ -1,4 +1,4 @@
-package io.kroom.app.fragments
+package io.kroom.app.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle

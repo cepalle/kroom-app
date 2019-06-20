@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity
 
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import io.kroom.app.fragments.*
+import io.kroom.app.fragment.*
 
 import kotlinx.android.synthetic.main.activity_main.*
 

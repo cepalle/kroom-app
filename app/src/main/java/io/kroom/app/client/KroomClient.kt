@@ -8,6 +8,7 @@ import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import io.kroom.app.Main
 import io.kroom.app.graphql.*
+import io.kroom.app.session.Session
 
 import okhttp3.Interceptor
 
@@ -27,24 +28,37 @@ class KroomClient {
             OkHttpClient.Builder()
                 .writeTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(15, TimeUnit.SECONDS)
-                .addInterceptor { builder ->
-                    if (Session.getToken() != null) {
-                        builder.proceed(builder.request().newBuilder().header("Kroom-token-id", Session.getToken()!!).build())
-
-
-                    } else {
-                        builder.proceed(builder.request())
-                    }
-                }
+                .addInterceptor(this::tokenInterceptor)
                 .addNetworkInterceptor(NetworkInterceptor())
                 .build()
         }
 
-    private val okHttpClient = OkHttpClient.Builder().build()
-    private val apolloClient = ApolloClient.builder()
-        .serverUrl(url)
-        .okHttpClient(okHttpClient)
-        .build()
+        private fun tokenInterceptor(builder: Interceptor.Chain): okhttp3.Response {
+            return if (Session.getToken() != null) {
+                builder.proceed(
+                    builder.request().newBuilder().header(
+                        "Kroom-token-id",
+                        Session.getToken()!!
+                    ).build()
+                )
+
+
+            } else {
+                builder.proceed(builder.request())
+            }
+        }
+
+        private class NetworkInterceptor : Interceptor {
+
+            override fun intercept(chain: Interceptor.Chain?): okhttp3.Response {
+                return chain!!.proceed(chain.request().newBuilder().header("Authorization", "Bearer <TOKEN>").build())
+            }
+        }
+
+        private val apolloClient = ApolloClient.builder()
+            .serverUrl(url)
+            .okHttpClient(okHttpClient)
+            .build()
 
     }
 
@@ -214,67 +228,70 @@ class KroomClient {
                 }
             })
         }
-
     }
 
-    @UiThread
-    fun getTrackVoteEventById(id: Int, res: Result<TrackVoteEventByIdQuery.TrackVoteEvent, ApolloException>) {
-        val queryCall = TrackVoteEventByIdQuery
-            .builder()
-            .id(id)
-            .build()
-        apolloClient.query(queryCall).enqueue(object : ApolloCall.Callback<TrackVoteEventByIdQuery.Data>() {
+    object TrackVote {
+        @UiThread
+        fun getTrackVoteEventById(id: Int, res: Result<TrackVoteEventByIdQuery.TrackVoteEvent, ApolloException>) {
+            val queryCall = TrackVoteEventByIdQuery
+                .builder()
+                .id(id)
+                .build()
+            apolloClient.query(queryCall).enqueue(object : ApolloCall.Callback<TrackVoteEventByIdQuery.Data>() {
 
-            override fun onResponse(response: Response<TrackVoteEventByIdQuery.Data>) {
-                res(response.data()!!.TrackVoteEventById().trackVoteEvent(), null)
-            }
+                override fun onResponse(response: Response<TrackVoteEventByIdQuery.Data>) {
+                    res(response.data()!!.TrackVoteEventById().trackVoteEvent(), null)
+                }
 
-            override fun onFailure(e: ApolloException) {
-                Main.app.runOnUiThread { res(null, e) }
-            }
+                override fun onFailure(e: ApolloException) {
+                    Main.app.runOnUiThread { res(null, e) }
+                }
 
-        })
+            })
+        }
+
+        @UiThread
+        fun getTrackVoteEventByUserId(
+            userId: Int,
+            res: Result<TrackVoteEventByUserIdQuery.TrackVoteEventByUserId, ApolloException>
+        ) {
+            val queryCall = TrackVoteEventByUserIdQuery
+                .builder()
+                .userId(userId)
+                .build()
+            apolloClient.query(queryCall).enqueue(object : ApolloCall.Callback<TrackVoteEventByUserIdQuery.Data>() {
+
+                override fun onResponse(response: Response<TrackVoteEventByUserIdQuery.Data>) {
+                    res(response.data()!!.TrackVoteEventByUserId(), null)
+                }
+
+                override fun onFailure(e: ApolloException) {
+                    Main.app.runOnUiThread { res(null, e) }
+                }
+            })
+        }
+
+
+        @UiThread
+        fun getTrackVoteEventsPublic(res: (MutableLiveData<TrackVoteEventsPublicQuery.TrackVoteEventsPublic?>) -> Unit) {
+            val queryCall = TrackVoteEventsPublicQuery
+                .builder()
+                .build()
+            apolloClient.query(queryCall).enqueue(object : ApolloCall.Callback<TrackVoteEventsPublicQuery.Data?>() {
+
+
+                override fun onResponse(response: Response<TrackVoteEventsPublicQuery.Data?>) {
+                    Pair(response.data()?.TrackVoteEventsPublic() ?: listOf(), null)
+                }
+
+                override fun onFailure(e: ApolloException) {
+                    // Main.app.runOnUiThread { res(null, e) }
+                }
+
+            })
+
+        }
     }
 
-    @UiThread
-    fun getTrackVoteEventByUserId(
-        userId: Int,
-        res: Result<TrackVoteEventByUserIdQuery.TrackVoteEventByUserId, ApolloException>
-    ) {
-        val queryCall = TrackVoteEventByUserIdQuery
-            .builder()
-            .userId(userId)
-            .build()
-        apolloClient.query(queryCall).enqueue(object : ApolloCall.Callback<TrackVoteEventByUserIdQuery.Data>() {
 
-            override fun onResponse(response: Response<TrackVoteEventByUserIdQuery.Data>) {
-                res(response.data()!!.TrackVoteEventByUserId(), null)
-            }
-
-            override fun onFailure(e: ApolloException) {
-                Main.app.runOnUiThread { res(null, e) }
-            }
-        })
-    }
-
-
-    @UiThread
-    fun getTrackVoteEventsPublic (res: (MutableLiveData<TrackVoteEventsPublicQuery.TrackVoteEventsPublic?>) -> Unit)  {
-        val queryCall = TrackVoteEventsPublicQuery
-            .builder()
-            .build()
-        apolloClient.query(queryCall).enqueue(object : ApolloCall.Callback<TrackVoteEventsPublicQuery.Data?>() {
-
-
-            override fun onResponse(response: Response<TrackVoteEventsPublicQuery.Data?>) {
-                Pair(response.data()?.TrackVoteEventsPublic()?: listOf(), null)
-            }
-
-            override fun onFailure(e: ApolloException) {
-               // Main.app.runOnUiThread { res(null, e) }
-            }
-
-        })
-
-    }
 }

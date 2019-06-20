@@ -1,4 +1,4 @@
-package io.kroom.app.custumadapter
+package io.kroom.app.customadapter
 
 
 import android.support.v7.widget.RecyclerView

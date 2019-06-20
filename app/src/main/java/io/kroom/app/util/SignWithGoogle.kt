@@ -1,8 +1,7 @@
-package io.kroom.app.utils
+package io.kroom.app.util
 
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import com.apollographql.apollo.exception.ApolloException
 import com.jk.simple.SimpleAuthResult

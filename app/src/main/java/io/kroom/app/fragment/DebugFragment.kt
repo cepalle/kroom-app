@@ -1,7 +1,6 @@
-package io.kroom.app.fragments
+package io.kroom.app.fragment
 
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -50,46 +49,46 @@ class DebugFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeToSignIn.setOnClickListener {
+        debugToSignIn.setOnClickListener {
             Main.app.goToRoute(Routes.USER_SIGN_IN)
         }
 
-        homeToSignUp.setOnClickListener {
+        debugToSignUp.setOnClickListener {
             Main.app.goToRoute(Routes.USER_SIGN_UP)
         }
 
-        homeGoogleLogin.setOnClickListener{
+        debugGoogleLogin.setOnClickListener{
             login(
                 this.activity!!, IdpType.GOOGLE
             ) { result -> onLoginCallback(result) }
 
         }
 
-        homeGoogleLogout.setOnClickListener{
+        debugGoogleLogout.setOnClickListener{
             SimpleSession.logout()
             this.tokenTextView?.text = "Logout!"
 
         }
 
-        homeLogedIn.setOnClickListener{
+        debugLogedIn.setOnClickListener{
             val builder = StringBuilder()
             builder.append(if (SimpleSession.isSignedIn(this.activity!!)) "Yes! Idp Type Is " + SimpleSession.getCurrentIdpType() else "No..")
             this.tokenTextView?.text = builder.toString()
 
         }
 
-        homeIdpType.setOnClickListener{
+        debugIdpType.setOnClickListener{
             val idpType = SimpleSession.getCurrentIdpType()
             this.tokenTextView?.text = idpType?.name ?: "Null"
 
         }
 
-        homeAccessToken.setOnClickListener{
+        debugAccessToken.setOnClickListener{
             this.tokenTextView?.text = SimpleSession.getAccessToken()
             Log.i("SELECTED VALUE", "ID TOKEN : " +  this.tokenTextView?.text)
         }
 
-        homeEmail.setOnClickListener{
+        debugEmail.setOnClickListener{
             this.tokenTextView?.text = SimpleSession.getEmail()
         }
 

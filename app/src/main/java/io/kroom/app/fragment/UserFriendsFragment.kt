@@ -1,4 +1,4 @@
-package io.kroom.app.fragments
+package io.kroom.app.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.apollographql.apollo.api.Error
 import com.apollographql.apollo.exception.ApolloException
@@ -17,8 +16,8 @@ import io.kroom.app.R
 import io.kroom.app.client.KroomClient
 import io.kroom.app.graphql.UserAddFriendMutation
 import io.kroom.app.session.Session
-import io.kroom.app.views.util.Dialogs
-import io.kroom.app.views.util.SuccessOrFail
+import io.kroom.app.util.Dialogs
+import io.kroom.app.util.SuccessOrFail
 import kotlinx.android.synthetic.main.fragment_user_friends.*
 
 

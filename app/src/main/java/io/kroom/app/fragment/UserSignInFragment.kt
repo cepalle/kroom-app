@@ -1,4 +1,4 @@
-package io.kroom.app.fragments
+package io.kroom.app.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,20 +10,17 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import com.apollographql.apollo.exception.ApolloException
-import com.jk.simple.SimpleAuthResult
 import com.jk.simple.SimpleSession
-import com.jk.simple.idp.IdpType
 import io.kroom.app.Main
 
 import io.kroom.app.R
 import io.kroom.app.Routes
 import io.kroom.app.client.KroomClient
 import io.kroom.app.graphql.UserSignInMutation
-import io.kroom.app.graphql.UserSignWhithGoolgeMutation
 import io.kroom.app.session.Session
-import io.kroom.app.utils.SuccessOrFail
-import io.kroom.app.utils.Dialogs
-import io.kroom.app.utils.SignWithGoogle
+import io.kroom.app.util.SuccessOrFail
+import io.kroom.app.util.Dialogs
+import io.kroom.app.util.SignWithGoogle
 
 import kotlinx.android.synthetic.main.fragment_user_sign_in.*
 
