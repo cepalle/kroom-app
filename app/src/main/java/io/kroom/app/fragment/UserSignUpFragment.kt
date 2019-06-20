@@ -14,7 +14,7 @@ import com.jk.simple.SimpleSession
 import io.kroom.app.Main
 import io.kroom.app.R
 import io.kroom.app.Routes
-import io.kroom.app.client.KroomClient
+import io.kroom.app.client.KroomApolloClient
 import io.kroom.app.graphql.UserSignUpMutation
 import io.kroom.app.session.Session
 import io.kroom.app.util.Dialogs
@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable
 
 class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSignUp, ApolloException> {
 
-    private val users = KroomClient.Users
+    private val users = KroomApolloClient.Users
     private val signWithGoogle = SignWithGoogle(Main.app)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -72,12 +72,12 @@ class UserSignUpFragment : Fragment(), SuccessOrFail<UserSignUpMutation.UserSign
         }
     }
 
-    private fun getRequest(): KroomClient.Users.UserSignUpRequest {
+    private fun getRequest(): KroomApolloClient.Users.UserSignUpRequest {
         val email = signUpEmail.text.toString()
         val password = signUpPassword.text.toString()
         val userName = signUpUsername.text.toString()
 
-        return KroomClient.Users.UserSignUpRequest(userName, email, password)
+        return KroomApolloClient.Users.UserSignUpRequest(userName, email, password)
     }
 
     override fun onSuccess(s: UserSignUpMutation.UserSignUp) {

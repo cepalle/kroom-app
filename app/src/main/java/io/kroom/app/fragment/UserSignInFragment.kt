@@ -15,7 +15,7 @@ import io.kroom.app.Main
 
 import io.kroom.app.R
 import io.kroom.app.Routes
-import io.kroom.app.client.KroomClient
+import io.kroom.app.client.KroomApolloClient
 import io.kroom.app.graphql.UserSignInMutation
 import io.kroom.app.session.Session
 import io.kroom.app.util.SuccessOrFail
@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable
 
 class UserSignInFragment : Fragment(), SuccessOrFail<UserSignInMutation.UserSignIn, ApolloException> {
 
-    private val users = KroomClient.Users
+    private val users = KroomApolloClient.Users
 
     private val signWithGoogle = SignWithGoogle(Main.app)
 
@@ -116,11 +116,11 @@ class UserSignInFragment : Fragment(), SuccessOrFail<UserSignInMutation.UserSign
         return null
     }
 
-    private fun getRequest(): KroomClient.Users.UserSignInRequest {
+    private fun getRequest(): KroomApolloClient.Users.UserSignInRequest {
         val password = signInPassword.text.toString()
         val userName = signInUsername.text.toString()
 
-        return KroomClient.Users.UserSignInRequest(userName, password)
+        return KroomApolloClient.Users.UserSignInRequest(userName, password)
     }
 
     private fun clearFields() {

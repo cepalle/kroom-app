@@ -9,14 +9,14 @@ import com.jk.simple.SimpleSession
 import com.jk.simple.idp.IdpType
 import io.kroom.app.Main
 import io.kroom.app.Routes
-import io.kroom.app.client.KroomClient
+import io.kroom.app.client.KroomApolloClient
 import io.kroom.app.graphql.UserSignWhithGoolgeMutation
 import io.kroom.app.session.Session
 
 class SignWithGoogle(var activity: AppCompatActivity) :
     SuccessOrFail<UserSignWhithGoolgeMutation.UserSignWithGoogle, ApolloException> {
 
-    private val users = KroomClient.Users
+    private val users = KroomApolloClient.Users
 
 
     private lateinit var googletoken: String
@@ -58,7 +58,7 @@ class SignWithGoogle(var activity: AppCompatActivity) :
             .makeText(Main.app.applicationContext, "connection...", Toast.LENGTH_SHORT)
             .show()
 
-        users.signGoogleRequest(KroomClient.Users.UserGoogleSignRequest(googletoken)) { res, exception ->
+        users.signGoogleRequest(KroomApolloClient.Users.UserGoogleSignRequest(googletoken)) { res, exception ->
 
             res?.let(this::onSuccess)
             exception?.let(this::onFail)

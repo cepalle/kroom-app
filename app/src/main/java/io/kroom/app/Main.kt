@@ -7,23 +7,27 @@ import android.os.StrictMode
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import io.kroom.app.fragment.*
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-
+/*
+    fun hideKeyboard() {
+        this.currentFocus?.let { v ->
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            imm?.hideSoftInputFromWindow(v.windowToken, 0)
+        }
+    }
+*/
 class Main : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        app = this
         setContentView(R.layout.activity_main)
 
         val connectivityManager = baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
-
 
         if (!(networkInfo != null && networkInfo.isConnected))
             Toast.makeText(baseContext, "it seems you are not connected to the Internet", Toast.LENGTH_LONG).show()
@@ -31,9 +35,7 @@ class Main : AppCompatActivity() {
         StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
 
         bottom_navigation.setOnNavigationItemSelectedListener {
-            Routes.fromInt(it.itemId)?.let { route ->
-                goToRoute(route)
-            }
+            it.itemId.toRoute()?.let(::goToRoute)
             true
         }
 
@@ -42,7 +44,7 @@ class Main : AppCompatActivity() {
         }
     }
 
-    fun goToRoute(route: Routes) {
+    private fun goToRoute(route: Routes) {
         when (route) {
             Routes.HOME -> changeFragment(HomeFragment())
             Routes.MUSICS -> changeFragment(ServicesChooserFragment())
@@ -59,40 +61,12 @@ class Main : AppCompatActivity() {
         }
     }
 
-
-    fun hideKeyboard() {
-        this.currentFocus?.let { v ->
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            imm?.hideSoftInputFromWindow(v.windowToken, 0)
-        }
-    }
-
     private fun changeFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
     }
 
-    companion object {
-        lateinit var app: Main
-    }
-
-
-    override fun onStart() {
-        super.onStart()
-        delegate.onStart()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        delegate.onStop()
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        delegate.onDestroy()
-    }
 }
 
 enum class Routes(val id: Int) {
@@ -110,15 +84,8 @@ enum class Routes(val id: Int) {
     MUSIC_PLAYLIST_EDITOR(-201),
     MUSIC_TRACK_VOTE(-202),
 
-
     DEBUG(-1000),
-
     ;
-
-    companion object {
-        fun fromInt(n: Int): Routes? {
-            return values().find { it.id == n }
-        }
-    }
-
 }
+
+fun Int.toRoute(): Routes? = Routes.values().find { it.id == this }

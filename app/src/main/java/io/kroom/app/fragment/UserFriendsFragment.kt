@@ -13,7 +13,7 @@ import com.apollographql.apollo.api.Error
 import com.apollographql.apollo.exception.ApolloException
 import io.kroom.app.Main
 import io.kroom.app.R
-import io.kroom.app.client.KroomClient
+import io.kroom.app.client.KroomApolloClient
 import io.kroom.app.graphql.UserAddFriendMutation
 import io.kroom.app.session.Session
 import io.kroom.app.util.Dialogs
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_user_friends.*
 
 class UserFriendsFragment : Fragment(), SuccessOrFail<UserAddFriendMutation.UserAddFriend, ApolloException> {
 
-    val users = KroomClient.Users
+    val users = KroomApolloClient.Users
 
     lateinit var adapterAutocompletion: ArrayAdapter<String>
     lateinit var adapterFriendsList: ArrayAdapter<String>

@@ -5,10 +5,9 @@ import android.arch.lifecycle.ViewModel
 import android.os.Handler
 import android.os.Looper
 import com.apollographql.apollo.exception.ApolloException
-import io.kroom.app.client.KroomClient
+import io.kroom.app.client.KroomApolloClient
 import io.kroom.app.graphql.TrackVoteEventAddOrUpdateVoteMutation
 import io.kroom.app.graphql.TrackVoteEventsPublicQuery
-import io.kroom.app.model.TrackVoteEvent
 
 
 class ViewModel : ViewModel() {
@@ -22,7 +21,7 @@ class ViewModel : ViewModel() {
     }
 
     private fun getTrackVoteEventPublicVm() {
-        KroomClient.TrackVote.getTrackVoteEventsPublic{
+        KroomApolloClient.TrackVote.getTrackVoteEventsPublic{
             val handler = Handler(Looper.getMainLooper())
             handler.post{
                     reposResultEventsPublicQuery.apply { it.value }
