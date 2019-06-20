@@ -25,8 +25,10 @@ mutation TrackVoteEventAddOrUpdateVoteMutation(
                     id
                 }
             }
-            schedule
-            location
+            scheduleBegin
+            scheduleEnd
+            latitude
+            longitude
             userInvited {
                 id
             }
