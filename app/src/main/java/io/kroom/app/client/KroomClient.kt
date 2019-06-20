@@ -21,7 +21,7 @@ class KroomClient {
 
     companion object {
 
-        var url = "https://ffd697f5.ngrok.io/graphql"
+        var url = "https://2b13c120.ngrok.io/graphql"
 
         private val okHttpClient: OkHttpClient by lazy {
             OkHttpClient.Builder()
