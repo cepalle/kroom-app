@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.jk.simple.SimpleSession
 import io.kroom.app.Main
 import io.kroom.app.R
 import io.kroom.app.Routes
@@ -29,6 +30,10 @@ class UserLoggedFragment : Fragment() {
 
         loggedLogoutAction.setOnClickListener {
             Session.removeUser()
+            if (SimpleSession.isSignedIn(Main.app)) {
+                SimpleSession . logout ()
+
+            }
             Main.app.goToRoute(Routes.HOME)
         }
 

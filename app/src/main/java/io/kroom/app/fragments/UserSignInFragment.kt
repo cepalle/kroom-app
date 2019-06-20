@@ -23,26 +23,25 @@ import io.kroom.app.graphql.UserSignWhithGoolgeMutation
 import io.kroom.app.session.Session
 import io.kroom.app.utils.SuccessOrFail
 import io.kroom.app.utils.Dialogs
+import io.kroom.app.utils.SignWithGoogle
 
 import kotlinx.android.synthetic.main.fragment_user_sign_in.*
-import kotlinx.android.synthetic.main.fragment_user_sign_in.googleLogin
+
 
 import org.jetbrains.annotations.Nullable
 
 class UserSignInFragment : Fragment(), SuccessOrFail<UserSignInMutation.UserSignIn, ApolloException> {
 
     private val users = KroomClient.Users
-    private lateinit var googletoken: String
-    private lateinit var token: String
+
+    private val signWithGoogle = SignWithGoogle(Main.app)
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Sign in"
 
         val view = inflater.inflate(R.layout.fragment_user_sign_in, container, false)
-        SimpleSession.setAuthProvider(
-            IdpType.GOOGLE,
-            "795222071121-0opmpk9tj064mgu8st78jbpirq004m00.apps.googleusercontent.com"
-        )
+        signWithGoogle.setAuthProvider()
         return view
     }
 
@@ -55,57 +54,13 @@ class UserSignInFragment : Fragment(), SuccessOrFail<UserSignInMutation.UserSign
 
         signInForgotPassword.setOnClickListener { Main.app.goToRoute(Routes.USER_FORGOT_PASSWORD) }
 
-        googleLogin.setOnClickListener {
-            SimpleSession.login(
-                this.activity!!, IdpType.GOOGLE
-            ) { result -> onLoginCallback(result) }
+        userSignInGoogle.setOnClickListener {
+            signWithGoogle.action()
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
         SimpleSession.onActivityResult(requestCode, resultCode, data)
-    }
-
-    private fun onLoginCallback(result: SimpleAuthResult<Void>) {
-        val builder = StringBuilder()
-        builder.append(if (result.isSuccess) SimpleSession.getCurrentIdpType().name + " Login is succeed" else "FAIL / " + result.errorCode + " / " + result.errorMessaage)
-        if (result.isSuccess) {
-            googletoken = SimpleSession.getAccessToken()
-            this.onGoogleSignIn()
-        } else {
-            Toast.makeText(context, "" + builder.toString(), Toast.LENGTH_LONG).show()
-        }
-
-    }
-
-    private fun onGoogleSignIn() {
-
-        Main.app.hideKeyboard()
-        signInAction.isEnabled = false
-        signInLoading.visibility = View.VISIBLE
-        Toast
-            .makeText(Main.app.applicationContext, "connection...", Toast.LENGTH_SHORT)
-            .show()
-        users.signGoogleRequest(getGoogleRequest()) { res, exception ->
-            res?.let { this::onGoogleSuccess }
-            exception?.let(this::onFail)
-
-            signInLoading.visibility = View.INVISIBLE
-            signInAction.isEnabled = true
-        }
-    }
-
-    private fun getGoogleRequest(): KroomClient.Users.UserGoogleSignRequest {
-        val token = googletoken
-        return KroomClient.Users.UserGoogleSignRequest(token)
-    }
-
-    fun onGoogleSuccess(s: UserSignWhithGoolgeMutation.UserSignWithGoogle) {
-        token = s.user()?.token().toString()
-        Toast.makeText(context, "" + token, Toast.LENGTH_LONG).show()
-        Main.app.goToRoute(Routes.HOME)
-
     }
 
     private fun onSignIn() {

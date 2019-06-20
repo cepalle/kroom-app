@@ -2,6 +2,9 @@ mutation UserSignWhithGoolgeMutation($token:String!){
     UserSignWithGoogle(token: $token){
         user{
             token
+            email
+            userName
+            id
         }
         errors {
             field
