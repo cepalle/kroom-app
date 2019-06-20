@@ -9,22 +9,26 @@ import android.support.v7.app.AppCompatActivity
 
 import android.widget.Toast
 import io.kroom.app.fragment.*
+import io.kroom.app.koin.appModule
+import io.kroom.app.view.home.HomeFragment
 
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
-/*
-    fun hideKeyboard() {
-        this.currentFocus?.let { v ->
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            imm?.hideSoftInputFromWindow(v.windowToken, 0)
-        }
-    }
-*/
 class Main : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        startKoin {
+            // Android context
+            androidContext(this@Main)
+            // modules
+            modules(appModule)
+        }
+
 
         val connectivityManager = baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
@@ -62,7 +66,8 @@ class Main : AppCompatActivity() {
     }
 
     private fun changeFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
     }

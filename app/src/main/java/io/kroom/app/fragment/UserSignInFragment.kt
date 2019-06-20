@@ -15,19 +15,16 @@ import io.kroom.app.Main
 
 import io.kroom.app.R
 import io.kroom.app.Routes
-import io.kroom.app.client.KroomApolloClient
+import io.kroom.app.webservice.KroomApolloClient
 import io.kroom.app.graphql.UserSignInMutation
 import io.kroom.app.session.Session
-import io.kroom.app.util.SuccessOrFail
 import io.kroom.app.util.Dialogs
-import io.kroom.app.util.SignWithGoogle
-
-import kotlinx.android.synthetic.main.fragment_user_sign_in.*
+import io.kroom.app.view.SignWithGoogle
 
 
 import org.jetbrains.annotations.Nullable
 
-class UserSignInFragment : Fragment(), SuccessOrFail<UserSignInMutation.UserSignIn, ApolloException> {
+class UserSignInFragment : Fragment() {
 
     private val users = KroomApolloClient.Users
 
