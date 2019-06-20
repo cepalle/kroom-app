@@ -1,4 +1,4 @@
-package io.kroom.app.views.util
+package io.kroom.app.utils
 
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity

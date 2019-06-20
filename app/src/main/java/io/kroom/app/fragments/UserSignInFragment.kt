@@ -14,62 +14,53 @@ import com.jk.simple.SimpleAuthResult
 import com.jk.simple.SimpleSession
 import com.jk.simple.idp.IdpType
 import io.kroom.app.Main
+
 import io.kroom.app.R
 import io.kroom.app.Routes
 import io.kroom.app.client.KroomClient
 import io.kroom.app.graphql.UserSignInMutation
+import io.kroom.app.graphql.UserSignWhithGoolgeMutation
 import io.kroom.app.session.Session
-import io.kroom.app.views.util.Dialogs
-import io.kroom.app.views.util.SuccessOrFail
+import io.kroom.app.utils.SuccessOrFail
+import io.kroom.app.utils.Dialogs
+import io.kroom.app.utils.SignWithGoogle
+
 import kotlinx.android.synthetic.main.fragment_user_sign_in.*
-import kotlinx.android.synthetic.main.fragment_user_sign_in.googleLogin
+
+
 import org.jetbrains.annotations.Nullable
 
 class UserSignInFragment : Fragment(), SuccessOrFail<UserSignInMutation.UserSignIn, ApolloException> {
 
     private val users = KroomClient.Users
-    private lateinit var googleToken: String
+
+    private val signWithGoogle = SignWithGoogle(Main.app)
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Sign in"
 
         val view = inflater.inflate(R.layout.fragment_user_sign_in, container, false)
-        SimpleSession.setAuthProvider(
-            IdpType.GOOGLE,
-            "795222071121-p1fbtb3mv3cjo9priggduc335rd8ng4d.apps.googleusercontent.com"
-        )
+        signWithGoogle.setAuthProvider()
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        signInAction.setOnClickListener { onSignIn() }
+        signInAction.setOnClickListener {
+            onSignIn()
+        }
 
         signInForgotPassword.setOnClickListener { Main.app.goToRoute(Routes.USER_FORGOT_PASSWORD) }
 
-        googleLogin.setOnClickListener {
-            SimpleSession.login(
-                this.activity!!, IdpType.GOOGLE
-            ) { result -> onLoginCallback(result) }
+        userSignInGoogle.setOnClickListener {
+            signWithGoogle.action()
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
         SimpleSession.onActivityResult(requestCode, resultCode, data)
-    }
-
-    private fun onLoginCallback(result: SimpleAuthResult<Void>) {
-        val builder = StringBuilder()
-        builder.append(if (result.isSuccess) SimpleSession.getCurrentIdpType().name + " Login is succeed" else "FAIL / " + result.errorCode + " / " + result.errorMessaage)
-        if (result.isSuccess)
-            googleToken = SimpleSession.getAccessToken()
-        else
-            Toast.makeText(context, "" + builder.toString(), Toast.LENGTH_LONG).show()
-
     }
 
     private fun onSignIn() {
@@ -92,6 +83,7 @@ class UserSignInFragment : Fragment(), SuccessOrFail<UserSignInMutation.UserSign
         }
     }
 
+
     override fun onSuccess(s: UserSignInMutation.UserSignIn) {
         if (checkSignInFormError(s)) return
 
@@ -102,6 +94,7 @@ class UserSignInFragment : Fragment(), SuccessOrFail<UserSignInMutation.UserSign
             Main.app.goToRoute(Routes.HOME)
         }
     }
+
 
     private fun checkSignInFormError(s: UserSignInMutation.UserSignIn): Boolean {
         val errors = s.errors()

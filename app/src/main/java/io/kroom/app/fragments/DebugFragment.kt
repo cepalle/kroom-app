@@ -30,7 +30,7 @@ class DebugFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_debug, container, false)
         tokenTextView = view.findViewById(R.id.tokenView)
-        SimpleSession.setAuthProvider(IdpType.GOOGLE,  "795222071121-p1fbtb3mv3cjo9priggduc335rd8ng4d.apps.googleusercontent.com")
+        SimpleSession.setAuthProvider(IdpType.GOOGLE,  "795222071121-82h8a0k3bhafm1jekm9k8eipmpvcshgr.apps.googleusercontent.com")
         return view
     }
 

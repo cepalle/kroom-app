@@ -1,21 +1,21 @@
 <resources>
     <string name="app_name">kroom-app</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string name="sign_in_to_kroom">Sign in to kroom</string>
-    <string name="signup_to_kroom">Signup to Kroom</string>
 
     <!-- user_sign_up -->
     <string name="sign_up">Sign up</string>
     <string name="user_name_sign_up">username</string>
     <string name="password_sign_up">password</string>
     <string name="email_sign_up">Email</string>
+    <string name="sign_in_to_kroom">Sign in to kroom</string>
+
 
     <!-- user_sign_in -->
     <string name="sign_in">Sign In</string>
     <string name="user_name_sign_in">username</string>
     <string name="password_sign_in">password</string>
+    <string name="signup_to_kroom">Signup to Kroom</string>
+
 
     <!-- log_google -->
     <string name="google_login">Google Login</string>
@@ -32,8 +32,28 @@
     <string name="ou">OU</string>
     <string name="email_adress">Email adress</string>
     <string name="send_email">Send email</string>
+
+
+    <!-- choser -->
     <string name="music_control_delegation">Music Control Delegation</string>
     <string name="music_track_vote">Music Track Vote</string>
     <string name="music_playlist_editor">Music Playlist Editor</string>
-    Music Playlist Editor
+
+
+    <!-- row_item_music_track_vote-->
+    <string name="track_vote_artist">Artist</string>
+    <string name="track_vote_cover_small"></string>
+    <string name="music_track_vote_up">Vote  Up</string>
+    <string name="music_track_vote_down">Vote Down</string>
+    <string name="track_vote_title">Title</string>
+    <string name="music_track_vote_duration">00 : 00</string>
+    <string name="list_music_track_vote">list_music_track_vote</string>
+
+    <!-- row_item_music_track_vote-events-->
+    <string name="event_user_master">User Master</string>
+    <string name="event_name">Event Name</string>
+    <string name="event_schedule">19/06/2019</string>
+    <string name="event_location">Location</string>
+
+
 </resources>

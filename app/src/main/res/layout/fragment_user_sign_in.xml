@@ -8,7 +8,7 @@
         tools:context=".fragments.UserSignInFragment">
 
     <ImageButton
-            android:id="@+id/googleLogin"
+            android:id="@+id/userSignInGoogle"
             android:text="@string/google"
             android:layout_width="200dp"
             android:layout_height="50dp"
@@ -32,7 +32,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/googleLogin"
+            app:layout_constraintTop_toBottomOf="@+id/userSignInGoogle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/signInUsername"
             app:layout_constraintStart_toStartOf="parent"
