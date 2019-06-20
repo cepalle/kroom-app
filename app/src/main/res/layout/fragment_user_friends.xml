@@ -22,5 +22,12 @@
             android:id="@+id/userFriendsAddAction" app:layout_constraintStart_toEndOf="@+id/userFriendsAdd"
             android:layout_marginStart="28dp" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="20dp"/>
+    <ListView
+            android:layout_width="396dp"
+            android:layout_height="631dp"
+            android:id="@+id/userFriendsList" android:layout_marginTop="38dp"
+            app:layout_constraintTop_toBottomOf="@+id/userFriendsAdd" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintHorizontal_bias="0.5"/>
 </android.support.constraint.ConstraintLayout>
 

@@ -93,7 +93,7 @@ type Mutation {
     TrackVoteEventDelUser(eventId: Int!, userId: Int!): TrackVoteEventDelUserPayload!
     TrackVoteEventDelVote(eventId: Int!, musicId: Int!, userId: Int!): TrackVoteEventDelVotePayload!
     TrackVoteEventNew(name: String!, public: Boolean!, userIdMaster: Int!): TrackVoteEventNewPayload!
-    TrackVoteEventUpdate(eventId: Int!, location: String, name: String!, public: Boolean!, schedule: String, userIdMaster: Int!): TrackVoteEventUpdatePayload!
+    TrackVoteEventUpdate(eventId: Int!, latitude: Float, locAndSchRestriction: Boolean!, longitude: Float, name: String!, public: Boolean!, scheduleBegin: Long, scheduleEnd: Long, userIdMaster: Int!): TrackVoteEventUpdatePayload!
     UserAddFriend(friendId: Int!, userId: Int!): UserAddFriendPayload!
     UserAddMusicalPreference(genreId: Int!, userId: Int!): UserAddMusicalPreferencePayload!
     UserDelFriend(friendId: Int!, userId: Int!): UserDelFriendPayload!
@@ -101,6 +101,8 @@ type Mutation {
     UserSignIn(pass: String!, userName: String!): UserSignInPayload!
     UserSignUp(email: String!, pass: String!, userName: String!): UserSignUpPayload!
     UserSignWithGoogle(token: String!): UserSignInPayload!
+    UserUpdateLocation(latitude: Float!, longitude: Float!, userId: Int!): UserUpdateLocationPayload!
+    UserUpdatePassword(newPassword: String!, userId: Int!): UserUpdatePasswordPayload!
     UserUpdatePrivacy(email: PrivacyEnum!, friends: PrivacyEnum!, location: PrivacyEnum!, musicalPreferencesGenre: PrivacyEnum!, userId: Int!): UserUpdatePrivacyPayload!
 }
 
@@ -119,7 +121,9 @@ type Query {
     DeezerSearch(connections: Connection, order: Order, search: String!, strict: Boolean!): SearchFieldsPayload!
     DeezerTrack(id: Int!): TrackFieldPayload!
     TrackVoteEventById(id: Int!): TrackVoteEventByIdPayload!
+    "Return all TrackVoteEvent where User are invited."
     TrackVoteEventByUserId(userId: Int!): TrackVoteEventByUserIdPayload!
+    "Return all TrackVoteEvent public."
     TrackVoteEventsPublic: [TrackVoteEvent!]!
     UserGetById(id: Int!): UserGetByIdPayload!
     UserNameAutocompletion(prefix: String!): [User!]!
@@ -188,10 +192,13 @@ type TrackFieldPayload {
 type TrackVoteEvent {
     currentTrack: Track
     id: Int!
-    location: String
+    latitude: Float
+    locAndSchRestriction: Boolean!
+    longitude: Float
     name: String!
     public: Boolean!
-    schedule: String
+    scheduleBegin: Long
+    scheduleEnd: Long
     trackWithVote: [TrackWithVote!]
     userInvited: [User!]
     userMaster: User
@@ -258,7 +265,8 @@ type User {
     email: String
     friends: [User!]
     id: Int
-    location: String
+    latitude: Float
+    longitude: Float
     musicalPreferences: [Genre!]
     permissionGroup: [String!]
     privacy: Privacy
@@ -308,6 +316,18 @@ type UserSignUpPayload {
     user: User
 }
 
+"UserUpdateLocationPayload description."
+type UserUpdateLocationPayload {
+    errors: [Error!]!
+    user: User
+}
+
+"UserUpdatePasswordPayload description."
+type UserUpdatePasswordPayload {
+    errors: [Error!]!
+    user: User
+}
+
 "UserUpdatePrivacyPayload description."
 type UserUpdatePrivacyPayload {
     errors: [Error!]!
@@ -347,3 +367,7 @@ enum PrivacyEnum {
     PRIVATE
     PUBLIC
 }
+
+
+"The `Long` scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1."
+scalar Long

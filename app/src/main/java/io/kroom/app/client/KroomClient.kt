@@ -6,10 +6,7 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import io.kroom.app.Main
-import io.kroom.app.graphql.UserAddFriendMutation
-import io.kroom.app.graphql.UserNameAutocompletionQuery
-import io.kroom.app.graphql.UserSignInMutation
-import io.kroom.app.graphql.UserSignUpMutation
+import io.kroom.app.graphql.*
 import io.kroom.app.session.Session
 import okhttp3.OkHttpClient
 
@@ -19,7 +16,7 @@ typealias Result<T, E> = (track: T?, exception: E?) -> Unit
 object KroomClient {
 
 
-    var url = "https://a72b4d4f.ngrok.io/graphql"
+    var url = "https://75028b18.ngrok.io/graphql"
 
     private val okHttpClient = OkHttpClient.Builder().addInterceptor { builder ->
         if (Session.getToken() != null) {
@@ -36,6 +33,23 @@ object KroomClient {
         .build()
 
     object Users {
+
+        @UiThread
+        fun user(id: Int, res: Result<Response<UserByIdQuery.Data>, ApolloException>) {
+            apolloClient.query(
+                UserByIdQuery.builder()
+                    .id(id)
+                    .build()
+            ).enqueue(object : ApolloCall.Callback<UserByIdQuery.Data>() {
+                override fun onFailure(e: ApolloException) {
+                    Main.app.runOnUiThread { res(null, e) }
+                }
+
+                override fun onResponse(response: Response<UserByIdQuery.Data>) {
+                    Main.app.runOnUiThread { res(response, null) }
+                }
+            })
+        }
 
         data class UserSignUpRequest(val userName: String, val email: String, val pass: String)
 
@@ -96,11 +110,29 @@ object KroomClient {
             })
         }
 
+        @UiThread
+        fun deleteFriend(friendId: Int, res: Result<UserDeleteFriendMutation.UserDelFriend, ApolloException>) {
+            apolloClient.mutate(
+                UserDeleteFriendMutation.builder()
+                    .userId(Session.getId()!!)
+                    .friendId(friendId)
+                    .build()
+            ).enqueue(object : ApolloCall.Callback<UserDeleteFriendMutation.Data>() {
+                override fun onResponse(response: Response<UserDeleteFriendMutation.Data>) {
+                    Main.app.runOnUiThread { res(response.data()!!.UserDelFriend(), null) }
+                }
+
+                override fun onFailure(e: ApolloException) {
+                    Main.app.runOnUiThread { res(null, e) }
+                }
+            })
+        }
+
 
         @UiThread
         fun userNameAutocompletion(
             prefix: String,
-            res: Result<List<UserNameAutocompletionQuery.UserNameAutocompletion>, ApolloException>
+            res: Result<Response<UserNameAutocompletionQuery.Data>, ApolloException>
         ) {
             apolloClient.query(
                 UserNameAutocompletionQuery.builder()
@@ -112,7 +144,7 @@ object KroomClient {
                 }
 
                 override fun onResponse(response: Response<UserNameAutocompletionQuery.Data>) {
-                    Main.app.runOnUiThread { res(response.data()!!.UserNameAutocompletion(), null) }
+                    Main.app.runOnUiThread { res(response, null) }
                 }
             })
         }

@@ -1,9 +1,21 @@
-mutation UserAddFriend($friendId: Int!, $userId: Int!) {
-    UserAddFriend(friendId: $friendId userId: $userId) {
+query UserById($id: Int!) {
+    UserGetById(id: $id) {
+        errors {
+            field
+            messages
+        }
         user {
-            id
             email
+            id
             userName
+            latitude
+            longitude
+            musicalPreferences {
+                pictureBig
+                id
+                name
+                pictureMedium
+            }
             friends {
                 email
                 friends {
@@ -22,10 +34,6 @@ mutation UserAddFriend($friendId: Int!, $userId: Int!) {
                     pictureMedium
                 }
             }
-        }
-        errors {
-            field
-            messages
         }
     }
 }

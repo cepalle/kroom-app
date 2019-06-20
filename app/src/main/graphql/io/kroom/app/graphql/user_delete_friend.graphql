@@ -1,5 +1,5 @@
-mutation UserAddFriend($friendId: Int!, $userId: Int!) {
-    UserAddFriend(friendId: $friendId userId: $userId) {
+mutation UserDeleteFriend($friendId: Int!, $userId: Int!) {
+    UserDelFriend(friendId: $friendId userId: $userId) {
         user {
             id
             email

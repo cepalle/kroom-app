@@ -34,5 +34,6 @@ class UserLoggedFragment : Fragment() {
 
 
         loggedWelcomeText.text = "Welcome ${Session.getUsername()} !"
+        println("TOKEN USER ${Session.getToken()}")
     }
 }
