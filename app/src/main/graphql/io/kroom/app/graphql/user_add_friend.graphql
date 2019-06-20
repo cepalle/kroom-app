@@ -1,0 +1,13 @@
+mutation UserAddFriend($friendId: Int!, $userId: Int!) {
+    UserAddFriend(friendId: $friendId userId: $userId) {
+        user {
+            id
+            email
+            userName
+        }
+        errors {
+            field
+            messages
+        }
+    }
+}

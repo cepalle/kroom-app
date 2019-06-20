@@ -46,4 +46,9 @@ object Session {
         val sharedPreferences = Main.app.getSharedPreferences("user", Context.MODE_PRIVATE)
         return sharedPreferences.getInt("id", 0)
     }
+
+    fun getToken() : String? {
+        val sharedPreferences = Main.app.getSharedPreferences("user", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("token", null)
+    }
 }

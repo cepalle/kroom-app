@@ -52,8 +52,10 @@ class Main : AppCompatActivity() {
             Routes.MUSIC_CONTROL_DELEGATION -> changeFragment(MusicControlDelegationFragment())
             Routes.MUSIC_PLAYLIST_EDITOR -> changeFragment(MusicPlaylistEditorFragement())
             Routes.MUSIC_TRACK_VOTE -> changeFragment(MusicTrackVoteFragment())
-            Routes.SETTINGS -> changeFragment(DebugFragment())
+            Routes.DEBUG -> changeFragment(DebugFragment())
+            Routes.SETTINGS -> changeFragment(SettingsFragment())
             Routes.USER_LOGGED -> changeFragment(UserLoggedFragment())
+            Routes.USER_FRIENDS -> changeFragment(UserFriendsFragment())
         }
     }
 
@@ -98,14 +100,18 @@ enum class Routes(val id: Int) {
     MUSICS(R.id.bottomNavigationMusics),
     SETTINGS(R.id.bottomNavigationSettings),
 
-    USER_SIGN_IN(-1),
-    USER_SIGN_UP(-2),
-    USER_FORGOT_PASSWORD(-3),
-    USER_LOGGED(-4),
+    USER_SIGN_IN(-100),
+    USER_SIGN_UP(-101),
+    USER_FORGOT_PASSWORD(-102),
+    USER_LOGGED(-103),
+    USER_FRIENDS(-104),
 
-    MUSIC_CONTROL_DELEGATION(-5),
-    MUSIC_PLAYLIST_EDITOR(-6),
-    MUSIC_TRACK_VOTE(-7),
+    MUSIC_CONTROL_DELEGATION(-200),
+    MUSIC_PLAYLIST_EDITOR(-201),
+    MUSIC_TRACK_VOTE(-202),
+
+
+    DEBUG(-1000),
 
     ;
 
