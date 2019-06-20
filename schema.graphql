@@ -88,8 +88,14 @@ type GenreFieldPayload {
 }
 
 type Mutation {
+    PlayListEditorAddTrack(playListId: Int!, trackId: Int!): PlayListEditorAddTrackPayload!
+    PlayListEditorDel(id: Int!): PlayListEditorDelPayload!
+    PlayListEditorDelTrack(playListId: Int!, trackId: Int!): PlayListEditorDelTrackPayload!
+    PlayListEditorMoveTrack(playListId: Int!, trackId: Int!, up: Boolean!): PlayListEditorMoveTrackPayload!
+    PlayListEditorNew(name: String!, public: Boolean!, userMasterId: Int!): PlayListEditorNewPayload!
     TrackVoteEventAddOrUpdateVote(eventId: Int!, musicId: Int!, up: Boolean!, userId: Int!): TrackVoteEventAddVotePayload!
     TrackVoteEventAddUser(eventId: Int!, userId: Int!): TrackVoteEventAddUserPayload!
+    TrackVoteEventDel(id: Int!): TrackVoteEventDelPayload!
     TrackVoteEventDelUser(eventId: Int!, userId: Int!): TrackVoteEventDelUserPayload!
     TrackVoteEventDelVote(eventId: Int!, musicId: Int!, userId: Int!): TrackVoteEventDelVotePayload!
     TrackVoteEventNew(name: String!, public: Boolean!, userIdMaster: Int!): TrackVoteEventNewPayload!
@@ -106,6 +112,57 @@ type Mutation {
     UserUpdatePrivacy(email: PrivacyEnum!, friends: PrivacyEnum!, location: PrivacyEnum!, musicalPreferencesGenre: PrivacyEnum!, userId: Int!): UserUpdatePrivacyPayload!
 }
 
+"PlayListEditorAddTrackPayload description."
+type PlayListEditorAddTrackPayload {
+    errors: [Error!]!
+    playListEditor: PlaylistEditor
+}
+
+"PlayListEditorByIdPayload description."
+type PlayListEditorByIdPayload {
+    errors: [Error!]!
+    playListEditor: PlaylistEditor
+}
+
+"PlayListEditorByUserIdPayload description."
+type PlayListEditorByUserIdPayload {
+    errors: [Error!]!
+    playListEditor: [PlaylistEditor!]
+}
+
+"PlayListEditorDelPayload description."
+type PlayListEditorDelPayload {
+    errors: [Error!]!
+}
+
+"PlayListEditorDelTrackPayload description."
+type PlayListEditorDelTrackPayload {
+    errors: [Error!]!
+    playListEditor: PlaylistEditor
+}
+
+"PlayListEditorMoveTrackPayload description."
+type PlayListEditorMoveTrackPayload {
+    errors: [Error!]!
+    playListEditor: PlaylistEditor
+}
+
+"PlayListEditorNewPayload description."
+type PlayListEditorNewPayload {
+    errors: [Error!]!
+    playListEditor: PlaylistEditor
+}
+
+"PlaylistEditor description."
+type PlaylistEditor {
+    id: Int!
+    invitedUsers: [User!]
+    name: String!
+    public: Boolean!
+    tracks: [Track!]
+    userMaster: User
+}
+
 "Privacy description."
 type Privacy {
     email: PrivacyEnum!
@@ -120,6 +177,11 @@ type Query {
     DeezerGenre(id: Int!): GenreFieldPayload!
     DeezerSearch(connections: Connection, order: Order, search: String!, strict: Boolean!): SearchFieldsPayload!
     DeezerTrack(id: Int!): TrackFieldPayload!
+    PlayListEditorById(id: Int!): PlayListEditorByIdPayload!
+    "Return all PlayListEditor where User are invited."
+    PlayListEditorByUserId(userId: Int!): PlayListEditorByUserIdPayload!
+    "Return all PlayListEditor public."
+    PlayListEditorsPublic: [PlaylistEditor!]!
     TrackVoteEventById(id: Int!): TrackVoteEventByIdPayload!
     "Return all TrackVoteEvent where User are invited."
     TrackVoteEventByUserId(userId: Int!): TrackVoteEventByUserIdPayload!
@@ -151,6 +213,7 @@ type SearchFieldsPayload {
 }
 
 type Subscription {
+    PlayListEditorById(id: Int!): PlayListEditorByIdPayload!
     TrackVoteEventById(id: Int!): TrackVoteEventByIdPayload!
 }
 
@@ -226,6 +289,11 @@ type TrackVoteEventByIdPayload {
 type TrackVoteEventByUserIdPayload {
     errors: [Error!]!
     trackVoteEvents: [TrackVoteEvent!]
+}
+
+"TrackVoteEventDelPayload description."
+type TrackVoteEventDelPayload {
+    errors: [Error!]!
 }
 
 "TrackVoteEventDelUserPayload description."
