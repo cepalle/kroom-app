@@ -1,20 +1,14 @@
 package io.kroom.app.view.main
 
-import android.content.Context
-import android.net.ConnectivityManager
 import android.os.Bundle
-import android.os.StrictMode
 
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import io.kroom.app.R
-import io.kroom.app.session.Session
+import io.kroom.app.repo.ScharedPreferencesRepo
 import io.kroom.app.view.TMP.fragment_TOSORT.*
 import io.kroom.app.view.connection.home.HomeFragment
 import io.kroom.app.view.main.musictrackvoteevents.MusicTrackVoteEventsFragment
-
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Session.init(this)
+        ScharedPreferencesRepo.init(this)
 
         /*
         val connectivityManager = baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -43,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         }
         */
 
-        if (Session.isConnected()) {
+        if (ScharedPreferencesRepo.isConnected()) {
             // TODO
             // launch activity SignIn or SignUp
         }

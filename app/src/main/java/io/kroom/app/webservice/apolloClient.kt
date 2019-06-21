@@ -1,7 +1,7 @@
 package io.kroom.app.webservice
 
 import com.apollographql.apollo.ApolloClient
-import io.kroom.app.session.Session
+import io.kroom.app.repo.ScharedPreferencesRepo
 
 import okhttp3.Interceptor
 
@@ -11,11 +11,11 @@ import java.util.concurrent.TimeUnit
 private const val url = "https:///785dbf4b.ngrok.io/graphql"
 
 private fun tokenInterceptor(builder: Interceptor.Chain): okhttp3.Response {
-    return if (Session.getToken() != null) {
+    return if (ScharedPreferencesRepo.getToken() != null) {
         builder.proceed(
             builder.request().newBuilder().header(
                 "Kroom-token-id",
-                Session.getToken()!!
+                ScharedPreferencesRepo.getToken()!!
             ).build()
         )
     } else {

@@ -1,21 +1,6 @@
 package io.kroom.app.view.main.userfriends
 
-import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import com.apollographql.apollo.api.Error
-import com.apollographql.apollo.exception.ApolloException
-import io.kroom.app.view.main.MainActivity
-import io.kroom.app.R
-import io.kroom.app.graphql.UserAddFriendMutation
-import io.kroom.app.session.Session
-import io.kroom.app.view.util.Dialogs
 
 
 class UserFriendsFragment : Fragment() {
@@ -41,7 +26,7 @@ class UserFriendsFragment : Fragment() {
         userFriendsAdd.setAdapter(adapterAutocompletion)
         userFriendsList.adapter = adapterFriendsList
 
-        users.user(Session.getId()!!) { s, _ ->
+        users.user(ScharedPreferencesRepo.getId()!!) { s, _ ->
             s?.let {
                 if (it.errors().isEmpty()) {
                     val userGetById = it.data()!!.UserGetById()

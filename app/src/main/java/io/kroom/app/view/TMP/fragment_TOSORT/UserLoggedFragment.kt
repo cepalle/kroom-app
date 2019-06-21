@@ -6,11 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.jk.simple.SimpleSession
-import io.kroom.app.view.main.MainActivity
 import io.kroom.app.R
-import io.kroom.app.view.main.Routes
-import io.kroom.app.session.Session
+import io.kroom.app.repo.ScharedPreferencesRepo
 
 class UserLoggedFragment : Fragment() {
 
@@ -25,7 +22,7 @@ class UserLoggedFragment : Fragment() {
 
         /*
         loggedLogoutAction.setOnClickListener {
-            Session.removeUser()
+            ScharedPreferencesRepo.removeUser()
             if (SimpleSession.isSignedIn(MainActivity.app)) {
                 SimpleSession . logout ()
 
@@ -34,8 +31,8 @@ class UserLoggedFragment : Fragment() {
         }
 
 
-        loggedWelcomeText.text = "Welcome ${Session.getUsername()} !"
+        loggedWelcomeText.text = "Welcome ${ScharedPreferencesRepo.getUsername()} !"
         */
-        println("TOKEN USER ${Session.getToken()}")
+        println("TOKEN USER ${ScharedPreferencesRepo.getToken()}")
     }
 }

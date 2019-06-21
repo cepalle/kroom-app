@@ -1,27 +1,6 @@
 package io.kroom.app.view.connection.usersignIn
 
-import android.content.Intent
-import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.apollographql.apollo.exception.ApolloException
-import com.jk.simple.SimpleSession
-import io.kroom.app.view.main.MainActivity
-
-import io.kroom.app.R
-import io.kroom.app.view.main.Routes
-import io.kroom.app.graphql.UserSignInMutation
-import io.kroom.app.session.Session
-import io.kroom.app.view.util.Dialogs
-import io.kroom.app.repo.SignWithGoogle_TODO
-
-
-import org.jetbrains.annotations.Nullable
 
 class UserSignInFragment : Fragment() {
     /*
@@ -83,7 +62,7 @@ class UserSignInFragment : Fragment() {
         Log.println(Log.INFO, "success-sign-in", "user sign up: $s")
 
         s.user()?.let {
-            Session.setUser(it.id()!!, it.email()!!, it.userName(), it.token()!!)
+            ScharedPreferencesRepo.setUser(it.id()!!, it.email()!!, it.userName(), it.token()!!)
             MainActivity.app.goToRoute(Routes.TRACK_VOTE_EVENT)
         }
     }

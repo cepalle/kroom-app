@@ -1,17 +1,6 @@
 package io.kroom.app.repo
 
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.apollographql.apollo.exception.ApolloException
-import com.jk.simple.SimpleAuthResult
-import com.jk.simple.SimpleSession
-import com.jk.simple.idp.IdpType
-import io.kroom.app.view.main.MainActivity
-import io.kroom.app.view.main.Routes
-import io.kroom.app.graphql.UserSignWhithGoolgeMutation
-import io.kroom.app.session.Session
-import io.kroom.app.view.util.Dialogs
 
 class SignWithGoogle_TODO(var activity: AppCompatActivity)  {
 
@@ -76,7 +65,7 @@ class SignWithGoogle_TODO(var activity: AppCompatActivity)  {
         }
         s.user()?.let { user ->
             Toast.makeText(activity, "" + user.token(), Toast.LENGTH_LONG).show()
-            Session.setUser(user.id()!!, user.email()!!, user.userName(), user.token()!!)
+            ScharedPreferencesRepo.setUser(user.id()!!, user.email()!!, user.userName(), user.token()!!)
             MainActivity.app.goToRoute(Routes.TRACK_VOTE_EVENT)
         }
     }

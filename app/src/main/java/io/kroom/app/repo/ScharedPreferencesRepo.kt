@@ -1,0 +1,54 @@
+package io.kroom.app.repo
+
+import android.content.Context
+
+object ScharedPreferencesRepo {
+
+    fun isConnected(context: Context): Boolean {
+
+        val sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("token", null) != null
+    }
+
+    fun setUser(context: Context, id: Int, email: String, username: String, token: String) {
+        val sharedPref = context.getSharedPreferences("user", Context.MODE_PRIVATE) ?: return
+        with(sharedPref.edit()) {
+            putString("token", token)
+            putString("email", email)
+            putInt("id", id)
+            putString("username", username)
+            apply()
+        }
+    }
+
+    fun removeUser(context: Context) {
+        val sharedPref = context.getSharedPreferences("user", Context.MODE_PRIVATE) ?: return
+        with(sharedPref.edit()) {
+            putString("token", null)
+            putString("email", null)
+            putString("id", null)
+            putString("username", null)
+            apply()
+        }
+    }
+
+    fun getUsername(context: Context): String? {
+        val sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("username", null)
+    }
+
+    fun getEmail(context: Context): String? {
+        val sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("email", null)
+    }
+
+    fun getId(context: Context): Int? {
+        val sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+        return sharedPreferences.getInt("id", 0)
+    }
+
+    fun getToken(context: Context): String? {
+        val sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("token", null)
+    }
+}
