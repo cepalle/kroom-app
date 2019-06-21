@@ -1,4 +1,4 @@
-package io.kroom.app.view.main.playlisteditor
+package io.kroom.app.view.main.playlisteditor.tabs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import io.kroom.app.R
 
-class MusicPlaylistEditorFragment : Fragment() {
+class PlaylistAddFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        requireActivity().title = "Playlist editor"
-        return inflater.inflate(R.layout.fragment_music_playlist_editor, container, false)
+        return inflater.inflate(R.layout.fragment_playlist_editor_tab_add, container, false)
     }
 }

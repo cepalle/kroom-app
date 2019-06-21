@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import io.kroom.app.R
 import io.kroom.app.repo.ScharedPreferencesRepo
 import io.kroom.app.view.TMP.fragment_TOSORT.*
+import io.kroom.app.view.main.playlisteditor.PlaylistEditorFragment
 import io.kroom.app.view.main.trackvoteevent.TrackVoteEventFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -19,8 +20,7 @@ class MainActivity : AppCompatActivity() {
         ScharedPreferencesRepo.init(this)
 
         if (ScharedPreferencesRepo.isConnected()) {
-            // TODO
-            // launch activity SignIn or SignUp
+            // TODO launch activity SignIn or SignUp
         }
 
         if (savedInstanceState == null) {
@@ -48,12 +48,12 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
+    private enum class Routes(val id: Int) {
+        TRACK_VOTE_EVENT(R.id.bottomNavigationTrackVoteEvent),
+        PLAYLIST_EDITOR(R.id.bottomNavigationPlayListEditor),
+        USER(R.id.bottomNavigationUser);
+    }
+
+    private fun Int.toRoute(): Routes? = Routes.values().find { it.id == this }
 }
 
-enum class Routes(val id: Int) {
-    TRACK_VOTE_EVENT(R.id.bottomNavigationTrackVoteEvent),
-    PLAYLIST_EDITOR(R.id.bottomNavigationPlayListEditor),
-    USER(R.id.bottomNavigationUser);
-}
-
-fun Int.toRoute(): Routes? = Routes.values().find { it.id == this }
