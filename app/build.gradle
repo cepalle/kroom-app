@@ -47,11 +47,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-android-scope:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
-    implementation "org.koin:koin-android-ext:$koin_version"
-
     compile 'com.github.kittinunf.result:result:2.2.0' //for jvm
     compile 'com.github.kittinunf.result:result-coroutines:2.2.0' //for kotlin's coroutine support
 }

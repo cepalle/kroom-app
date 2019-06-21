@@ -9,26 +9,15 @@ import android.support.v7.app.AppCompatActivity
 
 import android.widget.Toast
 import io.kroom.app.fragment.*
-import io.kroom.app.koin.appModule
 import io.kroom.app.view.home.HomeFragment
 
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
 
 class Main : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        startKoin {
-            // Android context
-            androidContext(this@Main)
-            // modules
-            modules(appModule)
-        }
-
 
         val connectivityManager = baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
