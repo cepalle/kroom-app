@@ -1,4 +1,4 @@
-package io.kroom.app.view.main.musictrackvote
+package io.kroom.app.view.main.playlisteditor
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import io.kroom.app.R
 
-
-class MusicTrackVoteFragment : Fragment() {
+class MusicPlaylistEditorFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        requireActivity().title = "Vote tracks"
-        return inflater.inflate(R.layout.fragment_music_track_vote, container, false)
+        requireActivity().title = "Playlist editor"
+        return inflater.inflate(R.layout.fragment_music_playlist_editor, container, false)
     }
 }

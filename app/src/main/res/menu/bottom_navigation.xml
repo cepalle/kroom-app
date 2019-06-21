@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-            android:id="@+id/bottomNavigationHome"
+            android:id="@+id/bottomNavigationTrackVoteEvent"
             android:icon="@drawable/ic_home_black_24dp"
-            android:title="Home" />
+            android:title="Vote" />
 
     <item
-            android:id="@+id/bottomNavigationMusics"
+            android:id="@+id/bottomNavigationPlayListEditor"
             android:icon="@drawable/ic_music_note_black_24dp"
-            android:title="Musics" />
+            android:title="Playlist" />
 
     <item
-            android:id="@+id/bottomNavigationSettings"
+            android:id="@+id/bottomNavigationUser"
             android:icon="@drawable/ic_settings_black_24dp"
-            android:title="Settings" />
+            android:title="User" />
 
 </menu>

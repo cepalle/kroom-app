@@ -1,4 +1,4 @@
-package io.kroom.app.view.main.userfriends
+package io.kroom.app.view.main.user
 
 import androidx.fragment.app.Fragment
 

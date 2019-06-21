@@ -7,7 +7,7 @@ import io.kroom.app.graphql.TrackVoteEventAddOrUpdateVoteMutation
 import io.kroom.app.graphql.TrackVoteEventByIdQuery
 import io.kroom.app.graphql.TrackVoteEventByUserIdQuery
 import io.kroom.app.graphql.TrackVoteEventsPublicQuery
-import io.kroom.app.webservice.apolloClient
+import io.kroom.app.repo.webservice.apolloClient
 
 object TrackVoteEventRepo {
 

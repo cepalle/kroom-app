@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.api.Response
 import io.kroom.app.graphql.*
-import io.kroom.app.webservice.apolloClient
+import io.kroom.app.repo.webservice.apolloClient
 
 object UserRepo {
 

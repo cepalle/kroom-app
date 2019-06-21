@@ -1,7 +1,9 @@
 package io.kroom.app.repo
 
+import android.annotation.SuppressLint
 import android.content.Context
 
+@SuppressLint("StaticFieldLeak")
 object ScharedPreferencesRepo {
 
     var context: Context? = null

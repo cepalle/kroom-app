@@ -5,15 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import io.kroom.app.view.main.MainActivity
 import io.kroom.app.R
-import io.kroom.app.view.main.Routes
 
-class ServicesChooserFragment : Fragment() {
+class PlaylistEditorFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Services"
-        return inflater.inflate(R.layout.fragment_services_chooser, container, false)
+        return inflater.inflate(R.layout.fragment_playlist_editor, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

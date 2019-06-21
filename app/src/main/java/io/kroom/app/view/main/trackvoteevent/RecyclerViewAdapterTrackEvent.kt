@@ -1,4 +1,4 @@
-package io.kroom.app.view.main.musictrackvoteevents
+package io.kroom.app.view.main.trackvoteevent
 
 
 import android.view.LayoutInflater
