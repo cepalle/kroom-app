@@ -1,4 +1,4 @@
-package io.kroom.app
+package io.kroom.app.view.main
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -8,18 +8,13 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 
 import android.widget.Toast
+import io.kroom.app.R
 import io.kroom.app.view.fragment_TOSORT.*
-import io.kroom.app.view.debug.DebugFragment
-import io.kroom.app.view.userfriends.UserFriendsFragment
-import io.kroom.app.view.usersignIn.UserSignInFragment
-import io.kroom.app.view.usersignup.UserSignUpFragment
-import io.kroom.app.view.home.HomeFragment
-import io.kroom.app.view.musicplaylisteditor.MusicPlaylistEditorFragment
-import io.kroom.app.view.musictrackvote.MusicTrackVoteFragment
+import io.kroom.app.view.connection.home.HomeFragment
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class Main : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,11 +26,19 @@ class Main : AppCompatActivity() {
         if (!(networkInfo != null && networkInfo.isConnected))
             Toast.makeText(baseContext, "it seems you are not connected to the Internet", Toast.LENGTH_LONG).show()
 
-        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().permitAll().build())
+        StrictMode.setThreadPolicy(
+            StrictMode.ThreadPolicy.Builder().permitAll().build()
+        )
 
         bottom_navigation.setOnNavigationItemSelectedListener {
             it.itemId.toRoute()?.let(::goToRoute)
             true
+        }
+
+        if (Session.isConnected()) {
+            // TODO
+            // launch activity SignIn or SignUp
+            MainActivity.app.goToRoute(Routes.USER_LOGGED)
         }
 
         if (savedInstanceState == null) {
@@ -45,18 +48,18 @@ class Main : AppCompatActivity() {
 
     private fun goToRoute(route: Routes) {
         when (route) {
-            Routes.HOME -> changeFragment(HomeFragment())
-            Routes.MUSICS -> changeFragment(ServicesChooserFragment())
-            Routes.USER_SIGN_IN -> changeFragment(UserSignInFragment())
-            Routes.USER_SIGN_UP -> changeFragment(UserSignUpFragment())
-            Routes.USER_FORGOT_PASSWORD -> changeFragment(MissingPasswordFragment())
-            Routes.MUSIC_CONTROL_DELEGATION -> changeFragment(MusicControlDelegationFragment())
-            Routes.MUSIC_PLAYLIST_EDITOR -> changeFragment(MusicPlaylistEditorFragment())
-            Routes.MUSIC_TRACK_VOTE -> changeFragment(MusicTrackVoteFragment())
-            Routes.DEBUG -> changeFragment(DebugFragment())
+            Routes.TRACK_VOTE_EVENT -> changeFragment(HomeFragment())
+            Routes.PLAYLIST_EDITOR -> changeFragment(ServicesChooserFragment())
             Routes.SETTINGS -> changeFragment(SettingsFragment())
-            Routes.USER_LOGGED -> changeFragment(UserLoggedFragment())
-            Routes.USER_FRIENDS -> changeFragment(UserFriendsFragment())
+            //Routes.USER_SIGN_IN -> changeFragment(UserSignInFragment())
+            //Routes.USER_SIGN_UP -> changeFragment(UserSignUpFragment())
+            //Routes.USER_FORGOT_PASSWORD -> changeFragment(MissingPasswordFragment())
+            //Routes.MUSIC_CONTROL_DELEGATION -> changeFragment(MusicControlDelegationFragment())
+            //Routes.MUSIC_PLAYLIST_EDITOR -> changeFragment(MusicPlaylistEditorFragment())
+            //Routes.MUSIC_TRACK_VOTE -> changeFragment(MusicTrackVoteFragment())
+            //Routes.DEBUG -> changeFragment(DebugFragment())
+            //Routes.USER_LOGGED -> changeFragment(UserLoggedFragment())
+            //Routes.USER_FRIENDS -> changeFragment(UserFriendsFragment())
         }
     }
 
@@ -70,10 +73,10 @@ class Main : AppCompatActivity() {
 }
 
 enum class Routes(val id: Int) {
-    HOME(R.id.bottomNavigationHome),
-    MUSICS(R.id.bottomNavigationMusics),
+    TRACK_VOTE_EVENT(R.id.bottomNavigationHome),
+    PLAYLIST_EDITOR(R.id.bottomNavigationMusics),
     SETTINGS(R.id.bottomNavigationSettings),
-
+/*
     USER_SIGN_IN(-100),
     USER_SIGN_UP(-101),
     USER_FORGOT_PASSWORD(-102),
@@ -85,6 +88,7 @@ enum class Routes(val id: Int) {
     MUSIC_TRACK_VOTE(-202),
 
     DEBUG(-1000),
+    */
     ;
 }
 

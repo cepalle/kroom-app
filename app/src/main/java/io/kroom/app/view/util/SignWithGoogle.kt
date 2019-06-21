@@ -7,8 +7,8 @@ import com.apollographql.apollo.exception.ApolloException
 import com.jk.simple.SimpleAuthResult
 import com.jk.simple.SimpleSession
 import com.jk.simple.idp.IdpType
-import io.kroom.app.Main
-import io.kroom.app.Routes
+import io.kroom.app.view.main.MainActivity
+import io.kroom.app.view.main.Routes
 import io.kroom.app.graphql.UserSignWhithGoolgeMutation
 import io.kroom.app.webservice.KroomApolloClient
 import io.kroom.app.session.Session
@@ -54,7 +54,7 @@ class SignWithGoogle(var activity: AppCompatActivity)  {
     private fun onGoogleSignIn() {
 
         Toast
-            .makeText(Main.app.applicationContext, "connection...", Toast.LENGTH_SHORT)
+            .makeText(MainActivity.app.applicationContext, "connection...", Toast.LENGTH_SHORT)
             .show()
 
         KroomApolloClient.Users.signGoogleRequest(
@@ -70,19 +70,19 @@ class SignWithGoogle(var activity: AppCompatActivity)  {
 
     override fun onSuccess(s: UserSignWhithGoolgeMutation.UserSignWithGoogle) {
         if (s.errors().isNotEmpty()) {
-            Dialogs.errorDialog(Main.app, "Can't sign up in with google")
+            Dialogs.errorDialog(MainActivity.app, "Can't sign up in with google")
             return
         }
         s.user()?.let { user ->
             Toast.makeText(activity, "" + user.token(), Toast.LENGTH_LONG).show()
             Session.setUser(user.id()!!, user.email()!!, user.userName(), user.token()!!)
-            Main.app.goToRoute(Routes.HOME)
+            MainActivity.app.goToRoute(Routes.TRACK_VOTE_EVENT)
         }
     }
 
     override fun onFail(f: ApolloException) {
         Log.println(Log.INFO, "on-google-fail", "fail: $f")
-        Dialogs.errorDialog(Main.app, "You encounter an error ${f.message}")
+        Dialogs.errorDialog(MainActivity.app, "You encounter an error ${f.message}")
             .show()
     }
 

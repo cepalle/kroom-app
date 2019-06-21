@@ -1,4 +1,4 @@
-package io.kroom.app.view.usersignIn
+package io.kroom.app.view.connection.usersignIn
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,10 +11,10 @@ import android.widget.EditText
 import android.widget.Toast
 import com.apollographql.apollo.exception.ApolloException
 import com.jk.simple.SimpleSession
-import io.kroom.app.Main
+import io.kroom.app.view.main.MainActivity
 
 import io.kroom.app.R
-import io.kroom.app.Routes
+import io.kroom.app.view.main.Routes
 import io.kroom.app.webservice.KroomApolloClient
 import io.kroom.app.graphql.UserSignInMutation
 import io.kroom.app.session.Session
@@ -28,7 +28,7 @@ class UserSignInFragment : Fragment() {
 
     private val users = KroomApolloClient.Users
 
-    private val signWithGoogle = SignWithGoogle(Main.app)
+    private val signWithGoogle = SignWithGoogle(MainActivity.app)
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,7 +46,7 @@ class UserSignInFragment : Fragment() {
             onSignIn()
         }
 
-        signInForgotPassword.setOnClickListener { Main.app.goToRoute(Routes.USER_FORGOT_PASSWORD) }
+        signInForgotPassword.setOnClickListener { MainActivity.app.goToRoute(Routes.USER_FORGOT_PASSWORD) }
 
         userSignInGoogle.setOnClickListener {
             signWithGoogle.action()
@@ -60,12 +60,12 @@ class UserSignInFragment : Fragment() {
     private fun onSignIn() {
         clearFields()
 
-        Main.app.hideKeyboard()
+        MainActivity.app.hideKeyboard()
         signInAction.isEnabled = false
         signInLoading.visibility = View.VISIBLE
 
         Toast
-            .makeText(Main.app.applicationContext, "Login your account...", Toast.LENGTH_SHORT)
+            .makeText(MainActivity.app.applicationContext, "Login your account...", Toast.LENGTH_SHORT)
             .show()
 
         users.signIn(getRequest()) { res, exception ->
@@ -85,7 +85,7 @@ class UserSignInFragment : Fragment() {
 
         s.user()?.let {
             Session.setUser(it.id()!!, it.email()!!, it.userName(), it.token()!!)
-            Main.app.goToRoute(Routes.HOME)
+            MainActivity.app.goToRoute(Routes.TRACK_VOTE_EVENT)
         }
     }
 
@@ -101,7 +101,7 @@ class UserSignInFragment : Fragment() {
 
     override fun onFail(f: ApolloException) {
         Log.println(Log.INFO, "fail-sign-in", "fail: $f")
-        Dialogs.errorDialog(Main.app, "You encounter an error ${f.message}")
+        Dialogs.errorDialog(MainActivity.app, "You encounter an error ${f.message}")
             .show()
     }
 

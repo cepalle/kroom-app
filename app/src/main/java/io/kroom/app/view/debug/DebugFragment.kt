@@ -13,9 +13,9 @@ import com.jk.simple.SimpleAuthResult
 import com.jk.simple.SimpleSession
 import com.jk.simple.SimpleSession.login
 import com.jk.simple.idp.IdpType
-import io.kroom.app.Main
+import io.kroom.app.view.main.MainActivity
 import io.kroom.app.R
-import io.kroom.app.Routes
+import io.kroom.app.view.main.Routes
 import org.jetbrains.annotations.Nullable
 
 
@@ -49,11 +49,11 @@ class DebugFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         debugToSignIn.setOnClickListener {
-            Main.app.goToRoute(Routes.USER_SIGN_IN)
+            MainActivity.app.goToRoute(Routes.USER_SIGN_IN)
         }
 
         debugToSignUp.setOnClickListener {
-            Main.app.goToRoute(Routes.USER_SIGN_UP)
+            MainActivity.app.goToRoute(Routes.USER_SIGN_UP)
         }
 
         debugGoogleLogin.setOnClickListener{

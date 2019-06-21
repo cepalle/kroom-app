@@ -1,4 +1,4 @@
-package io.kroom.app.view.userfriends
+package io.kroom.app.view.main.userfriends
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.apollographql.apollo.api.Error
 import com.apollographql.apollo.exception.ApolloException
-import io.kroom.app.Main
+import io.kroom.app.view.main.MainActivity
 import io.kroom.app.R
 import io.kroom.app.webservice.KroomApolloClient
 import io.kroom.app.graphql.UserAddFriendMutation
@@ -94,12 +94,12 @@ class UserFriendsFragment : Fragment() {
                 users.deleteFriend(usersFetchedCache[username]!!) { s, e ->
                     s?.let {
                         if (s.errors().isNotEmpty()) {
-                            Dialogs.errorDialog(Main.app, "You encounter an error ${s.errors()[0].messages()[0]}")
+                            Dialogs.errorDialog(MainActivity.app, "You encounter an error ${s.errors()[0].messages()[0]}")
                                 .show()
                             return@let
                         }
                         val user = s.user()!!
-                        Dialogs.successDialog(Main.app, "Deleted user $username")
+                        Dialogs.successDialog(MainActivity.app, "Deleted user $username")
                             .show()
                         updateFriendsList(user.friends()!!.map { friend ->
                             Pair(
@@ -110,7 +110,7 @@ class UserFriendsFragment : Fragment() {
                     }
 
                     e?.let {
-                        Dialogs.errorDialog(Main.app, "You encounter an error ${it.message}")
+                        Dialogs.errorDialog(MainActivity.app, "You encounter an error ${it.message}")
                             .show()
                     }
                 }
@@ -158,13 +158,13 @@ class UserFriendsFragment : Fragment() {
                     friend.id()!!
                 )
             })
-            Dialogs.successDialog(Main.app, "You added ${s.user()!!.userName()} to your friend list!")
+            Dialogs.successDialog(MainActivity.app, "You added ${s.user()!!.userName()} to your friend list!")
         }
     }
 
     override fun onFail(f: ApolloException) {
         Log.println(Log.INFO, "fail-add-friend", "fail: $f")
-        Dialogs.errorDialog(Main.app, "You encounter an error ${f.message}")
+        Dialogs.errorDialog(MainActivity.app, "You encounter an error ${f.message}")
             .show()
     }
 

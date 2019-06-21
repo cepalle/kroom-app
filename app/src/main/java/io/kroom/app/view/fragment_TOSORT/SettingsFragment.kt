@@ -5,9 +5,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.kroom.app.Main
+import io.kroom.app.view.main.MainActivity
 import io.kroom.app.R
-import io.kroom.app.Routes
+import io.kroom.app.view.main.Routes
 
 class SettingsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -18,8 +18,8 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        settingsFriends.setOnClickListener { Main.app.goToRoute(Routes.USER_FRIENDS) }
-        settingsDebug.setOnClickListener { Main.app.goToRoute(Routes.DEBUG)  }
+        settingsFriends.setOnClickListener { MainActivity.app.goToRoute(Routes.USER_FRIENDS) }
+        settingsDebug.setOnClickListener { MainActivity.app.goToRoute(Routes.DEBUG)  }
         settingsProfile.setOnClickListener {  }
     }
 }

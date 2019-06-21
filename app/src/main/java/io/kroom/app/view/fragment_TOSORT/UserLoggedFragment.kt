@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jk.simple.SimpleSession
-import io.kroom.app.Main
+import io.kroom.app.view.main.MainActivity
 import io.kroom.app.R
-import io.kroom.app.Routes
+import io.kroom.app.view.main.Routes
 import io.kroom.app.session.Session
 
 class UserLoggedFragment : Fragment() {
@@ -24,16 +24,16 @@ class UserLoggedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (!Session.isConnected()) {
-            Main.app.goToRoute(Routes.HOME)
+            MainActivity.app.goToRoute(Routes.TRACK_VOTE_EVENT)
         }
 
         loggedLogoutAction.setOnClickListener {
             Session.removeUser()
-            if (SimpleSession.isSignedIn(Main.app)) {
+            if (SimpleSession.isSignedIn(MainActivity.app)) {
                 SimpleSession . logout ()
 
             }
-            Main.app.goToRoute(Routes.HOME)
+            MainActivity.app.goToRoute(Routes.TRACK_VOTE_EVENT)
         }
 
 

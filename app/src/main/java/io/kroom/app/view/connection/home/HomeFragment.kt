@@ -1,15 +1,13 @@
-package io.kroom.app.view.home
+package io.kroom.app.view.connection.home
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.kroom.app.Main
+import io.kroom.app.view.main.MainActivity
 import io.kroom.app.R
-import io.kroom.app.Routes
-import io.kroom.app.session.Session
-import kotlinx.android.synthetic.main.fragment_home.*
+import io.kroom.app.view.main.Routes
 
 class HomeFragment : Fragment() {
 
@@ -21,15 +19,11 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (Session.isConnected()) {
-            Main.app.goToRoute(Routes.USER_LOGGED)
-        }
-
         homeSignIn.setOnClickListener {
-            Main.app.goToRoute(Routes.USER_SIGN_IN)
+            MainActivity.app.goToRoute(Routes.USER_SIGN_IN)
         }
         homeSignUp.setOnClickListener {
-            Main.app.goToRoute(Routes.USER_SIGN_UP)
+            MainActivity.app.goToRoute(Routes.USER_SIGN_UP)
         }
 
     }

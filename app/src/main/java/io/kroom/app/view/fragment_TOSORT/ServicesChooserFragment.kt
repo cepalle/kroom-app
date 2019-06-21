@@ -5,9 +5,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.kroom.app.Main
+import io.kroom.app.view.main.MainActivity
 import io.kroom.app.R
-import io.kroom.app.Routes
+import io.kroom.app.view.main.Routes
 
 class ServicesChooserFragment : Fragment() {
 
@@ -20,13 +20,13 @@ class ServicesChooserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         musicTrackVote.setOnClickListener {
-            Main.app.goToRoute(Routes.MUSIC_TRACK_VOTE)
+            MainActivity.app.goToRoute(Routes.MUSIC_TRACK_VOTE)
         }
         musicControlDelegation.setOnClickListener {
-            Main.app.goToRoute(Routes.MUSIC_CONTROL_DELEGATION)
+            MainActivity.app.goToRoute(Routes.MUSIC_CONTROL_DELEGATION)
         }
         musicPlaylistEditor.setOnClickListener {
-            Main.app.goToRoute(Routes.MUSIC_PLAYLIST_EDITOR)
+            MainActivity.app.goToRoute(Routes.MUSIC_PLAYLIST_EDITOR)
         }
 
 
