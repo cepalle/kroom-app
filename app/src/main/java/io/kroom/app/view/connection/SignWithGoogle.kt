@@ -1,4 +1,4 @@
-package io.kroom.app.view.util
+package io.kroom.app.view.connection
 
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -12,6 +12,7 @@ import io.kroom.app.view.main.Routes
 import io.kroom.app.graphql.UserSignWhithGoolgeMutation
 import io.kroom.app.webservice.KroomApolloClient
 import io.kroom.app.session.Session
+import io.kroom.app.view.util.Dialogs
 
 class SignWithGoogle(var activity: AppCompatActivity)  {
 

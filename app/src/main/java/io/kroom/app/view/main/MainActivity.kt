@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 
 import android.widget.Toast
 import io.kroom.app.R
+import io.kroom.app.session.Session
 import io.kroom.app.view.fragment_TOSORT.*
 import io.kroom.app.view.connection.home.HomeFragment
 
@@ -19,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Session.init(this)
 
         val connectivityManager = baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
@@ -38,7 +41,6 @@ class MainActivity : AppCompatActivity() {
         if (Session.isConnected()) {
             // TODO
             // launch activity SignIn or SignUp
-            MainActivity.app.goToRoute(Routes.USER_LOGGED)
         }
 
         if (savedInstanceState == null) {
@@ -88,7 +90,7 @@ enum class Routes(val id: Int) {
     MUSIC_TRACK_VOTE(-202),
 
     DEBUG(-1000),
-    */
+*/
     ;
 }
 

@@ -19,7 +19,7 @@ import io.kroom.app.webservice.KroomApolloClient
 import io.kroom.app.graphql.UserSignInMutation
 import io.kroom.app.session.Session
 import io.kroom.app.view.util.Dialogs
-import io.kroom.app.view.util.SignWithGoogle
+import io.kroom.app.view.connection.SignWithGoogle
 
 
 import org.jetbrains.annotations.Nullable
