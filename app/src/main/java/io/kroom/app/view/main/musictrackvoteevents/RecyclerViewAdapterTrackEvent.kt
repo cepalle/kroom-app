@@ -1,18 +1,17 @@
 package io.kroom.app.view.main.musictrackvoteevents
 
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.R
 import io.kroom.app.graphql.TrackVoteEventsPublicQuery
-import io.kroom.app.model.TrackVoteEvent
 
-class RecyclerViewAdapterTrackEvent: RecyclerView.Adapter<RecyclerViewAdapterTrackEvent.TrackEventVoteViewHolder>() {
+class RecyclerViewAdapterTrackEvent : RecyclerView.Adapter<RecyclerViewAdapterTrackEvent.TrackEventVoteViewHolder>() {
 
-    private var clientEvent:TrackVoteEventsPublicQuery.TrackVoteEventsPublic? = null
-    private lateinit var trackVoteEvent:List<TrackVoteEvent>
+    private var clientEvent: TrackVoteEventsPublicQuery.TrackVoteEventsPublic? = null
+    // private lateinit var trackVoteEvent: List<TrackVoteEvent>
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackEventVoteViewHolder {
@@ -22,15 +21,16 @@ class RecyclerViewAdapterTrackEvent: RecyclerView.Adapter<RecyclerViewAdapterTra
     }
 
     override fun getItemCount(): Int {
-       return trackVoteEvent.size
+        //return trackVoteEvent.size
+        return 0
     }
 
     override fun onBindViewHolder(holder: TrackEventVoteViewHolder, position: Int) {
-        val event = trackVoteEvent[position]
+        // val event = trackVoteEvent[position]
 
     }
 
-    class  TrackEventVoteViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class TrackEventVoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-  }
+    }
 }

@@ -1,10 +1,10 @@
 package io.kroom.app.view.connection.home
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import io.kroom.app.view.main.MainActivity
 import io.kroom.app.R
 import io.kroom.app.view.main.Routes
@@ -19,12 +19,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeSignIn.setOnClickListener {
-            MainActivity.app.goToRoute(Routes.USER_SIGN_IN)
-        }
-        homeSignUp.setOnClickListener {
-            MainActivity.app.goToRoute(Routes.USER_SIGN_UP)
-        }
+        // homeSignIn.setOnClickListener {
+        //     MainActivity.app.goToRoute(Routes.USER_SIGN_IN)
+        // }
+        // homeSignUp.setOnClickListener {
+        //     MainActivity.app.goToRoute(Routes.USER_SIGN_UP)
+        // }
 
     }
 }

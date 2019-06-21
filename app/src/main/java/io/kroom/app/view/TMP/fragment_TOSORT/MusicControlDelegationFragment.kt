@@ -1,10 +1,10 @@
-package io.kroom.app.view.fragment_TOSORT
+package io.kroom.app.view.TMP.fragment_TOSORT
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import io.kroom.app.R
 
 class MusicControlDelegationFragment : Fragment() {

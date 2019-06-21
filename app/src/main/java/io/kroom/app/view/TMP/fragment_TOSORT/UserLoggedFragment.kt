@@ -1,11 +1,11 @@
-package io.kroom.app.view.fragment_TOSORT
+package io.kroom.app.view.TMP.fragment_TOSORT
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.jk.simple.SimpleSession
 import io.kroom.app.view.main.MainActivity
 import io.kroom.app.R
@@ -23,10 +23,7 @@ class UserLoggedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (!Session.isConnected()) {
-            MainActivity.app.goToRoute(Routes.TRACK_VOTE_EVENT)
-        }
-
+        /*
         loggedLogoutAction.setOnClickListener {
             Session.removeUser()
             if (SimpleSession.isSignedIn(MainActivity.app)) {
@@ -38,6 +35,7 @@ class UserLoggedFragment : Fragment() {
 
 
         loggedWelcomeText.text = "Welcome ${Session.getUsername()} !"
+        */
         println("TOKEN USER ${Session.getToken()}")
     }
 }

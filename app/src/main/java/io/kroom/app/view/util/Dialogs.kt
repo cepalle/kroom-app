@@ -1,11 +1,12 @@
 package io.kroom.app.view.util
 
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+
 
 object Dialogs {
 
-    fun errorDialog(activity: AppCompatActivity, message: String,  title: String = "An error occured!"): AlertDialog.Builder {
+    fun errorDialog(activity: AppCompatActivity, message: String, title: String = "An error occured!"): AlertDialog.Builder {
         return AlertDialog.Builder(activity)
             .setTitle(title)
             .setMessage(message)

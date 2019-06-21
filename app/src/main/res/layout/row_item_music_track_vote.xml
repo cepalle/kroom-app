@@ -15,7 +15,7 @@ android:baselineAligned="false">
 <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/design_default_color_primary"
+        android:backgroundTint="@color/colorPrimary"
         android:id="@+id/linearlayout1"
         android:layout_marginTop="2dp">
 
@@ -66,7 +66,6 @@ android:baselineAligned="false">
         android:layout_below="@+id/linearlayout1"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="2dp">
-
 
     <TextView
             android:id="@+id/musicTrackVoteTitle"

@@ -2,33 +2,32 @@ package io.kroom.app.view.connection.usersignIn
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.apollographql.apollo.exception.ApolloException
 import com.jk.simple.SimpleSession
 import io.kroom.app.view.main.MainActivity
 
 import io.kroom.app.R
 import io.kroom.app.view.main.Routes
-import io.kroom.app.webservice.KroomApolloClient
 import io.kroom.app.graphql.UserSignInMutation
 import io.kroom.app.session.Session
 import io.kroom.app.view.util.Dialogs
-import io.kroom.app.view.connection.SignWithGoogle
+import io.kroom.app.repo.SignWithGoogle_TODO
 
 
 import org.jetbrains.annotations.Nullable
 
 class UserSignInFragment : Fragment() {
-
+    /*
     private val users = KroomApolloClient.Users
 
-    private val signWithGoogle = SignWithGoogle(MainActivity.app)
+    private val signWithGoogle = SignWithGoogle_TODO(MainActivity.app)
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -124,4 +123,5 @@ class UserSignInFragment : Fragment() {
         signInPassword.error = null
         signInUsername.error = null
     }
+    */
 }

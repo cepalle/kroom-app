@@ -1,8 +1,8 @@
-package io.kroom.app.view.connection
+package io.kroom.app.repo
 
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.apollographql.apollo.exception.ApolloException
 import com.jk.simple.SimpleAuthResult
 import com.jk.simple.SimpleSession
@@ -10,12 +10,12 @@ import com.jk.simple.idp.IdpType
 import io.kroom.app.view.main.MainActivity
 import io.kroom.app.view.main.Routes
 import io.kroom.app.graphql.UserSignWhithGoolgeMutation
-import io.kroom.app.webservice.KroomApolloClient
 import io.kroom.app.session.Session
 import io.kroom.app.view.util.Dialogs
 
-class SignWithGoogle(var activity: AppCompatActivity)  {
+class SignWithGoogle_TODO(var activity: AppCompatActivity)  {
 
+    /*
     private val users = KroomApolloClient.Users
 
 
@@ -90,4 +90,5 @@ class SignWithGoogle(var activity: AppCompatActivity)  {
     companion object {
         val SERVER_ID = "795222071121-82h8a0k3bhafm1jekm9k8eipmpvcshgr.apps.googleusercontent.com"
     }
+    */
 }

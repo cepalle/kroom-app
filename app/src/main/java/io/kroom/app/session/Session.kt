@@ -8,6 +8,7 @@ object Session {
     var context: Context? = null
 
     fun init(c: Context) {
+        // TODO delete on delete ?
         context = c
     }
 

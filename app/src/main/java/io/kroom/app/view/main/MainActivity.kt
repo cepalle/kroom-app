@@ -4,14 +4,15 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.StrictMode
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import io.kroom.app.R
 import io.kroom.app.session.Session
-import io.kroom.app.view.fragment_TOSORT.*
+import io.kroom.app.view.TMP.fragment_TOSORT.*
 import io.kroom.app.view.connection.home.HomeFragment
+import io.kroom.app.view.main.musictrackvoteevents.MusicTrackVoteEventsFragment
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         Session.init(this)
 
+        /*
         val connectivityManager = baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
 
@@ -32,11 +34,14 @@ class MainActivity : AppCompatActivity() {
         StrictMode.setThreadPolicy(
             StrictMode.ThreadPolicy.Builder().permitAll().build()
         )
+        */
 
+        /*
         bottom_navigation.setOnNavigationItemSelectedListener {
             it.itemId.toRoute()?.let(::goToRoute)
             true
         }
+        */
 
         if (Session.isConnected()) {
             // TODO
@@ -50,18 +55,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun goToRoute(route: Routes) {
         when (route) {
-            Routes.TRACK_VOTE_EVENT -> changeFragment(HomeFragment())
+            Routes.TRACK_VOTE_EVENT -> changeFragment(MusicTrackVoteEventsFragment())
             Routes.PLAYLIST_EDITOR -> changeFragment(ServicesChooserFragment())
             Routes.SETTINGS -> changeFragment(SettingsFragment())
-            //Routes.USER_SIGN_IN -> changeFragment(UserSignInFragment())
-            //Routes.USER_SIGN_UP -> changeFragment(UserSignUpFragment())
-            //Routes.USER_FORGOT_PASSWORD -> changeFragment(MissingPasswordFragment())
-            //Routes.MUSIC_CONTROL_DELEGATION -> changeFragment(MusicControlDelegationFragment())
-            //Routes.MUSIC_PLAYLIST_EDITOR -> changeFragment(MusicPlaylistEditorFragment())
-            //Routes.MUSIC_TRACK_VOTE -> changeFragment(MusicTrackVoteFragment())
-            //Routes.DEBUG -> changeFragment(DebugFragment())
-            //Routes.USER_LOGGED -> changeFragment(UserLoggedFragment())
-            //Routes.USER_FRIENDS -> changeFragment(UserFriendsFragment())
         }
     }
 

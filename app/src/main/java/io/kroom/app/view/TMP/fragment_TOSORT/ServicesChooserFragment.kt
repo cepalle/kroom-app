@@ -1,10 +1,10 @@
-package io.kroom.app.view.fragment_TOSORT
+package io.kroom.app.view.TMP.fragment_TOSORT
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import io.kroom.app.view.main.MainActivity
 import io.kroom.app.R
 import io.kroom.app.view.main.Routes
@@ -19,16 +19,15 @@ class ServicesChooserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        musicTrackVote.setOnClickListener {
-            MainActivity.app.goToRoute(Routes.MUSIC_TRACK_VOTE)
-        }
-        musicControlDelegation.setOnClickListener {
-            MainActivity.app.goToRoute(Routes.MUSIC_CONTROL_DELEGATION)
-        }
-        musicPlaylistEditor.setOnClickListener {
-            MainActivity.app.goToRoute(Routes.MUSIC_PLAYLIST_EDITOR)
-        }
-
+        // musicTrackVote.setOnClickListener {
+        //     MainActivity.app.goToRoute(Routes.MUSIC_TRACK_VOTE)
+        // }
+        // musicControlDelegation.setOnClickListener {
+        //     MainActivity.app.goToRoute(Routes.MUSIC_CONTROL_DELEGATION)
+        // }
+        // musicPlaylistEditor.setOnClickListener {
+        //     MainActivity.app.goToRoute(Routes.MUSIC_PLAYLIST_EDITOR)
+        // }
 
     }
 

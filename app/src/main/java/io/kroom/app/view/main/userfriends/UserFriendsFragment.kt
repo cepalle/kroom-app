@@ -1,7 +1,6 @@
 package io.kroom.app.view.main.userfriends
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -9,18 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import com.apollographql.apollo.api.Error
 import com.apollographql.apollo.exception.ApolloException
 import io.kroom.app.view.main.MainActivity
 import io.kroom.app.R
-import io.kroom.app.webservice.KroomApolloClient
 import io.kroom.app.graphql.UserAddFriendMutation
 import io.kroom.app.session.Session
 import io.kroom.app.view.util.Dialogs
 
 
 class UserFriendsFragment : Fragment() {
-
+    /*
     val users = KroomApolloClient.Users
 
     lateinit var adapterAutocompletion: ArrayAdapter<String>
@@ -167,5 +166,6 @@ class UserFriendsFragment : Fragment() {
         Dialogs.errorDialog(MainActivity.app, "You encounter an error ${f.message}")
             .show()
     }
+    */
 
 }

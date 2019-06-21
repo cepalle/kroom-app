@@ -1,14 +1,14 @@
-package io.kroom.app.view.debug
+package io.kroom.app.view.TMP.debug
 
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.jk.simple.SimpleAuthResult
 import com.jk.simple.SimpleSession
 import com.jk.simple.SimpleSession.login
@@ -47,7 +47,7 @@ class DebugFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        /*
         debugToSignIn.setOnClickListener {
             MainActivity.app.goToRoute(Routes.USER_SIGN_IN)
         }
@@ -90,6 +90,7 @@ class DebugFragment : Fragment() {
         debugEmail.setOnClickListener{
             this.tokenTextView?.text = SimpleSession.getEmail()
         }
+        */
 
     }
 }
