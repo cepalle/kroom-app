@@ -9,10 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.jk.simple.SimpleAuthResult
-import com.jk.simple.SimpleSession
-import com.jk.simple.SimpleSession.login
-import com.jk.simple.idp.IdpType
 import io.kroom.app.view.main.MainActivity
 import io.kroom.app.R
 import io.kroom.app.view.main.Routes
@@ -21,6 +17,7 @@ import org.jetbrains.annotations.Nullable
 
 class DebugFragment : Fragment() {
 
+    /*
     private var tokenTextView: TextView? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Kroom"
@@ -93,4 +90,5 @@ class DebugFragment : Fragment() {
         */
 
     }
+    */
 }
