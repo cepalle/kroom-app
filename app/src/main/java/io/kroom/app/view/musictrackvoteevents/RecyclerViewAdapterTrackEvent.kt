@@ -1,4 +1,4 @@
-package io.kroom.app.customadapter
+package io.kroom.app.view.musictrackvoteevents
 
 
 import android.support.v7.widget.RecyclerView

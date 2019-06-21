@@ -1,4 +1,4 @@
-package io.kroom.app.fragment
+package io.kroom.app.view.userfriends
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -16,7 +16,7 @@ import io.kroom.app.R
 import io.kroom.app.webservice.KroomApolloClient
 import io.kroom.app.graphql.UserAddFriendMutation
 import io.kroom.app.session.Session
-import io.kroom.app.util.Dialogs
+import io.kroom.app.view.util.Dialogs
 
 
 class UserFriendsFragment : Fragment() {

@@ -1,4 +1,4 @@
-package io.kroom.app.fragment
+package io.kroom.app.view.fragment_TOSORT
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -11,7 +11,6 @@ import io.kroom.app.Main
 import io.kroom.app.R
 import io.kroom.app.Routes
 import io.kroom.app.session.Session
-import kotlinx.android.synthetic.main.fragment_user_logged.*
 
 class UserLoggedFragment : Fragment() {
 

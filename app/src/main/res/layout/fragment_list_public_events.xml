@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/list_music_track_vote"
-        tools:context=".fragment.MusicTrackVoteFragment">
+        tools:context=".view.musictrackvote.MusicTrackVoteFragment">
 
 
     <android.support.v7.widget.RecyclerView

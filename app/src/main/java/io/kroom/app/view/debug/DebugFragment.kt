@@ -1,4 +1,4 @@
-package io.kroom.app.fragment
+package io.kroom.app.view.debug
 
 
 import android.content.Intent
@@ -16,7 +16,6 @@ import com.jk.simple.idp.IdpType
 import io.kroom.app.Main
 import io.kroom.app.R
 import io.kroom.app.Routes
-import kotlinx.android.synthetic.main.fragment_debug.*
 import org.jetbrains.annotations.Nullable
 
 

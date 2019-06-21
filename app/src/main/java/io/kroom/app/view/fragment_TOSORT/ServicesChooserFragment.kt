@@ -1,4 +1,4 @@
-package io.kroom.app.fragment
+package io.kroom.app.view.fragment_TOSORT
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import io.kroom.app.Main
 import io.kroom.app.R
 import io.kroom.app.Routes
-import kotlinx.android.synthetic.main.fragment_services_chooser.*
 
 class ServicesChooserFragment : Fragment() {
 

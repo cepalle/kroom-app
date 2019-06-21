@@ -8,8 +8,14 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 
 import android.widget.Toast
-import io.kroom.app.fragment.*
+import io.kroom.app.view.fragment_TOSORT.*
+import io.kroom.app.view.debug.DebugFragment
+import io.kroom.app.view.userfriends.UserFriendsFragment
+import io.kroom.app.view.usersignIn.UserSignInFragment
+import io.kroom.app.view.usersignup.UserSignUpFragment
 import io.kroom.app.view.home.HomeFragment
+import io.kroom.app.view.musicplaylisteditor.MusicPlaylistEditorFragment
+import io.kroom.app.view.musictrackvote.MusicTrackVoteFragment
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -45,7 +51,7 @@ class Main : AppCompatActivity() {
             Routes.USER_SIGN_UP -> changeFragment(UserSignUpFragment())
             Routes.USER_FORGOT_PASSWORD -> changeFragment(MissingPasswordFragment())
             Routes.MUSIC_CONTROL_DELEGATION -> changeFragment(MusicControlDelegationFragment())
-            Routes.MUSIC_PLAYLIST_EDITOR -> changeFragment(MusicPlaylistEditorFragement())
+            Routes.MUSIC_PLAYLIST_EDITOR -> changeFragment(MusicPlaylistEditorFragment())
             Routes.MUSIC_TRACK_VOTE -> changeFragment(MusicTrackVoteFragment())
             Routes.DEBUG -> changeFragment(DebugFragment())
             Routes.SETTINGS -> changeFragment(SettingsFragment())
