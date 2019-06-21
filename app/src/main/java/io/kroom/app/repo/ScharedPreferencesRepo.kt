@@ -4,14 +4,19 @@ import android.content.Context
 
 object ScharedPreferencesRepo {
 
-    fun isConnected(context: Context): Boolean {
+    var context: Context? = null
 
-        val sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+    fun init(c: Context) {
+        context = c
+    }
+
+    fun isConnected(): Boolean {
+        val sharedPreferences = context!!.getSharedPreferences("user", Context.MODE_PRIVATE)
         return sharedPreferences.getString("token", null) != null
     }
 
-    fun setUser(context: Context, id: Int, email: String, username: String, token: String) {
-        val sharedPref = context.getSharedPreferences("user", Context.MODE_PRIVATE) ?: return
+    fun setUser(id: Int, email: String, username: String, token: String) {
+        val sharedPref = context!!.getSharedPreferences("user", Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
             putString("token", token)
             putString("email", email)
@@ -21,8 +26,8 @@ object ScharedPreferencesRepo {
         }
     }
 
-    fun removeUser(context: Context) {
-        val sharedPref = context.getSharedPreferences("user", Context.MODE_PRIVATE) ?: return
+    fun removeUser() {
+        val sharedPref = context!!.getSharedPreferences("user", Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
             putString("token", null)
             putString("email", null)
@@ -32,23 +37,23 @@ object ScharedPreferencesRepo {
         }
     }
 
-    fun getUsername(context: Context): String? {
-        val sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+    fun getUsername(): String? {
+        val sharedPreferences = context!!.getSharedPreferences("user", Context.MODE_PRIVATE)
         return sharedPreferences.getString("username", null)
     }
 
-    fun getEmail(context: Context): String? {
-        val sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+    fun getEmail(): String? {
+        val sharedPreferences = context!!.getSharedPreferences("user", Context.MODE_PRIVATE)
         return sharedPreferences.getString("email", null)
     }
 
-    fun getId(context: Context): Int? {
-        val sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+    fun getId(): Int? {
+        val sharedPreferences = context!!.getSharedPreferences("user", Context.MODE_PRIVATE)
         return sharedPreferences.getInt("id", 0)
     }
 
-    fun getToken(context: Context): String? {
-        val sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+    fun getToken(): String? {
+        val sharedPreferences = context!!.getSharedPreferences("user", Context.MODE_PRIVATE)
         return sharedPreferences.getString("token", null)
     }
 }
