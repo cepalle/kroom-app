@@ -8,7 +8,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
-private const val url = "https:///785dbf4b.ngrok.io/graphql"
+private const val url = "https:///d16ffd9f.ngrok.io/graphql"
 
 private fun tokenInterceptor(builder: Interceptor.Chain): okhttp3.Response {
     val token = ScharedPreferencesRepo.getToken()

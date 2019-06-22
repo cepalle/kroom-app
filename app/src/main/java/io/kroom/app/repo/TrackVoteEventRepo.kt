@@ -11,19 +11,20 @@ import io.kroom.app.repo.webservice.apolloClient
 
 object TrackVoteEventRepo {
 
-    data class TrackVoteEventRequest(val eventId: Int, val userId: Int, val musicId: Int, val up: Boolean)
-
     fun trackVoteEventAddOrUpdateVote(
-        req: TrackVoteEventRequest
+        eventId: Int,
+        userId: Int,
+        musicId: Int,
+        up: Boolean
     ): LiveData<Result<Response<TrackVoteEventAddOrUpdateVoteMutation.Data>>> {
         val data = MutableLiveData<Result<Response<TrackVoteEventAddOrUpdateVoteMutation.Data>>>()
 
         apolloClient.mutate(
             TrackVoteEventAddOrUpdateVoteMutation.builder()
-                .eventId(req.eventId)
-                .userId(req.userId)
-                .musicId(req.musicId)
-                .up(req.up)
+                .eventId(eventId)
+                .userId(userId)
+                .musicId(musicId)
+                .up(up)
                 .build()
         ).enqueue(CallBackHandler { data.value = it })
 

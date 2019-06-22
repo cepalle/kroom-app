@@ -22,51 +22,48 @@ object UserRepo {
         return data
     }
 
-    data class UserSignUpRequest(val userName: String, val email: String, val pass: String)
-
     fun signUp(
-        req: UserSignUpRequest
+        userName: String,
+        email: String,
+        pass: String
     ): LiveData<Result<Response<UserSignUpMutation.Data>>> {
         val data = MutableLiveData<Result<Response<UserSignUpMutation.Data>>>()
 
         apolloClient.mutate(
             UserSignUpMutation.builder()
-                .userName(req.userName)
-                .email(req.email)
-                .pass(req.pass)
+                .userName(userName)
+                .email(email)
+                .pass(pass)
                 .build()
         ).enqueue(CallBackHandler { data.value = it })
 
         return data
     }
 
-    data class UserSignInRequest(val userName: String, val pass: String)
-
     fun signIn(
-        req: UserSignInRequest
+        userName: String,
+        pass: String
     ): LiveData<Result<Response<UserSignInMutation.Data>>> {
         val data = MutableLiveData<Result<Response<UserSignInMutation.Data>>>()
 
         apolloClient.mutate(
             UserSignInMutation.builder()
-                .userName(req.userName)
-                .pass(req.pass)
+                .userName(userName)
+                .pass(pass)
                 .build()
         ).enqueue(CallBackHandler { data.value = it })
 
         return data
     }
 
-    data class UserGoogleSignRequest(val token: String)
-
     fun signGoogleRequest(
-        req: UserGoogleSignRequest
+        token: String
     ): LiveData<Result<Response<UserSignWhithGoolgeMutation.Data>>> {
         val data = MutableLiveData<Result<Response<UserSignWhithGoolgeMutation.Data>>>()
 
         apolloClient.mutate(
             UserSignWhithGoolgeMutation.builder()
-                .token(req.token)
+                .token(token)
                 .build()
         ).enqueue(CallBackHandler { data.value = it })
 

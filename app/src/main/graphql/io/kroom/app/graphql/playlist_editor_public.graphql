@@ -1,0 +1,6 @@
+query PlayListEditorsPublicQuery {
+    PlayListEditorsPublic {
+        id
+        name
+    }
+}
