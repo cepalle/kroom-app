@@ -1,24 +1,18 @@
-package io.kroom.app.repo
+package io.kroom.app
 
-import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Context
+import androidx.lifecycle.AndroidViewModel
 
-@SuppressLint("StaticFieldLeak")
-object ScharedPreferencesRepo {
-
-    var context: Context? = null
-
-    fun init(c: Context) {
-        context = c
-    }
+class SharedPreferencesViewModel(app: Application) : AndroidViewModel(app) {
 
     fun isConnected(): Boolean {
-        val sharedPreferences = context!!.getSharedPreferences("user", Context.MODE_PRIVATE)
+        val sharedPreferences = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE)
         return sharedPreferences.getString("token", null) != null
     }
 
     fun setUser(id: Int, email: String, username: String, token: String) {
-        val sharedPref = context!!.getSharedPreferences("user", Context.MODE_PRIVATE) ?: return
+        val sharedPref = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
             putString("token", token)
             putString("email", email)
@@ -29,7 +23,7 @@ object ScharedPreferencesRepo {
     }
 
     fun removeUser() {
-        val sharedPref = context!!.getSharedPreferences("user", Context.MODE_PRIVATE) ?: return
+        val sharedPref = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
             putString("token", null)
             putString("email", null)
@@ -40,22 +34,22 @@ object ScharedPreferencesRepo {
     }
 
     fun getUsername(): String? {
-        val sharedPreferences = context!!.getSharedPreferences("user", Context.MODE_PRIVATE)
+        val sharedPreferences = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE)
         return sharedPreferences.getString("username", null)
     }
 
     fun getEmail(): String? {
-        val sharedPreferences = context!!.getSharedPreferences("user", Context.MODE_PRIVATE)
+        val sharedPreferences = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE)
         return sharedPreferences.getString("email", null)
     }
 
     fun getId(): Int? {
-        val sharedPreferences = context!!.getSharedPreferences("user", Context.MODE_PRIVATE)
+        val sharedPreferences = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE)
         return sharedPreferences.getInt("id", 0)
     }
 
     fun getToken(): String? {
-        val sharedPreferences = context!!.getSharedPreferences("user", Context.MODE_PRIVATE)
+        val sharedPreferences = getApplication<Application>().getSharedPreferences("user", Context.MODE_PRIVATE)
         return sharedPreferences.getString("token", null)
     }
 }

@@ -2,18 +2,18 @@ package io.kroom.app.repo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import io.kroom.app.graphql.*
-import io.kroom.app.repo.webservice.apolloClient
 
-object UserRepo {
+class UserRepo(val client: ApolloClient) {
 
     fun user(
         id: Int
     ): LiveData<Result<Response<UserByIdQuery.Data>>> {
         val data = MutableLiveData<Result<Response<UserByIdQuery.Data>>>()
 
-        apolloClient.query(
+        client.query(
             UserByIdQuery.builder()
                 .id(id)
                 .build()
@@ -29,7 +29,7 @@ object UserRepo {
     ): LiveData<Result<Response<UserSignUpMutation.Data>>> {
         val data = MutableLiveData<Result<Response<UserSignUpMutation.Data>>>()
 
-        apolloClient.mutate(
+        client.mutate(
             UserSignUpMutation.builder()
                 .userName(userName)
                 .email(email)
@@ -46,7 +46,7 @@ object UserRepo {
     ): LiveData<Result<Response<UserSignInMutation.Data>>> {
         val data = MutableLiveData<Result<Response<UserSignInMutation.Data>>>()
 
-        apolloClient.mutate(
+        client.mutate(
             UserSignInMutation.builder()
                 .userName(userName)
                 .pass(pass)
@@ -61,7 +61,7 @@ object UserRepo {
     ): LiveData<Result<Response<UserSignWhithGoolgeMutation.Data>>> {
         val data = MutableLiveData<Result<Response<UserSignWhithGoolgeMutation.Data>>>()
 
-        apolloClient.mutate(
+        client.mutate(
             UserSignWhithGoolgeMutation.builder()
                 .token(token)
                 .build()
@@ -76,7 +76,7 @@ object UserRepo {
     ): LiveData<Result<Response<UserAddFriendMutation.Data>>> {
         val data = MutableLiveData<Result<Response<UserAddFriendMutation.Data>>>()
 
-        apolloClient.mutate(
+        client.mutate(
             UserAddFriendMutation.builder()
                 .userId(userId)
                 .friendId(friendId)
@@ -92,7 +92,7 @@ object UserRepo {
     ): LiveData<Result<Response<UserDeleteFriendMutation.Data>>> {
         val data = MutableLiveData<Result<Response<UserDeleteFriendMutation.Data>>>()
 
-        apolloClient.mutate(
+        client.mutate(
             UserDeleteFriendMutation.builder()
                 .userId(userId)
                 .friendId(friendId)
@@ -107,7 +107,7 @@ object UserRepo {
     ): LiveData<Result<Response<UserNameAutocompletionQuery.Data>>> {
         val data = MutableLiveData<Result<Response<UserNameAutocompletionQuery.Data>>>()
 
-        apolloClient.query(
+        client.query(
             UserNameAutocompletionQuery.builder()
                 .prefix(prefix)
                 .build()

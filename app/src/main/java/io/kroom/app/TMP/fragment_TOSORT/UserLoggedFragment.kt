@@ -1,4 +1,4 @@
-package io.kroom.app.view.TMP.fragment_TOSORT
+package io.kroom.app.TMP.fragment_TOSORT
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import io.kroom.app.R
-import io.kroom.app.repo.ScharedPreferencesRepo
+import io.kroom.app.SharedPreferencesViewModel
 
 class UserLoggedFragment : Fragment() {
 
@@ -22,7 +22,7 @@ class UserLoggedFragment : Fragment() {
 
         /*
         loggedLogoutAction.setOnClickListener {
-            ScharedPreferencesRepo.removeUser()
+            SharedPreferencesViewModel.removeUser()
             if (SimpleSession.isSignedIn(MainActivity.app)) {
                 SimpleSession . logout ()
 
@@ -31,8 +31,8 @@ class UserLoggedFragment : Fragment() {
         }
 
 
-        loggedWelcomeText.text = "Welcome ${ScharedPreferencesRepo.getUsername()} !"
+        loggedWelcomeText.text = "Welcome ${SharedPreferencesViewModel.getUsername()} !"
         */
-        println("TOKEN USER ${ScharedPreferencesRepo.getToken()}")
+        println("TOKEN USER ${SharedPreferencesViewModel.getToken()}")
     }
 }

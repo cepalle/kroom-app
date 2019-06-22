@@ -2,14 +2,14 @@ package io.kroom.app.repo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import io.kroom.app.graphql.TrackVoteEventAddOrUpdateVoteMutation
 import io.kroom.app.graphql.TrackVoteEventByIdQuery
 import io.kroom.app.graphql.TrackVoteEventByUserIdQuery
 import io.kroom.app.graphql.TrackVoteEventsPublicQuery
-import io.kroom.app.repo.webservice.apolloClient
 
-object TrackVoteEventRepo {
+class TrackVoteEventRepo(val client: ApolloClient) {
 
     fun trackVoteEventAddOrUpdateVote(
         eventId: Int,
@@ -19,7 +19,7 @@ object TrackVoteEventRepo {
     ): LiveData<Result<Response<TrackVoteEventAddOrUpdateVoteMutation.Data>>> {
         val data = MutableLiveData<Result<Response<TrackVoteEventAddOrUpdateVoteMutation.Data>>>()
 
-        apolloClient.mutate(
+        client.mutate(
             TrackVoteEventAddOrUpdateVoteMutation.builder()
                 .eventId(eventId)
                 .userId(userId)
@@ -40,7 +40,7 @@ object TrackVoteEventRepo {
             .builder()
             .id(id)
             .build()
-        apolloClient.query(queryCall).enqueue(CallBackHandler { data.value = it })
+        client.query(queryCall).enqueue(CallBackHandler { data.value = it })
 
         return data
     }
@@ -54,7 +54,7 @@ object TrackVoteEventRepo {
             .builder()
             .userId(userId)
             .build()
-        apolloClient.query(queryCall).enqueue(CallBackHandler { data.value = it })
+        client.query(queryCall).enqueue(CallBackHandler { data.value = it })
 
         return data
     }
@@ -67,7 +67,7 @@ object TrackVoteEventRepo {
         val queryCall = TrackVoteEventsPublicQuery
             .builder()
             .build()
-        apolloClient.query(queryCall).enqueue(CallBackHandler { data.value = it })
+        client.query(queryCall).enqueue(CallBackHandler { data.value = it })
 
         return data
     }

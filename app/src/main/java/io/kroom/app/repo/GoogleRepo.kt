@@ -1,5 +1,7 @@
 package io.kroom.app.repo
 
-object GoogleRepo {
+import com.apollographql.apollo.ApolloClient
+
+class GoogleRepo(val client: ApolloClient) {
 
 }

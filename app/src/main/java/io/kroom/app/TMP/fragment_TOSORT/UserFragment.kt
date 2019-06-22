@@ -1,4 +1,4 @@
-package io.kroom.app.view.TMP.fragment_TOSORT
+package io.kroom.app.TMP.fragment_TOSORT
 
 import android.os.Bundle
 import android.view.LayoutInflater

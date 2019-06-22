@@ -62,7 +62,7 @@ class UserSignInFragment : Fragment() {
         Log.println(Log.INFO, "success-sign-in", "user sign up: $s")
 
         s.user()?.let {
-            ScharedPreferencesRepo.setUser(it.id()!!, it.email()!!, it.userName(), it.token()!!)
+            SharedPreferencesViewModel.setUser(it.id()!!, it.email()!!, it.userName(), it.token()!!)
             MainActivity.app.goToRoute(Routes.TRACK_VOTE_EVENT)
         }
     }

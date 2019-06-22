@@ -1,4 +1,4 @@
-package io.kroom.app.repo
+package io.kroom.app.TMP
 
 import androidx.appcompat.app.AppCompatActivity
 
@@ -65,7 +65,7 @@ class SignWithGoogle_TODO(var activity: AppCompatActivity)  {
         }
         s.user()?.let { user ->
             Toast.makeText(activity, "" + user.token(), Toast.LENGTH_LONG).show()
-            ScharedPreferencesRepo.setUser(user.id()!!, user.email()!!, user.userName(), user.token()!!)
+            SharedPreferencesViewModel.setUser(user.id()!!, user.email()!!, user.userName(), user.token()!!)
             MainActivity.app.goToRoute(Routes.TRACK_VOTE_EVENT)
         }
     }

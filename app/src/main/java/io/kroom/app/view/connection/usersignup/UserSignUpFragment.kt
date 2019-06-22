@@ -72,7 +72,7 @@ class UserSignUpFragment : Fragment() {
         )
             .show()
         s.user()?.let {
-            ScharedPreferencesRepo.setUser(it.id()!!, it.email()!!, it.userName(), it.token()!!)
+            SharedPreferencesViewModel.setUser(it.id()!!, it.email()!!, it.userName(), it.token()!!)
             MainActivity.app.goToRoute(Routes.TRACK_VOTE_EVENT)
         }
     }

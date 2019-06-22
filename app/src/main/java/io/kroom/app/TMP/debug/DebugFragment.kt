@@ -1,17 +1,7 @@
-package io.kroom.app.view.TMP.debug
+package io.kroom.app.TMP.debug
 
 
-import android.content.Intent
-import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import io.kroom.app.view.main.MainActivity
-import io.kroom.app.R
-import org.jetbrains.annotations.Nullable
 
 
 class DebugFragment : Fragment() {

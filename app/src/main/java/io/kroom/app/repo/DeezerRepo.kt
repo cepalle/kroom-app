@@ -1,5 +1,7 @@
 package io.kroom.app.repo
 
-object DeezerRepo {
+import com.apollographql.apollo.ApolloClient
+
+class DeezerRepo(val client: ApolloClient) {
 
 }
