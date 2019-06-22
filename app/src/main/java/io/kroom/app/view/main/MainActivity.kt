@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import io.kroom.app.R
-import io.kroom.app.SharedPreferencesViewModel
+import io.kroom.app.util.SharedPreferences
 import io.kroom.app.TMP.fragment_TOSORT.*
 import io.kroom.app.view.main.playlisteditor.PlaylistEditorFragment
 import io.kroom.app.view.main.trackvoteevent.TrackVoteEventFragment
@@ -17,9 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        SharedPreferencesViewModel.init(this)
-
-        if (SharedPreferencesViewModel.isConnected()) {
+        if (SharedPreferences.isConnected(application)) {
             // TODO launch activity SignIn or SignUp
         }
 

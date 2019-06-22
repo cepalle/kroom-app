@@ -26,7 +26,7 @@ class UserFriendsFragment : Fragment() {
         userFriendsAdd.setAdapter(adapterAutocompletion)
         userFriendsList.adapter = adapterFriendsList
 
-        users.user(SharedPreferencesViewModel.getId()!!) { s, _ ->
+        users.user(SharedPreferences.getId()!!) { s, _ ->
             s?.let {
                 if (it.errors().isEmpty()) {
                     val userGetById = it.data()!!.UserGetById()

@@ -65,7 +65,7 @@ class SignWithGoogle_TODO(var activity: AppCompatActivity)  {
         }
         s.user()?.let { user ->
             Toast.makeText(activity, "" + user.token(), Toast.LENGTH_LONG).show()
-            SharedPreferencesViewModel.setUser(user.id()!!, user.email()!!, user.userName(), user.token()!!)
+            SharedPreferences.setUser(user.id()!!, user.email()!!, user.userName(), user.token()!!)
             MainActivity.app.goToRoute(Routes.TRACK_VOTE_EVENT)
         }
     }
