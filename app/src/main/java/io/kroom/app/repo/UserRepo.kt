@@ -1,25 +1,24 @@
 package io.kroom.app.repo
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import io.kroom.app.graphql.*
+import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.SingleSubject
 
 class UserRepo(val client: ApolloClient) {
 
     fun user(
         id: Int
-    ): SingleSubject<Result<Response<UserByIdQuery.Data>>> {
-        val data: SingleSubject<Result<Response<UserByIdQuery.Data>>> =
-            SingleSubject.create()
+    ): BehaviorSubject<Result<Response<UserByIdQuery.Data>>> {
+        val data: BehaviorSubject<Result<Response<UserByIdQuery.Data>>> =
+            BehaviorSubject.create()
 
         client.query(
             UserByIdQuery.builder()
                 .id(id)
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.onNext(it) })
 
         return data
     }

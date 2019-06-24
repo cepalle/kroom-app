@@ -1,6 +1,6 @@
 package io.kroom.app.view.util
 
-import androidx.appcompat.app.AlertDialog
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 

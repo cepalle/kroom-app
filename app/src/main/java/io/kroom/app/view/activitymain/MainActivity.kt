@@ -1,6 +1,7 @@
 package io.kroom.app.view.activitymain
 
 import android.os.Bundle
+import android.util.Log
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import io.kroom.app.util.SharedPreferences
 import io.kroom.app.TMP.fragment_TOSORT.*
 import io.kroom.app.view.activitymain.playlisteditor.PlaylistEditorFragment
 import io.kroom.app.view.activitymain.trackvoteevent.TrackVoteEventFragment
+import io.kroom.app.view.activitymain.user.UserFriendsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -35,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         when (route) {
             Routes.TRACK_VOTE_EVENT -> changeFragment(TrackVoteEventFragment())
             Routes.PLAYLIST_EDITOR -> changeFragment(PlaylistEditorFragment())
-            Routes.USER -> changeFragment(UserFragment())
+            Routes.USER -> changeFragment(UserFriendsFragment())
         }
     }
 
@@ -54,4 +56,3 @@ class MainActivity : AppCompatActivity() {
 
     private fun Int.toRoute(): Routes? = Routes.values().find { it.id == this }
 }
-

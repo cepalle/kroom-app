@@ -1,14 +1,11 @@
 package io.kroom.app.repo
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import io.kroom.app.graphql.TrackVoteEventAddOrUpdateVoteMutation
 import io.kroom.app.graphql.TrackVoteEventByIdQuery
 import io.kroom.app.graphql.TrackVoteEventByUserIdQuery
 import io.kroom.app.graphql.TrackVoteEventsPublicQuery
-import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.SingleSubject
 
 class TrackVoteEventRepo(val client: ApolloClient) {

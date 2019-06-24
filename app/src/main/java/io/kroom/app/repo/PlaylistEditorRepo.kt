@@ -1,13 +1,9 @@
 package io.kroom.app.repo
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import io.kroom.app.graphql.PlayListEditorByUserIdQuery
 import io.kroom.app.graphql.PlayListEditorsPublicQuery
-import io.reactivex.Single
-import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.SingleSubject
 
 class PlaylistEditorRepo(val client: ApolloClient) {

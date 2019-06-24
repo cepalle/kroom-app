@@ -7,7 +7,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
-private const val url = "https:///d16ffd9f.ngrok.io/graphql"
+private const val url = "https:///49924e83.ngrok.io/graphql"
 
 class GraphClient(private val getToken: () -> String?) {
     private fun tokenInterceptor(builder: Interceptor.Chain): okhttp3.Response {
@@ -32,7 +32,7 @@ class GraphClient(private val getToken: () -> String?) {
             it.proceed(
                 it.request().newBuilder().header(
                     "Authorization",
-                    "Bearer <TOKEN>"
+                    "Bearer TOKEN"
                 ).build()
             )
         }
