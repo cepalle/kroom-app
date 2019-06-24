@@ -17,8 +17,8 @@ class PlaylistInvitedFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_playlist_editor_tab_private, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val model = ViewModelProviders.of(this).get(PlaylistInvitedViewModel::class.java)
 

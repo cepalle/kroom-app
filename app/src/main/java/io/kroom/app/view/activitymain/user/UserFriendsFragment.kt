@@ -1,11 +1,15 @@
 package io.kroom.app.view.activitymain.user
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import io.kroom.app.R
 
 
 class UserFriendsFragment : Fragment() {
-    /*
-    val users = KroomApolloClient.Users
 
     lateinit var adapterAutocompletion: ArrayAdapter<String>
     lateinit var adapterFriendsList: ArrayAdapter<String>
@@ -78,7 +82,10 @@ class UserFriendsFragment : Fragment() {
                 users.deleteFriend(usersFetchedCache[username]!!) { s, e ->
                     s?.let {
                         if (s.errors().isNotEmpty()) {
-                            Dialogs.errorDialog(MainActivity.app, "You encounter an error ${s.errors()[0].messages()[0]}")
+                            Dialogs.errorDialog(
+                                MainActivity.app,
+                                "You encounter an error ${s.errors()[0].messages()[0]}"
+                            )
                                 .show()
                             return@let
                         }
@@ -151,6 +158,5 @@ class UserFriendsFragment : Fragment() {
         Dialogs.errorDialog(MainActivity.app, "You encounter an error ${f.message}")
             .show()
     }
-    */
 
 }

@@ -13,8 +13,8 @@ class PlaylistAddFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_playlist_editor_tab_add, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val model = ViewModelProviders.of(this).get(PlaylistPublicViewModel::class.java)
     }
