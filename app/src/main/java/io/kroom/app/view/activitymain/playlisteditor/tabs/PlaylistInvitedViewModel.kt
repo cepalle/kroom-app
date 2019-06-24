@@ -17,7 +17,9 @@ class PlaylistInvitedViewModel(app: Application) : AndroidViewModel(app) {
     private val playRepo = PlaylistEditorRepo(client)
 
     val playlistInvited by lazy {
-        // TODO get userId
-        playRepo.PlayListEditorByUserId(3)
+        val id = SharedPreferences.getId(getApplication())
+        id?.let {
+            playRepo.PlayListEditorByUserId(it)
+        }
     }
 }

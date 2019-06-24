@@ -1,12 +1,19 @@
 package io.kroom.app.view.activitymain.user
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.apollographql.apollo.exception.ApolloException
 import io.kroom.app.R
+import io.kroom.app.graphql.UserAddFriendMutation
+import io.kroom.app.view.util.Dialogs
+import kotlinx.android.synthetic.main.fragment_user_friends.*
 
 
 class UserFriendsFragment : Fragment() {
@@ -30,6 +37,19 @@ class UserFriendsFragment : Fragment() {
         userFriendsAdd.setAdapter(adapterAutocompletion)
         userFriendsList.adapter = adapterFriendsList
 
+        val model = ViewModelProviders.of(this).get(UserFriendsViewModel::class.java)
+
+        updateAutoCompletion(model.autoCompletion.value)
+        model.autoCompletion.observe(this, Observer {
+            updateAutoCompletion(it)
+        })
+
+        updateListFriends(model.friendsList.value)
+        model.friendsList.observe(this, Observer {
+            updateListFriends(it)
+        })
+
+        /*
         users.user(SharedPreferences.getId()!!) { s, _ ->
             s?.let {
                 if (it.errors().isEmpty()) {
@@ -107,6 +127,7 @@ class UserFriendsFragment : Fragment() {
                 }
             }
         }
+        */
     }
 
     private fun updateFriendsList(friends: List<Pair<String, Int>>) {
@@ -137,7 +158,7 @@ class UserFriendsFragment : Fragment() {
         }
     }
 
-    override fun onSuccess(s: UserAddFriendMutation.UserAddFriend) {
+    fun onSuccess(s: UserAddFriendMutation.UserAddFriend) {
         val errors = s.errors()
         if (errors.size > 0) {
             userFriendsAdd.error = errors[0].messages()[0]
@@ -149,14 +170,22 @@ class UserFriendsFragment : Fragment() {
                     friend.id()!!
                 )
             })
-            Dialogs.successDialog(MainActivity.app, "You added ${s.user()!!.userName()} to your friend list!")
+            Dialogs.successDialog(this, "You added ${s.user()!!.userName()} to your friend list!")
         }
     }
 
-    override fun onFail(f: ApolloException) {
+    fun onFail(f: ApolloException) {
         Log.println(Log.INFO, "fail-add-friend", "fail: $f")
-        Dialogs.errorDialog(MainActivity.app, "You encounter an error ${f.message}")
+        Dialogs.errorDialog(this, "You encounter an error ${f.message}")
             .show()
+    }
+
+    fun updateAutoCompletion(ls: Array<String>?) {
+
+    }
+
+    fun updateListFriends(ls: Array<String>?) {
+
     }
 
 }

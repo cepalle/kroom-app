@@ -22,8 +22,8 @@ class PlaylistInvitedFragment : Fragment() {
 
         val model = ViewModelProviders.of(this).get(PlaylistInvitedViewModel::class.java)
 
-        updatePlaylistInvited(model.playlistInvited.value)
-        model.playlistInvited.observe(this, Observer {
+        updatePlaylistInvited(model.playlistInvited?.value)
+        model.playlistInvited?.observe(this, Observer {
             updatePlaylistInvited(it)
         })
 
