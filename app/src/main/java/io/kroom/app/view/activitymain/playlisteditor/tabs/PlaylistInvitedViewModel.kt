@@ -23,10 +23,8 @@ class PlaylistInvitedViewModel(app: Application) : AndroidViewModel(app) {
     private var dispose: Disposable? = null
 
     init {
-        val id = SharedPreferences.getId(getApplication())
-        id?.let {
-            val sub = playRepo.playListEditorByUserId(it)
-            dispose = sub.subscribe { r ->
+        SharedPreferences.getId(getApplication())?.let {
+            dispose = playRepo.playListEditorByUserId(it).subscribe { r ->
                 listInvited.value = r
             }
         }

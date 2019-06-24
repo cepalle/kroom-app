@@ -23,8 +23,7 @@ class PlaylistPublicViewModel(app: Application) : AndroidViewModel(app) {
     private var dispose: Disposable? = null
 
     init {
-        val sub = playRepo.playListEditorsPublic()
-        dispose = sub.subscribe { r ->
+        dispose = playRepo.playListEditorsPublic().subscribe { r ->
             listPublic.value = r
         }
     }

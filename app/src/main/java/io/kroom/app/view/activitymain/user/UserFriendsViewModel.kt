@@ -4,12 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.apollographql.apollo.api.Response
-import io.kroom.app.graphql.UserAddFriendMutation
-import io.kroom.app.graphql.UserNameAutocompletionQuery
 import io.kroom.app.repo.UserRepo
 import io.kroom.app.repo.webservice.GraphClient
 import io.kroom.app.util.SharedPreferences
+import io.reactivex.disposables.Disposable
 
 class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
     private val client = GraphClient {
@@ -19,26 +17,75 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
     private val userRepo = UserRepo(client)
     private val userId = SharedPreferences.getId(getApplication())
 
+    private var disposeUserById: Disposable? = null
+    private var disposeAuto: Disposable? = null
+    private var disposeAddFriend: Disposable? = null
+
     // ---
 
-    val autoCompletion: MutableLiveData<Array<String>> = MutableLiveData()
-    val friendsList: MutableLiveData<Array<String>> = MutableLiveData()
+    private val autoCompletion: MutableLiveData<List<String>> = MutableLiveData()
+    private val friendsList: MutableLiveData<List<String>> = MutableLiveData()
+    private val error: MutableLiveData<String> = MutableLiveData()
 
-    val userFriend = userId?.let { userRepo.user(it) }
-
-    fun updateAutoComplet(prefix: String): LiveData<Result<Response<UserNameAutocompletionQuery.Data>>> {
-        userRepo.userNameAutocompletion(prefix).observe(viewLifecycleOwner,)
-
-        return
-    }
-
-    fun addFriend(friendId: Int): LiveData<Result<Response<UserAddFriendMutation.Data>>>? {
-        return userId?.let {
-            userRepo.addFriend(it, friendId)
+    init {
+        disposeUserById = userId?.let {
+            userRepo.user(it).subscribe { r ->
+                r.onFailure {
+                    error.value = it.message
+                    friendsList.value = null
+                }
+                r.onSuccess {
+                    friendsList.value = it.data()?.UserGetById()?.user()?.friends()?.map { it.userName() }
+                }
+            }
         }
     }
 
-    // first fetch
-    // fetch on update auto
-    // mutation add + update
+    override fun onCleared() {
+        super.onCleared()
+        disposeUserById?.dispose()
+        disposeAuto?.dispose()
+        disposeAddFriend?.dispose()
+    }
+
+    fun updateAutoComplet(prefix: String) {
+        disposeAuto?.dispose()
+        disposeAuto = userRepo.userNameAutocompletion(prefix).subscribe { r ->
+            r.onFailure {
+                error.value = it.message
+                autoCompletion.value = null
+            }
+            r.onSuccess {
+                autoCompletion.value = it.data()?.UserNameAutocompletion()?.map { it.userName() }
+            }
+        }
+    }
+
+    fun addFriend(friendId: Int) {
+        disposeAddFriend?.dispose()
+        disposeAddFriend = userId?.let {
+            userRepo.addFriend(it, friendId).subscribe { r ->
+                r.onFailure {
+                    error.value = it.message
+                    friendsList.value = null
+                }
+                r.onSuccess {
+                    friendsList.value = it.data()?.UserAddFriend()?.user()?.friends()?.map { it.userName() }
+                }
+            }
+        }
+    }
+
+    fun getAutoCompletion(): LiveData<List<String>> {
+        return autoCompletion
+    }
+
+    fun getFriendsList(): LiveData<List<String>> {
+        return friendsList
+    }
+
+    fun getError(): LiveData<String> {
+        return error
+    }
+
 }

@@ -1,4 +1,4 @@
-query UserById($id: Int!) {
+query UserByIdQuery($id: Int!) {
     UserGetById(id: $id) {
         errors {
             field

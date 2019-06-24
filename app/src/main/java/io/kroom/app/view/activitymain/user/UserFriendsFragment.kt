@@ -38,14 +38,16 @@ class UserFriendsFragment : Fragment() {
         userFriendsList.adapter = adapterFriendsList
 
         val model = ViewModelProviders.of(this).get(UserFriendsViewModel::class.java)
+        val autoCompletion = model.getAutoCompletion()
+        val friendsList = model.getFriendsList()
 
-        updateAutoCompletion(model.autoCompletion.value)
-        model.autoCompletion.observe(this, Observer {
+        updateAutoCompletion(autoCompletion.value)
+        autoCompletion.observe(this, Observer {
             updateAutoCompletion(it)
         })
 
-        updateListFriends(model.friendsList.value)
-        model.friendsList.observe(this, Observer {
+        updateListFriends(friendsList.value)
+        friendsList.observe(this, Observer {
             updateListFriends(it)
         })
 
