@@ -8,6 +8,8 @@ import io.kroom.app.graphql.TrackVoteEventAddOrUpdateVoteMutation
 import io.kroom.app.graphql.TrackVoteEventByIdQuery
 import io.kroom.app.graphql.TrackVoteEventByUserIdQuery
 import io.kroom.app.graphql.TrackVoteEventsPublicQuery
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.SingleSubject
 
 class TrackVoteEventRepo(val client: ApolloClient) {
 
@@ -16,8 +18,9 @@ class TrackVoteEventRepo(val client: ApolloClient) {
         userId: Int,
         musicId: Int,
         up: Boolean
-    ): LiveData<Result<Response<TrackVoteEventAddOrUpdateVoteMutation.Data>>> {
-        val data = MutableLiveData<Result<Response<TrackVoteEventAddOrUpdateVoteMutation.Data>>>()
+    ): SingleSubject<Result<Response<TrackVoteEventAddOrUpdateVoteMutation.Data>>> {
+        val data: SingleSubject<Result<Response<TrackVoteEventAddOrUpdateVoteMutation.Data>>> =
+            SingleSubject.create()
 
         client.mutate(
             TrackVoteEventAddOrUpdateVoteMutation.builder()
@@ -26,48 +29,51 @@ class TrackVoteEventRepo(val client: ApolloClient) {
                 .musicId(musicId)
                 .up(up)
                 .build()
-        ).enqueue(CallBackHandler { data.value = it })
+        ).enqueue(CallBackHandler { data.onSuccess(it) })
 
         return data
     }
 
     fun getTrackVoteEventById(
         id: Int
-    ): LiveData<Result<Response<TrackVoteEventByIdQuery.Data>>> {
-        val data = MutableLiveData<Result<Response<TrackVoteEventByIdQuery.Data>>>()
+    ): SingleSubject<Result<Response<TrackVoteEventByIdQuery.Data>>> {
+        val data: SingleSubject<Result<Response<TrackVoteEventByIdQuery.Data>>> =
+            SingleSubject.create()
 
         val queryCall = TrackVoteEventByIdQuery
             .builder()
             .id(id)
             .build()
-        client.query(queryCall).enqueue(CallBackHandler { data.value = it })
+        client.query(queryCall).enqueue(CallBackHandler { data.onSuccess(it) })
 
         return data
     }
 
     fun getTrackVoteEventByUserId(
         userId: Int
-    ): LiveData<Result<Response<TrackVoteEventByUserIdQuery.Data>>> {
-        val data = MutableLiveData<Result<Response<TrackVoteEventByUserIdQuery.Data>>>()
+    ): SingleSubject<Result<Response<TrackVoteEventByUserIdQuery.Data>>> {
+        val data: SingleSubject<Result<Response<TrackVoteEventByUserIdQuery.Data>>> =
+            SingleSubject.create()
 
         val queryCall = TrackVoteEventByUserIdQuery
             .builder()
             .userId(userId)
             .build()
-        client.query(queryCall).enqueue(CallBackHandler { data.value = it })
+        client.query(queryCall).enqueue(CallBackHandler { data.onSuccess(it) })
 
         return data
     }
 
     fun getTrackVoteEventsPublic(
 
-    ): LiveData<Result<Response<TrackVoteEventsPublicQuery.Data>>> {
-        val data = MutableLiveData<Result<Response<TrackVoteEventsPublicQuery.Data>>>()
+    ): SingleSubject<Result<Response<TrackVoteEventsPublicQuery.Data>>> {
+        val data: SingleSubject<Result<Response<TrackVoteEventsPublicQuery.Data>>> =
+            SingleSubject.create()
 
         val queryCall = TrackVoteEventsPublicQuery
             .builder()
             .build()
-        client.query(queryCall).enqueue(CallBackHandler { data.value = it })
+        client.query(queryCall).enqueue(CallBackHandler { data.onSuccess(it) })
 
         return data
     }

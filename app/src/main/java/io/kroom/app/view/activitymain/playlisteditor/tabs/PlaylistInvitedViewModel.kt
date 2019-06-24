@@ -3,11 +3,14 @@ package io.kroom.app.view.activitymain.playlisteditor.tabs
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations.map
+import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.api.Response
+import io.kroom.app.graphql.PlayListEditorByUserIdQuery
 import io.kroom.app.repo.PlaylistEditorRepo
 import io.kroom.app.repo.webservice.GraphClient
 import io.kroom.app.util.SharedPreferences
+import io.reactivex.Scheduler
+import io.reactivex.disposables.Disposable
 
 class PlaylistInvitedViewModel(app: Application) : AndroidViewModel(app) {
     private val client = GraphClient {
@@ -16,10 +19,26 @@ class PlaylistInvitedViewModel(app: Application) : AndroidViewModel(app) {
 
     private val playRepo = PlaylistEditorRepo(client)
 
-    val playlistInvited by lazy {
+    private val listInvited = MutableLiveData<Result<Response<PlayListEditorByUserIdQuery.Data>>>()
+    private var dispose: Disposable? = null
+
+    init {
         val id = SharedPreferences.getId(getApplication())
         id?.let {
-            playRepo.PlayListEditorByUserId(it)
+            val sub = playRepo.playListEditorByUserId(it)
+            dispose = sub.subscribe { r ->
+                listInvited.value = r
+            }
         }
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        dispose?.dispose()
+    }
+
+    fun getListInvited(): LiveData<Result<Response<PlayListEditorByUserIdQuery.Data>>> {
+        return listInvited
+    }
+
 }

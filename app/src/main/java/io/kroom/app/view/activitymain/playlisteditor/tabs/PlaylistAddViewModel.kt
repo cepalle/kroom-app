@@ -12,5 +12,4 @@ class PlaylistAddViewModel(app: Application) : AndroidViewModel(app) {
     }.client
 
     private val playRepo = PlaylistEditorRepo(client)
-
 }

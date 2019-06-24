@@ -22,8 +22,10 @@ class PlaylistPublicFragment : Fragment() {
 
         val model = ViewModelProviders.of(this).get(PlaylistPublicViewModel::class.java)
 
-        updatePlaylistPublic(model.playlistPublic.value)
-        model.playlistPublic.observe(this, Observer {
+        val listPublic = model.getListPublic()
+
+        updatePlaylistPublic(listPublic.value)
+        listPublic.observe(this, Observer {
             updatePlaylistPublic(it)
         })
 
