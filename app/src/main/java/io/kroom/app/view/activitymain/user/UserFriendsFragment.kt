@@ -27,10 +27,9 @@ class UserFriendsFragment : Fragment() {
         requireActivity().title = "Friends management"
         return inflater.inflate(R.layout.fragment_user_friends, container, false)
     }
-
+    /*
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         adapterAutocompletion = ArrayAdapter(activity!!, R.layout.select_dialog_item_material, java.util.ArrayList())
         adapterFriendsList = ArrayAdapter(activity!!, R.layout.select_dialog_item_material, java.util.ArrayList())
 
@@ -182,12 +181,12 @@ class UserFriendsFragment : Fragment() {
             .show()
     }
 
-    fun updateAutoCompletion(ls: Array<String>?) {
+    fun updateAutoCompletion(ls: List<String>?) {
 
     }
 
-    fun updateListFriends(ls: Array<String>?) {
+    fun updateListFriends(ls: List<String>?) {
 
     }
-
+    */
 }
