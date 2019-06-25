@@ -10,11 +10,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.apollographql.apollo.api.Response
 import io.kroom.app.R
 import io.kroom.app.graphql.PlayListEditorByUserIdQuery
-import io.kroom.app.graphql.PlayListEditorsPublicQuery
 
 class PlaylistInvitedFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_playlist_editor_tab_private, container, false)
+        return inflater.inflate(R.layout.fragment_playlist_editor_tab_invited, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

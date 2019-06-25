@@ -14,13 +14,13 @@
     >
 
         <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_private"
-                android:icon="@drawable/ic_home_black_24dp"
-                android:text="public" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_public"
                 android:icon="@drawable/ic_launcher_background"
-                android:text="private" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                android:text="public" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_invited"
+                android:icon="@drawable/ic_home_black_24dp"
+                android:text="invited" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
         <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_add"
                 android:icon="@drawable/ic_music_note_black_24dp"
