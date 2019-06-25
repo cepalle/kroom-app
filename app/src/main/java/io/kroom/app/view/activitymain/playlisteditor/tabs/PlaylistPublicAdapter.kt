@@ -56,7 +56,7 @@ class PlaylistPublicAdapter(private val dataSet: MutableList<playPubAdapterModel
         viewHolder.cacheUserName?.text = "by ${dataModel.userName}"
         viewHolder.cacheNbTrack?.text = "${dataModel.nbTrack} Tracks"
         viewHolder.cachePrivacy?.text = if (dataModel.public) "public"
-        else "private (${dataModel.nbUserInvited})"
+        else "private (${dataModel.nbUserInvited}) users"
         // convertView?.setBackgroundColor(dataModel.color.toColor())
         return convertView!!
     }
