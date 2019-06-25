@@ -3,7 +3,6 @@ package io.kroom.app.view.activitymain.user
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,8 +42,6 @@ class UserFriendsFragment : Fragment() {
 
         updateAutoCompletion(autoCompletion?.value)
         autoCompletion?.observe(this, Observer {
-            Log.i("TEST", "autoCompletion model")
-
             updateAutoCompletion(it)
         })
 
@@ -54,8 +51,6 @@ class UserFriendsFragment : Fragment() {
         })
 
         errorMessage?.observe(this, Observer {
-            Log.i("TEST", "observe error model")
-
             Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
         })
 
@@ -69,8 +64,6 @@ class UserFriendsFragment : Fragment() {
                 s: CharSequence, start: Int,
                 before: Int, count: Int
             ) {
-                Log.i("TEST", "onTextChanged")
-
                 model?.updateAutoComplet(userFriendsAddInput.text.toString())
             }
         })

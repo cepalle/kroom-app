@@ -1,7 +1,6 @@
 package io.kroom.app.view.activitymain.user
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -30,9 +29,6 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
     private val errorMessage: MutableLiveData<String> = MutableLiveData()
 
     init {
-        Log.i("TEST", "init")
-
-        // TODO if not connected
         disposeUserById = userId?.let {
             userRepo.user(it).subscribe { r ->
                 r.onFailure {
@@ -61,15 +57,10 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun updateAutoComplet(prefix: String) {
-        Log.i("TEST", "updateAutoComplet")
 
         disposeAuto?.dispose()
         disposeAuto = userRepo.userNameAutocompletion(prefix).subscribe { r ->
-            Log.i("TEST", "subscribe")
-
             r.onFailure {
-                Log.i("TEST", "onFailure")
-
                 errorMessage.postValue(it.message)
                 autoCompletion.postValue(null)
             }
