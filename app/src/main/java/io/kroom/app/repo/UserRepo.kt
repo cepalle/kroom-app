@@ -1,10 +1,10 @@
 package io.kroom.app.repo
 
+import android.util.Log
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import io.kroom.app.graphql.*
 import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.SingleSubject
 
 class UserRepo(val client: ApolloClient) {
 
@@ -18,7 +18,11 @@ class UserRepo(val client: ApolloClient) {
             UserByIdQuery.builder()
                 .id(id)
                 .build()
-        ).enqueue(CallBackHandler { data.onNext(it) })
+        ).enqueue(CallBackHandler {
+            Log.i("TEST", "enqueue")
+
+            data.onNext(it)
+        })
 
         return data
     }
@@ -27,9 +31,9 @@ class UserRepo(val client: ApolloClient) {
         userName: String,
         email: String,
         pass: String
-    ): SingleSubject<Result<Response<UserSignUpMutation.Data>>> {
-        val data: SingleSubject<Result<Response<UserSignUpMutation.Data>>> =
-            SingleSubject.create()
+    ): BehaviorSubject<Result<Response<UserSignUpMutation.Data>>> {
+        val data: BehaviorSubject<Result<Response<UserSignUpMutation.Data>>> =
+            BehaviorSubject.create()
 
         client.mutate(
             UserSignUpMutation.builder()
@@ -37,7 +41,7 @@ class UserRepo(val client: ApolloClient) {
                 .email(email)
                 .pass(pass)
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.onNext(it) })
 
         return data
     }
@@ -45,31 +49,31 @@ class UserRepo(val client: ApolloClient) {
     fun signIn(
         userName: String,
         pass: String
-    ): SingleSubject<Result<Response<UserSignInMutation.Data>>> {
-        val data: SingleSubject<Result<Response<UserSignInMutation.Data>>> =
-            SingleSubject.create()
+    ): BehaviorSubject<Result<Response<UserSignInMutation.Data>>> {
+        val data: BehaviorSubject<Result<Response<UserSignInMutation.Data>>> =
+            BehaviorSubject.create()
 
         client.mutate(
             UserSignInMutation.builder()
                 .userName(userName)
                 .pass(pass)
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.onNext(it) })
 
         return data
     }
 
     fun signGoogleRequest(
         token: String
-    ): SingleSubject<Result<Response<UserSignWhithGoolgeMutation.Data>>> {
-        val data: SingleSubject<Result<Response<UserSignWhithGoolgeMutation.Data>>> =
-            SingleSubject.create()
+    ): BehaviorSubject<Result<Response<UserSignWhithGoolgeMutation.Data>>> {
+        val data: BehaviorSubject<Result<Response<UserSignWhithGoolgeMutation.Data>>> =
+            BehaviorSubject.create()
 
         client.mutate(
             UserSignWhithGoolgeMutation.builder()
                 .token(token)
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.onNext(it) })
 
         return data
     }
@@ -77,16 +81,16 @@ class UserRepo(val client: ApolloClient) {
     fun addFriend(
         userId: Int,
         friendId: Int
-    ): SingleSubject<Result<Response<UserAddFriendMutation.Data>>> {
-        val data: SingleSubject<Result<Response<UserAddFriendMutation.Data>>> =
-            SingleSubject.create()
+    ): BehaviorSubject<Result<Response<UserAddFriendMutation.Data>>> {
+        val data: BehaviorSubject<Result<Response<UserAddFriendMutation.Data>>> =
+            BehaviorSubject.create()
 
         client.mutate(
             UserAddFriendMutation.builder()
                 .userId(userId)
                 .friendId(friendId)
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.onNext(it) })
 
         return data
     }
@@ -94,31 +98,31 @@ class UserRepo(val client: ApolloClient) {
     fun deleteFriend(
         userId: Int,
         friendId: Int
-    ): SingleSubject<Result<Response<UserDeleteFriendMutation.Data>>> {
-        val data: SingleSubject<Result<Response<UserDeleteFriendMutation.Data>>> =
-            SingleSubject.create()
+    ): BehaviorSubject<Result<Response<UserDeleteFriendMutation.Data>>> {
+        val data: BehaviorSubject<Result<Response<UserDeleteFriendMutation.Data>>> =
+            BehaviorSubject.create()
 
         client.mutate(
             UserDeleteFriendMutation.builder()
                 .userId(userId)
                 .friendId(friendId)
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.onNext(it) })
 
         return data
     }
 
     fun userNameAutocompletion(
         prefix: String
-    ): SingleSubject<Result<Response<UserNameAutocompletionQuery.Data>>> {
-        val data: SingleSubject<Result<Response<UserNameAutocompletionQuery.Data>>> =
-            SingleSubject.create()
+    ): BehaviorSubject<Result<Response<UserNameAutocompletionQuery.Data>>> {
+        val data: BehaviorSubject<Result<Response<UserNameAutocompletionQuery.Data>>> =
+            BehaviorSubject.create()
 
         client.query(
             UserNameAutocompletionQuery.builder()
                 .prefix(prefix)
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.onNext(it) })
 
         return data
     }

@@ -31,8 +31,13 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
     private val errorMessage: MutableLiveData<String> = MutableLiveData()
 
     init {
+        Log.i("TEST", "init")
+
+        // TODO if not connected
         disposeUserById = userId?.let {
             userRepo.user(it).subscribe { r ->
+                Log.i("TEST", "subscribe")
+
                 r.onFailure {
                     errorMessage.value = it.message
                     friendsList.value = null

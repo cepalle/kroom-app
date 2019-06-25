@@ -48,6 +48,8 @@ class UserFriendsFragment : Fragment() {
 
         updateListFriends(friendsList?.value)
         friendsList?.observe(this, Observer {
+            Log.i("TEST", "observe")
+
             updateListFriends(it)
         })
 

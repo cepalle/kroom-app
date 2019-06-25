@@ -4,34 +4,34 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import io.kroom.app.graphql.PlayListEditorByUserIdQuery
 import io.kroom.app.graphql.PlayListEditorsPublicQuery
-import io.reactivex.subjects.SingleSubject
+import io.reactivex.subjects.BehaviorSubject
 
 class PlaylistEditorRepo(val client: ApolloClient) {
 
     fun playListEditorsPublic(
-    ): SingleSubject<Result<Response<PlayListEditorsPublicQuery.Data>>> {
-        val data: SingleSubject<Result<Response<PlayListEditorsPublicQuery.Data>>> =
-            SingleSubject.create()
+    ): BehaviorSubject<Result<Response<PlayListEditorsPublicQuery.Data>>> {
+        val data: BehaviorSubject<Result<Response<PlayListEditorsPublicQuery.Data>>> =
+            BehaviorSubject.create()
 
         client.query(
             PlayListEditorsPublicQuery.builder()
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.onNext(it) })
 
         return data
     }
 
     fun playListEditorByUserId(
         userId: Int
-    ): SingleSubject<Result<Response<PlayListEditorByUserIdQuery.Data>>> {
-        val data: SingleSubject<Result<Response<PlayListEditorByUserIdQuery.Data>>> =
-            SingleSubject.create()
+    ): BehaviorSubject<Result<Response<PlayListEditorByUserIdQuery.Data>>> {
+        val data: BehaviorSubject<Result<Response<PlayListEditorByUserIdQuery.Data>>> =
+            BehaviorSubject.create()
 
         client.query(
             PlayListEditorByUserIdQuery.builder()
                 .id(userId)
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.onNext(it) })
 
         return data
     }
