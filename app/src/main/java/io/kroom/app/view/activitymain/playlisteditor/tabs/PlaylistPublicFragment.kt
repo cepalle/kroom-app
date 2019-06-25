@@ -13,6 +13,12 @@ import io.kroom.app.graphql.PlayListEditorsPublicQuery
 
 class PlaylistPublicFragment : Fragment() {
 
+    private val adapterPublic by lazy {
+        context?.let {
+            PlaylistPublicAdapter(arrayListOf(), it)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_playlist_editor_tab_public, container, false)
     }
@@ -34,6 +40,7 @@ class PlaylistPublicFragment : Fragment() {
     private fun updatePlaylistPublic(res: Result<Response<PlayListEditorsPublicQuery.Data>>?) {
         if (res == null) return
         // TODO update view
+        adapterPublic?.updateDataSet()
     }
 
 }
