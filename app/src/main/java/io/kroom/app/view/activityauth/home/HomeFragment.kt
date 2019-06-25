@@ -1,4 +1,4 @@
-package io.kroom.app.view.activityconnection.home
+package io.kroom.app.view.activityauth.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

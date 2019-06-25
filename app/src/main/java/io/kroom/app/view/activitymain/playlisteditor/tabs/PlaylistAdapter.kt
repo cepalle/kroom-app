@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import io.kroom.app.R
 
-data class playPubAdapterModel(
+data class playAdapterModel(
     val name: String,
     val userName: String,
     val nbTrack: Int,
@@ -17,10 +17,10 @@ data class playPubAdapterModel(
     val public: Boolean
 )
 
-class PlaylistPublicAdapter(private val dataSet: MutableList<playPubAdapterModel>, mContext: Context) :
-    ArrayAdapter<playPubAdapterModel>(mContext, R.layout.adapter_playlist_editor_public, dataSet) {
+class PlaylistPublicAdapter(private val dataSet: MutableList<playAdapterModel>, mContext: Context) :
+    ArrayAdapter<playAdapterModel>(mContext, R.layout.adapter_playlist_editor_public, dataSet) {
 
-    fun updateDataSet(todos: List<playPubAdapterModel>) {
+    fun updateDataSet(todos: List<playAdapterModel>) {
         dataSet.clear()
         dataSet.addAll(todos)
     }

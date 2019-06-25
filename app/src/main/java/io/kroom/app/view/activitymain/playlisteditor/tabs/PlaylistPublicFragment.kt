@@ -31,7 +31,7 @@ class PlaylistPublicFragment : Fragment() {
             list_public.adapter = adapterPublic
             adapterPublic?.updateDataSet(
                 listOf(
-                    playPubAdapterModel("name", "username", 0, 42, false)
+                    playAdapterModel("name", "username", 0, 42, false)
                 )
             )
         }
@@ -59,7 +59,7 @@ class PlaylistPublicFragment : Fragment() {
                 val nbInvited = it.invitedUsers()?.count()
 
                 if (userName != null && nbTrack != null && nbInvited != null)
-                    playPubAdapterModel(
+                    playAdapterModel(
                         it.name(),
                         userName,
                         nbTrack,
