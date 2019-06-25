@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.apollographql.apollo.api.Response
 import io.kroom.app.graphql.PlayListEditorByUserIdQuery
 import io.kroom.app.repo.PlaylistEditorRepo
 import io.kroom.app.webservice.GraphClient
@@ -18,7 +17,7 @@ class PlaylistInvitedViewModel(app: Application) : AndroidViewModel(app) {
 
     private val playRepo = PlaylistEditorRepo(client)
 
-    private val listInvited = MutableLiveData<Result<Response<PlayListEditorByUserIdQuery.Data>>>()
+    private val listInvited = MutableLiveData<Result<PlayListEditorByUserIdQuery.Data>>()
     private var dispose: Disposable? = null
 
     init {
@@ -34,7 +33,7 @@ class PlaylistInvitedViewModel(app: Application) : AndroidViewModel(app) {
         dispose?.dispose()
     }
 
-    fun getListInvited(): LiveData<Result<Response<PlayListEditorByUserIdQuery.Data>>> {
+    fun getListInvited(): LiveData<Result<PlayListEditorByUserIdQuery.Data>> {
         return listInvited
     }
 

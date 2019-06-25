@@ -16,8 +16,8 @@ class TrackVoteEventRepo(val client: ApolloClient) {
         userId: Int,
         musicId: Int,
         up: Boolean
-    ): Single<Result<TrackVoteEventAddOrUpdateVoteMutation.Data>> {
-        val data: SingleSubject<Result<Response<TrackVoteEventAddOrUpdateVoteMutation.Data>>> =
+    ): SingleSubject<Result<TrackVoteEventAddOrUpdateVoteMutation.Data>> {
+        val data: SingleSubject<Result<TrackVoteEventAddOrUpdateVoteMutation.Data>> =
             SingleSubject.create()
 
         client.mutate(
@@ -29,13 +29,13 @@ class TrackVoteEventRepo(val client: ApolloClient) {
                 .build()
         ).enqueue(CallBackHandler { data.onSuccess(it) })
 
-        return data.map(::flatenResultResponse)
+        return data
     }
 
     fun getTrackVoteEventById(
         id: Int
-    ): Single<Result<TrackVoteEventByIdQuery.Data>> {
-        val data: SingleSubject<Result<Response<TrackVoteEventByIdQuery.Data>>> =
+    ): SingleSubject<Result<TrackVoteEventByIdQuery.Data>> {
+        val data: SingleSubject<Result<TrackVoteEventByIdQuery.Data>> =
             SingleSubject.create()
 
         val queryCall = TrackVoteEventByIdQuery
@@ -44,13 +44,13 @@ class TrackVoteEventRepo(val client: ApolloClient) {
             .build()
         client.query(queryCall).enqueue(CallBackHandler { data.onSuccess(it) })
 
-        return data.map(::flatenResultResponse)
+        return data
     }
 
     fun getTrackVoteEventByUserId(
         userId: Int
-    ): Single<Result<TrackVoteEventByUserIdQuery.Data>> {
-        val data: SingleSubject<Result<Response<TrackVoteEventByUserIdQuery.Data>>> =
+    ): SingleSubject<Result<TrackVoteEventByUserIdQuery.Data>> {
+        val data: SingleSubject<Result<TrackVoteEventByUserIdQuery.Data>> =
             SingleSubject.create()
 
         val queryCall = TrackVoteEventByUserIdQuery
@@ -59,13 +59,13 @@ class TrackVoteEventRepo(val client: ApolloClient) {
             .build()
         client.query(queryCall).enqueue(CallBackHandler { data.onSuccess(it) })
 
-        return data.map(::flatenResultResponse)
+        return data
     }
 
     fun getTrackVoteEventsPublic(
 
-    ): Single<Result<TrackVoteEventsPublicQuery.Data>> {
-        val data: SingleSubject<Result<Response<TrackVoteEventsPublicQuery.Data>>> =
+    ): SingleSubject<Result<TrackVoteEventsPublicQuery.Data>> {
+        val data: SingleSubject<Result<TrackVoteEventsPublicQuery.Data>> =
             SingleSubject.create()
 
         val queryCall = TrackVoteEventsPublicQuery
@@ -73,7 +73,7 @@ class TrackVoteEventRepo(val client: ApolloClient) {
             .build()
         client.query(queryCall).enqueue(CallBackHandler { data.onSuccess(it) })
 
-        return data.map(::flatenResultResponse)
+        return data
     }
 
 }

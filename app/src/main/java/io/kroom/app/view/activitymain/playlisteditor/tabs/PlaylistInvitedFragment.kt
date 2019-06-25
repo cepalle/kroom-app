@@ -30,7 +30,7 @@ class PlaylistInvitedFragment : Fragment() {
 
     }
 
-    private fun updatePlaylistInvited(res: Result<Response<PlayListEditorByUserIdQuery.Data>>?) {
+    private fun updatePlaylistInvited(res: Result<PlayListEditorByUserIdQuery.Data>?) {
         if (res == null) return
         // TODO update view
     }

@@ -41,15 +41,12 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
                 }
                 r.onSuccess {
                     friendsList.postValue(
-                        it.data()?.UserGetById()?.user()?.friends()?.map {
+                        it.UserGetById().user()?.friends()?.map {
                             val id = it.id()
                             if (id != null) Pair(it.userName(), id)
                             else null
                         }?.filterNotNull()
                     )
-                    it.errors().forEach {
-                        errorMessage.postValue(it.message())
-                    }
                 }
             }
         }
@@ -78,15 +75,12 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
             }
             r.onSuccess {
                 autoCompletion.postValue(
-                    it.data()?.UserNameAutocompletion()?.map {
+                    it.UserNameAutocompletion().map {
                         val id = it.id()
                         if (id != null) Pair(it.userName(), id)
                         else null
-                    }?.filterNotNull()
+                    }.filterNotNull()
                 )
-                it.errors().forEach {
-                    errorMessage.postValue(it.message())
-                }
             }
         }
     }
@@ -101,15 +95,12 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
                 }
                 r.onSuccess {
                     friendsList.postValue(
-                        it.data()?.UserAddFriend()?.user()?.friends()?.map {
+                        it.UserAddFriend().user()?.friends()?.map {
                             val id = it.id()
                             if (id != null) Pair(it.userName(), id)
                             else null
                         }?.filterNotNull()
                     )
-                    it.errors().forEach {
-                        errorMessage.postValue(it.message())
-                    }
                 }
             }
         }
@@ -125,15 +116,12 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
                 }
                 r.onSuccess {
                     friendsList.postValue(
-                        it.data()?.UserDelFriend()?.user()?.friends()?.map {
+                        it.UserDelFriend().user()?.friends()?.map {
                             val id = it.id()
                             if (id != null) Pair(it.userName(), id)
                             else null
                         }?.filterNotNull()
                     )
-                    it.errors().forEach {
-                        errorMessage.postValue(it.message())
-                    }
                 }
             }
         }

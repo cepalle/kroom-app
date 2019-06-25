@@ -18,7 +18,7 @@ class PlaylistPublicViewModel(app: Application) : AndroidViewModel(app) {
 
     private val playRepo = PlaylistEditorRepo(client)
 
-    private val listPublic = MutableLiveData<Result<Response<PlayListEditorsPublicQuery.Data>>>()
+    private val listPublic = MutableLiveData<Result<PlayListEditorsPublicQuery.Data>>()
     private var dispose: Disposable? = null
 
     init {
@@ -32,7 +32,7 @@ class PlaylistPublicViewModel(app: Application) : AndroidViewModel(app) {
         dispose?.dispose()
     }
 
-    fun getListPublic(): LiveData<Result<Response<PlayListEditorsPublicQuery.Data>>> {
+    fun getListPublic(): LiveData<Result<PlayListEditorsPublicQuery.Data>> {
         return listPublic
     }
 

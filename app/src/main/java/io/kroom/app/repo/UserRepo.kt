@@ -11,8 +11,8 @@ class UserRepo(val client: ApolloClient) {
 
     fun user(
         id: Int
-    ): Single<Result<UserByIdQuery.Data>> {
-        val data: SingleSubject<Result<Response<UserByIdQuery.Data>>> =
+    ): SingleSubject<Result<UserByIdQuery.Data>> {
+        val data: SingleSubject<Result<UserByIdQuery.Data>> =
             SingleSubject.create()
 
         client.query(
@@ -23,15 +23,15 @@ class UserRepo(val client: ApolloClient) {
             data.onSuccess(it)
         })
 
-        return data.map(::flatenResultResponse)
+        return data
     }
 
     fun signUp(
         userName: String,
         email: String,
         pass: String
-    ): Single<Result<UserSignUpMutation.Data>> {
-        val data: SingleSubject<Result<Response<UserSignUpMutation.Data>>> =
+    ): SingleSubject<Result<UserSignUpMutation.Data>> {
+        val data: SingleSubject<Result<UserSignUpMutation.Data>> =
             SingleSubject.create()
 
         client.mutate(
@@ -42,14 +42,14 @@ class UserRepo(val client: ApolloClient) {
                 .build()
         ).enqueue(CallBackHandler { data.onSuccess(it) })
 
-        return data.map(::flatenResultResponse)
+        return data
     }
 
     fun signIn(
         userName: String,
         pass: String
-    ): Single<Result<UserSignInMutation.Data>> {
-        val data: SingleSubject<Result<Response<UserSignInMutation.Data>>> =
+    ): SingleSubject<Result<UserSignInMutation.Data>> {
+        val data: SingleSubject<Result<UserSignInMutation.Data>> =
             SingleSubject.create()
 
         client.mutate(
@@ -59,13 +59,13 @@ class UserRepo(val client: ApolloClient) {
                 .build()
         ).enqueue(CallBackHandler { data.onSuccess(it) })
 
-        return data.map(::flatenResultResponse)
+        return data
     }
 
     fun signGoogleRequest(
         token: String
-    ): Single<Result<UserSignWhithGoolgeMutation.Data>> {
-        val data: SingleSubject<Result<Response<UserSignWhithGoolgeMutation.Data>>> =
+    ): SingleSubject<Result<UserSignWhithGoolgeMutation.Data>> {
+        val data: SingleSubject<Result<UserSignWhithGoolgeMutation.Data>> =
             SingleSubject.create()
 
         client.mutate(
@@ -74,14 +74,14 @@ class UserRepo(val client: ApolloClient) {
                 .build()
         ).enqueue(CallBackHandler { data.onSuccess(it) })
 
-        return data.map(::flatenResultResponse)
+        return data
     }
 
     fun addFriend(
         userId: Int,
         friendId: Int
-    ): Single<Result<UserAddFriendMutation.Data>> {
-        val data: SingleSubject<Result<Response<UserAddFriendMutation.Data>>> =
+    ): SingleSubject<Result<UserAddFriendMutation.Data>> {
+        val data: SingleSubject<Result<UserAddFriendMutation.Data>> =
             SingleSubject.create()
 
         client.mutate(
@@ -91,14 +91,14 @@ class UserRepo(val client: ApolloClient) {
                 .build()
         ).enqueue(CallBackHandler { data.onSuccess(it) })
 
-        return data.map(::flatenResultResponse)
+        return data
     }
 
     fun deleteFriend(
         userId: Int,
         friendId: Int
-    ): Single<Result<UserDeleteFriendMutation.Data>> {
-        val data: SingleSubject<Result<Response<UserDeleteFriendMutation.Data>>> =
+    ): SingleSubject<Result<UserDeleteFriendMutation.Data>> {
+        val data: SingleSubject<Result<UserDeleteFriendMutation.Data>> =
             SingleSubject.create()
 
         client.mutate(
@@ -108,13 +108,13 @@ class UserRepo(val client: ApolloClient) {
                 .build()
         ).enqueue(CallBackHandler { data.onSuccess(it) })
 
-        return data.map(::flatenResultResponse)
+        return data
     }
 
     fun userNameAutocompletion(
         prefix: String
-    ): Single<Result<UserNameAutocompletionQuery.Data>> {
-        val data: SingleSubject<Result<Response<UserNameAutocompletionQuery.Data>>> =
+    ): SingleSubject<Result<UserNameAutocompletionQuery.Data>> {
+        val data: SingleSubject<Result<UserNameAutocompletionQuery.Data>> =
             SingleSubject.create()
         Log.i("TEST", "userNameAutocompletion")
 
@@ -128,7 +128,7 @@ class UserRepo(val client: ApolloClient) {
             data.onSuccess(it)
         })
 
-        return data.map(::flatenResultResponse)
+        return data
     }
 
 }

@@ -10,8 +10,8 @@ import io.reactivex.subjects.SingleSubject
 class PlaylistEditorRepo(val client: ApolloClient) {
 
     fun playListEditorsPublic(
-    ): Single<Result<PlayListEditorsPublicQuery.Data>> {
-        val data: SingleSubject<Result<Response<PlayListEditorsPublicQuery.Data>>> =
+    ): SingleSubject<Result<PlayListEditorsPublicQuery.Data>> {
+        val data: SingleSubject<Result<PlayListEditorsPublicQuery.Data>> =
             SingleSubject.create()
 
         client.query(
@@ -19,13 +19,13 @@ class PlaylistEditorRepo(val client: ApolloClient) {
                 .build()
         ).enqueue(CallBackHandler { data.onSuccess(it) })
 
-        return data.map(::flatenResultResponse)
+        return data
     }
 
     fun playListEditorByUserId(
         userId: Int
-    ): Single<Result<PlayListEditorByUserIdQuery.Data?>> {
-        val data: SingleSubject<Result<Response<PlayListEditorByUserIdQuery.Data>>> =
+    ): SingleSubject<Result<PlayListEditorByUserIdQuery.Data>> {
+        val data: SingleSubject<Result<PlayListEditorByUserIdQuery.Data>> =
             SingleSubject.create()
 
         client.query(
@@ -34,7 +34,7 @@ class PlaylistEditorRepo(val client: ApolloClient) {
                 .build()
         ).enqueue(CallBackHandler { data.onSuccess(it) })
 
-        return data.map(::flatenResultResponse)
+        return data
     }
 
 }
