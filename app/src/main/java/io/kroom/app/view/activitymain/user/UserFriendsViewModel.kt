@@ -2,12 +2,11 @@ package io.kroom.app.view.activitymain.user
 
 import android.app.Application
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.kroom.app.repo.UserRepo
-import io.kroom.app.repo.webservice.GraphClient
+import io.kroom.app.webservice.GraphClient
 import io.kroom.app.util.SharedPreferences
 import io.reactivex.disposables.Disposable
 

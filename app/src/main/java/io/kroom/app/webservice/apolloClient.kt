@@ -1,4 +1,4 @@
-package io.kroom.app.repo.webservice
+package io.kroom.app.webservice
 
 import com.apollographql.apollo.ApolloClient
 

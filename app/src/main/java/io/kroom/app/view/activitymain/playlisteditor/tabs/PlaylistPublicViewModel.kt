@@ -5,10 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.api.Response
-import io.kroom.app.graphql.PlayListEditorByUserIdQuery
 import io.kroom.app.graphql.PlayListEditorsPublicQuery
 import io.kroom.app.repo.PlaylistEditorRepo
-import io.kroom.app.repo.webservice.GraphClient
+import io.kroom.app.webservice.GraphClient
 import io.kroom.app.util.SharedPreferences
 import io.reactivex.disposables.Disposable
 
