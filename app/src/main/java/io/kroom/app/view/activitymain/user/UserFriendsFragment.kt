@@ -43,17 +43,19 @@ class UserFriendsFragment : Fragment() {
 
         updateAutoCompletion(autoCompletion?.value)
         autoCompletion?.observe(this, Observer {
+            Log.i("TEST", "autoCompletion model")
+
             updateAutoCompletion(it)
         })
 
         updateListFriends(friendsList?.value)
         friendsList?.observe(this, Observer {
-            Log.i("TEST", "observe")
-
             updateListFriends(it)
         })
 
         errorMessage?.observe(this, Observer {
+            Log.i("TEST", "observe error model")
+
             Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
         })
 
@@ -67,6 +69,8 @@ class UserFriendsFragment : Fragment() {
                 s: CharSequence, start: Int,
                 before: Int, count: Int
             ) {
+                Log.i("TEST", "onTextChanged")
+
                 model?.updateAutoComplet(userFriendsAddInput.text.toString())
             }
         })

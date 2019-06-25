@@ -19,8 +19,6 @@ class UserRepo(val client: ApolloClient) {
                 .id(id)
                 .build()
         ).enqueue(CallBackHandler {
-            Log.i("TEST", "enqueue")
-
             data.onNext(it)
         })
 
@@ -117,12 +115,17 @@ class UserRepo(val client: ApolloClient) {
     ): BehaviorSubject<Result<Response<UserNameAutocompletionQuery.Data>>> {
         val data: BehaviorSubject<Result<Response<UserNameAutocompletionQuery.Data>>> =
             BehaviorSubject.create()
+        Log.i("TEST", "userNameAutocompletion")
 
         client.query(
             UserNameAutocompletionQuery.builder()
                 .prefix(prefix)
                 .build()
-        ).enqueue(CallBackHandler { data.onNext(it) })
+        ).enqueue(CallBackHandler {
+            Log.i("TEST", "CallBackHandler")
+
+            data.onNext(it)
+        })
 
         return data
     }

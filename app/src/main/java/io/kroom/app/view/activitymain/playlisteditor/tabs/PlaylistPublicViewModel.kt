@@ -23,7 +23,7 @@ class PlaylistPublicViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         dispose = playRepo.playListEditorsPublic().subscribe { r ->
-            listPublic.value = r
+            listPublic.postValue(r)
         }
     }
 

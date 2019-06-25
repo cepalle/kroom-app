@@ -35,20 +35,20 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
         // TODO if not connected
         disposeUserById = userId?.let {
             userRepo.user(it).subscribe { r ->
-                Log.i("TEST", "subscribe")
-
                 r.onFailure {
-                    errorMessage.value = it.message
-                    friendsList.value = null
+                    errorMessage.postValue(it.message)
+                    friendsList.postValue(null)
                 }
                 r.onSuccess {
-                    friendsList.value = it.data()?.UserGetById()?.user()?.friends()?.map {
-                        val id = it.id()
-                        if (id != null) Pair(it.userName(), id)
-                        else null
-                    }?.filterNotNull()
+                    friendsList.postValue(
+                        it.data()?.UserGetById()?.user()?.friends()?.map {
+                            val id = it.id()
+                            if (id != null) Pair(it.userName(), id)
+                            else null
+                        }?.filterNotNull()
+                    )
                     it.errors().forEach {
-                        errorMessage.value = it.message()
+                        errorMessage.postValue(it.message())
                     }
                 }
             }
@@ -64,20 +64,28 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun updateAutoComplet(prefix: String) {
+        Log.i("TEST", "updateAutoComplet")
+
         disposeAuto?.dispose()
         disposeAuto = userRepo.userNameAutocompletion(prefix).subscribe { r ->
+            Log.i("TEST", "subscribe")
+
             r.onFailure {
-                errorMessage.value = it.message
-                autoCompletion.value = null
+                Log.i("TEST", "onFailure")
+
+                errorMessage.postValue(it.message)
+                autoCompletion.postValue(null)
             }
             r.onSuccess {
-                autoCompletion.value = it.data()?.UserNameAutocompletion()?.map {
-                    val id = it.id()
-                    if (id != null) Pair(it.userName(), id)
-                    else null
-                }?.filterNotNull()
+                autoCompletion.postValue(
+                    it.data()?.UserNameAutocompletion()?.map {
+                        val id = it.id()
+                        if (id != null) Pair(it.userName(), id)
+                        else null
+                    }?.filterNotNull()
+                )
                 it.errors().forEach {
-                    errorMessage.value = it.message()
+                    errorMessage.postValue(it.message())
                 }
             }
         }
@@ -88,17 +96,19 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
         disposeAddFriend = userId?.let {
             userRepo.addFriend(it, friendId).subscribe { r ->
                 r.onFailure {
-                    errorMessage.value = it.message
-                    friendsList.value = null
+                    errorMessage.postValue(it.message)
+                    friendsList.postValue(null)
                 }
                 r.onSuccess {
-                    friendsList.value = it.data()?.UserAddFriend()?.user()?.friends()?.map {
-                        val id = it.id()
-                        if (id != null) Pair(it.userName(), id)
-                        else null
-                    }?.filterNotNull()
+                    friendsList.postValue(
+                        it.data()?.UserAddFriend()?.user()?.friends()?.map {
+                            val id = it.id()
+                            if (id != null) Pair(it.userName(), id)
+                            else null
+                        }?.filterNotNull()
+                    )
                     it.errors().forEach {
-                        errorMessage.value = it.message()
+                        errorMessage.postValue(it.message())
                     }
                 }
             }
@@ -110,17 +120,19 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
         disposeDelFriend = userId?.let {
             userRepo.deleteFriend(it, friendId).subscribe { r ->
                 r.onFailure {
-                    errorMessage.value = it.message
-                    friendsList.value = null
+                    errorMessage.postValue(it.message)
+                    friendsList.postValue(null)
                 }
                 r.onSuccess {
-                    friendsList.value = it.data()?.UserDelFriend()?.user()?.friends()?.map {
-                        val id = it.id()
-                        if (id != null) Pair(it.userName(), id)
-                        else null
-                    }?.filterNotNull()
+                    friendsList.postValue(
+                        it.data()?.UserDelFriend()?.user()?.friends()?.map {
+                            val id = it.id()
+                            if (id != null) Pair(it.userName(), id)
+                            else null
+                        }?.filterNotNull()
+                    )
                     it.errors().forEach {
-                        errorMessage.value = it.message()
+                        errorMessage.postValue(it.message())
                     }
                 }
             }
