@@ -41,7 +41,12 @@ class PlaylistEditorFragment : Fragment() {
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                if (tab.position != model?.tabPosition) {
+                    tab.position.toRoute()?.let(::goToRoute)
+                    model?.tabPosition = tab.position
+                }
+            }
         })
 
     }

@@ -28,12 +28,7 @@ class PlaylistAddFragment : Fragment() {
                     Toast.makeText(context, "Playlist created", Toast.LENGTH_SHORT).show()
                     input_name_edit.setText("")
                 } else {
-                    // TODO
-                    Toast.makeText(
-                        context,
-                        it.PlayListEditorNew().errors()[0].messages()[0],
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    input_name_edit.error = it.PlayListEditorNew().errors()[0].messages()[0]
                 }
             }
             it.onFailure {
