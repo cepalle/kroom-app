@@ -31,7 +31,7 @@ class PlaylistPublicFragment : Fragment() {
             list_public.adapter = adapterPublic
             adapterPublic?.updateDataSet(
                 listOf(
-                    playAdapterModel("name", "username", 0, 42, false)
+                    playAdapterModel(0, "name", "username", 0, 42, false)
                 )
             )
         }
@@ -60,6 +60,7 @@ class PlaylistPublicFragment : Fragment() {
 
                 if (userName != null && nbTrack != null && nbInvited != null)
                     playAdapterModel(
+                        it.id(),
                         it.name(),
                         userName,
                         nbTrack,

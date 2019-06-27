@@ -2,14 +2,18 @@ package io.kroom.app.view.activitymain.playlisteditor.tabs
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import io.kroom.app.R
+import io.kroom.app.view.activitymain.playlisteditor.PlaylistEditorActivity
 
 data class playAdapterModel(
+    val id: Int,
     val name: String,
     val userName: String,
     val nbTrack: Int,
@@ -49,7 +53,14 @@ class PlaylistPublicAdapter(private val dataSet: MutableList<playAdapterModel>, 
 
             convertView.tag = viewHolder
         } else {
-            viewHolder = convertView.tag as ViewHolder // can throw
+            viewHolder = convertView.tag as ViewHolder
+        }
+
+        convertView?.setOnClickListener {
+            val intent = Intent(context, PlaylistEditorActivity::class.java).apply {
+                putExtra("", dataModel.id)
+            }
+            startActivity(context, intent, null)
         }
 
         viewHolder.cacheName?.text = dataModel.name

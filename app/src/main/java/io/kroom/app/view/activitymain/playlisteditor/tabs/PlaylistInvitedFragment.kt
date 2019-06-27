@@ -31,7 +31,7 @@ class PlaylistInvitedFragment : Fragment() {
             list_invited.adapter = adapterIvited
             adapterIvited?.updateDataSet(
                 listOf(
-                    playAdapterModel("name2", "username2", 101, 41, false)
+                    playAdapterModel(1, "name2", "username2", 101, 41, false)
                 )
             )
         }
@@ -60,6 +60,7 @@ class PlaylistInvitedFragment : Fragment() {
 
                 if (userName != null && nbTrack != null && nbInvited != null)
                     playAdapterModel(
+                        it.id(),
                         it.name(),
                         userName,
                         nbTrack,
