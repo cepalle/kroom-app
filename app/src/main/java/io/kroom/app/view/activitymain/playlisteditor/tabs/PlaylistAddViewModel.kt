@@ -13,5 +13,7 @@ class PlaylistAddViewModel(app: Application) : AndroidViewModel(app) {
 
     private val playRepo = PlaylistEditorRepo(client)
 
+    fun newPlaylist(inputName: String, public: Boolean) {
+    }
 
 }
