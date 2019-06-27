@@ -21,7 +21,7 @@ class PlaylistPublicViewModel(app: Application) : AndroidViewModel(app) {
     private var dispose: Disposable? = null
 
     init {
-        dispose = playRepo.playListEditorsPublic().subscribe { r ->
+        dispose = playRepo.playlistEditorsPublic().subscribe { r ->
             listPublic.postValue(r)
         }
     }

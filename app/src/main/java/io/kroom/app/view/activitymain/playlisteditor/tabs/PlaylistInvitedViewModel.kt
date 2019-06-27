@@ -22,7 +22,7 @@ class PlaylistInvitedViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         SharedPreferences.getId(getApplication())?.let {
-            dispose = playRepo.playListEditorByUserId(it).subscribe { r ->
+            dispose = playRepo.playlistEditorByUserId(it).subscribe { r ->
                 listInvited.postValue(r)
             }
         }
