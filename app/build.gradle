@@ -59,4 +59,6 @@ dependencies {
     implementation 'com.github.kittinunf.result:result:2.2.0'
     implementation 'com.github.kittinunf.result:result-coroutines:2.2.0'
 
+    implementation 'com.google.android.material:material:1.0.0'
+
 }
