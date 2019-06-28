@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "750061079775",
+    "firebase_url": "https://kroom-7351d.firebaseio.com",
+    "project_id": "kroom-7351d",
+    "storage_bucket": "kroom-7351d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:750061079775:android:78c0673704c2da8d",
+        "android_client_info": {
+          "package_name": "io.kroom.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "750061079775-m3a7rnl3srteibh3s8fnjsv8mucubl9m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.kroom.app",
+            "certificate_hash": "928f2d67fc3c8fc77bc9a465308e61e368f26d66"
+          }
+        },
+        {
+          "client_id": "750061079775-6rl0adqrkgov5bclopq50natkkjodkd2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnr2RAxxOw_ySiPjKSMZd4L_xpbIVf2sU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "750061079775-6rl0adqrkgov5bclopq50natkkjodkd2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

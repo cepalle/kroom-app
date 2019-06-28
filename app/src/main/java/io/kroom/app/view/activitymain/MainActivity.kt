@@ -38,12 +38,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        Toast.makeText(this, "requestCode main : "+requestCode, Toast.LENGTH_SHORT).show()
-        Toast.makeText(this, "resultCode main : "+resultCode, Toast.LENGTH_SHORT).show()
-    }
-
     private fun goToRoute(route: Routes) {
         when (route) {
             Routes.TRACK_VOTE_EVENT -> changeFragment(TrackVoteEventFragment())
