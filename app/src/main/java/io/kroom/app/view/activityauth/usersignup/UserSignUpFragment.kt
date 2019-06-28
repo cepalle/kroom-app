@@ -23,9 +23,7 @@ import kotlinx.android.synthetic.main.fragment_user_sign_up.*
 
 class UserSignUpFragment : Fragment() {
 
-
     lateinit var model: UserSignUpViewModel
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Sign up"
@@ -57,32 +55,30 @@ class UserSignUpFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        Log.i("DEBUG", "onActivityResult: $requestCode $resultCode")
+
         if (requestCode == GOOGLE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             val googleResult = model.getGoogleResult(task)
             googleResult.observe(this, Observer {
                 Log.i("DEBUG", "google result observer")
 
-                if (it == null) {
-                    Toast.makeText(activity, "it is null", Toast.LENGTH_SHORT).show()
-                } else {
-                    it.onFailure { t ->
-                        Toast.makeText(activity, "exception: ${t.message}", Toast.LENGTH_SHORT).show()
-                    }
-                    it.onSuccess { userData ->
-                        Log.i("DEBUG", "on success activity result")
-                        userData.user()?.let { user ->
-                            Toast.makeText(activity, "" + user.token(), Toast.LENGTH_LONG).show()
+                it.onFailure { t ->
+                    Log.i("DEBUG", "on failure")
+                    Toast.makeText(activity, "exception: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+                it.onSuccess { userData ->
+                    Log.i("DEBUG", "on success activity result")
+                    userData.user()?.let { user ->
+                        Toast.makeText(activity, user.token(), Toast.LENGTH_LONG).show()
 
-                            Session.setUser(
-                                activity?.application!!,
-                                user.id()!!,
-                                user.email()!!,
-                                user.userName(),
-                                user.token()!!
-                            )
-
-                        }
+                        Session.setUser(
+                            activity?.application!!,
+                            user.id()!!,
+                            user.email()!!,
+                            user.userName(),
+                            user.token()!!
+                        )
                     }
                 }
             })

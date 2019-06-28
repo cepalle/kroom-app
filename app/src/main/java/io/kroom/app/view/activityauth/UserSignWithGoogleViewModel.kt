@@ -54,9 +54,9 @@ open class UserSignWithGoogleViewModel(app: Application) : AndroidViewModel(app)
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
-                // updateAccount(account)
+
                 googleToken = account.idToken.toString()
-                // TODO signIn
+
                 userRepo.signGoogleRequest(googleToken).subscribe { r ->
                     r.onFailure {
                         data.postValue(failure(it))
@@ -75,10 +75,7 @@ open class UserSignWithGoogleViewModel(app: Application) : AndroidViewModel(app)
                                 userNAme,
                                 token
                             )
-                        } else {
-                            // TODO
                         }
-
                         data.postValue(success(it.UserSignWithGoogle()))
                     }
                 }
