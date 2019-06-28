@@ -12,6 +12,7 @@ import io.kroom.app.view.activitymain.user.UserFriendsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import io.kroom.app.view.activityauth.AuthActivity
 
@@ -39,6 +40,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Toast.makeText(this, "requestCode main : "+requestCode, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "resultCode main : "+resultCode, Toast.LENGTH_SHORT).show()
     }
 
     private fun goToRoute(route: Routes) {

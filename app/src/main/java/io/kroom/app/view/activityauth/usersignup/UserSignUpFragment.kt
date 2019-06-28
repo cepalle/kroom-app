@@ -55,6 +55,8 @@ class UserSignUpFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        Toast.makeText(activity, "requestCode main : "+requestCode, Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, "resultCode main : "+resultCode, Toast.LENGTH_SHORT).show()
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == GOOGLE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
