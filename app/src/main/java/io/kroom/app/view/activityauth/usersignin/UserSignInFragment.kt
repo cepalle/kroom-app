@@ -1,5 +1,7 @@
 package io.kroom.app.view.activityauth.usersignin
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,11 +12,16 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.tasks.Task
 import io.kroom.app.R
 import io.kroom.app.TMP.util.Dialogs
 import io.kroom.app.graphql.UserSignInMutation
 import io.kroom.app.util.Session
+import io.kroom.app.view.activityauth.usersignup.UserSignUpFragment
 import kotlinx.android.synthetic.main.fragment_user_sign_in.*
+
 
 class UserSignInFragment : Fragment() {
 
@@ -35,6 +42,48 @@ class UserSignInFragment : Fragment() {
         signInForgotPassword.setOnClickListener { Log.e("TODO", "blsblsblalvlal") }
 
         model.getSignInResult().observe(this, Observer { observe(it) })
+
+        userSignInGoogle.setOnClickListener {
+            onGoogleSignIn()
+        }
+    }
+    private fun onGoogleSignIn() {
+        val intent = model.signInGoogleIntent()
+        startActivityForResult(intent, UserSignUpFragment.GOOGLE_REQUEST_CODE, null)
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        super.onActivityResult(requestCode, resultCode, data)
+
+        Log.i("DEBUG", "onActivityResult: $requestCode $resultCode")
+
+        if (requestCode == UserSignUpFragment.GOOGLE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            val googleResult = model.getGoogleResult(task)
+            googleResult.observe(this, Observer {
+                Log.i("DEBUG", "google result observer")
+
+                it.onFailure { t ->
+                    Log.i("DEBUG", "on failure")
+                    Toast.makeText(activity, "exception: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+                it.onSuccess { userData ->
+                    Log.i("DEBUG", "on success activity result")
+                    userData.user()?.let { user ->
+                        Toast.makeText(activity, user.token(), Toast.LENGTH_LONG).show()
+
+                        Session.setUser(
+                            activity?.application!!,
+                            user.id()!!,
+                            user.email()!!,
+                            user.userName(),
+                            user.token()!!
+                        )
+                    }
+                    activity?.finish()
+                }
+            })
+        }
     }
 
 
@@ -103,5 +152,9 @@ class UserSignInFragment : Fragment() {
         signInPassword.error = null
         signInUsername.error = null
     }
+    companion object {
+        const val GOOGLE_REQUEST_CODE = 9999
+    }
+
 
 }

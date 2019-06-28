@@ -1,5 +1,6 @@
 package io.kroom.app.view.activityauth
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
@@ -36,7 +37,9 @@ class AuthActivity : AppCompatActivity() {
             }
         })
     }
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+    }
     private fun changeFragment(position: Int) {
         model.menuPosition = position
         if (position == 0) supportFragmentManager.beginTransaction()

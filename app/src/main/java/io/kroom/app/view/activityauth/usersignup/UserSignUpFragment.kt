@@ -53,8 +53,6 @@ class UserSignUpFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Toast.makeText(activity, "requestCode main : "+requestCode, Toast.LENGTH_SHORT).show()
-        Toast.makeText(activity, "resultCode main : "+resultCode, Toast.LENGTH_SHORT).show()
         super.onActivityResult(requestCode, resultCode, data)
 
         Log.i("DEBUG", "onActivityResult: $requestCode $resultCode")
@@ -82,6 +80,7 @@ class UserSignUpFragment : Fragment() {
                             user.token()!!
                         )
                     }
+                    activity?.finish()
                 }
             })
         }
@@ -90,8 +89,6 @@ class UserSignUpFragment : Fragment() {
     private fun onSignUp() {
 
         clearFields()
-
-
         signUpAction.isEnabled = false
         signUpLoading.visibility = View.VISIBLE
 
@@ -122,8 +119,6 @@ class UserSignUpFragment : Fragment() {
     fun onSuccess(user: UserSignUpMutation.User) {
 
         Log.i("success-sign-up", "user sign up: $user")
-
-
         Session.setUser(
             this.activity?.application!!,
             user.id()!!, user.email()!!, user.userName(), user.token()!!
