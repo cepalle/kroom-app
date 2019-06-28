@@ -31,7 +31,7 @@ class PlaylistPublicFragment : Fragment() {
             list_public.adapter = adapterPublic
             adapterPublic?.updateDataSet(
                 listOf(
-                    playAdapterModel(0, "name", "username", 0, 42, false)
+                    playAdapterModel(0, "name", "username", 0, false)
                 )
             )
         }
@@ -56,15 +56,13 @@ class PlaylistPublicFragment : Fragment() {
             it.PlayListEditorsPublic().map {
                 val userName = it.userMaster()?.userName()
                 val nbTrack = it.tracks()?.count()
-                val nbInvited = it.invitedUsers()?.count()
 
-                if (userName != null && nbTrack != null && nbInvited != null)
+                if (userName != null && nbTrack != null)
                     playAdapterModel(
                         it.id(),
                         it.name(),
                         userName,
                         nbTrack,
-                        nbInvited,
                         it.public_()
                     )
                 else null

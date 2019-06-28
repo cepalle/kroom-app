@@ -7,17 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import io.kroom.app.R
 import io.kroom.app.view.activitymain.playlisteditor.activityplaylisteditor.PlaylistEditorActivity
+import io.kroom.app.view.activitymain.playlisteditor.activityplaylistreading.PlaylistReadingActivity
 
 data class playAdapterModel(
     val id: Int,
     val name: String,
     val userName: String,
     val nbTrack: Int,
-    val nbUserInvited: Int,
     val public: Boolean
 )
 
@@ -36,6 +37,8 @@ class PlaylistPublicAdapter(private val dataSet: MutableList<playAdapterModel>, 
         var cacheUserName: TextView? = null
         var cacheNbTrack: TextView? = null
         var cachePrivacy: TextView? = null
+        var cacheButtonReading: Button? = null
+        var cacheButtonEdition: Button? = null
     }
 
     @SuppressLint("SetTextI18n")
@@ -52,24 +55,31 @@ class PlaylistPublicAdapter(private val dataSet: MutableList<playAdapterModel>, 
             viewHolder.cacheNbTrack = convertView.findViewById(R.id.adapter_nb_track)
             viewHolder.cachePrivacy = convertView.findViewById(R.id.adapter_privacy)
             viewHolder.cacheUserName = convertView.findViewById(R.id.adapter_user_name)
+            viewHolder.cacheButtonReading = convertView.findViewById(R.id.adapter_button_reading)
+            viewHolder.cacheButtonEdition = convertView.findViewById(R.id.adapter_button_edition)
 
             convertView.tag = viewHolder
         } else {
             viewHolder = convertView.tag as ViewHolder
         }
 
-        convertView?.setOnClickListener {
+        viewHolder.cacheName?.text = dataModel.name
+        viewHolder.cacheUserName?.text = "by ${dataModel.userName}"
+        viewHolder.cacheNbTrack?.text = "${dataModel.nbTrack} Tracks"
+        viewHolder.cachePrivacy?.text = if (dataModel.public) "public" else "private"
+        viewHolder.cacheButtonEdition?.setOnClickListener {
             val intent = Intent(context, PlaylistEditorActivity::class.java).apply {
                 putExtra(EXTRA_NAME_PLAYLIST_ID, dataModel.id)
             }
             startActivity(context, intent, null)
         }
+        viewHolder.cacheButtonReading?.setOnClickListener {
+            val intent = Intent(context, PlaylistReadingActivity::class.java).apply {
+                putExtra(EXTRA_NAME_PLAYLIST_ID, dataModel.id)
+            }
+            startActivity(context, intent, null)
+        }
 
-        viewHolder.cacheName?.text = dataModel.name
-        viewHolder.cacheUserName?.text = "by ${dataModel.userName}"
-        viewHolder.cacheNbTrack?.text = "${dataModel.nbTrack} Tracks"
-        viewHolder.cachePrivacy?.text = if (dataModel.public) "public"
-        else "private (${dataModel.nbUserInvited} users)"
         // convertView?.setBackgroundColor(dataModel.color.toColor())
         return convertView!!
     }
