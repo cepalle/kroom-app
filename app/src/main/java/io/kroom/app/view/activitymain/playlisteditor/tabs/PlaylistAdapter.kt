@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import io.kroom.app.R
-import io.kroom.app.view.activitymain.playlisteditor.PlaylistEditorActivity
+import io.kroom.app.view.activitymain.playlisteditor.activityplaylisteditor.PlaylistEditorActivity
 
 data class playAdapterModel(
     val id: Int,
@@ -20,6 +20,8 @@ data class playAdapterModel(
     val nbUserInvited: Int,
     val public: Boolean
 )
+
+const val EXTRA_NAME_PLAYLIST_ID = "PlaylistPublicAdapter.playlistId"
 
 class PlaylistPublicAdapter(private val dataSet: MutableList<playAdapterModel>, mContext: Context) :
     ArrayAdapter<playAdapterModel>(mContext, R.layout.adapter_playlist_editor_public, dataSet) {
@@ -58,7 +60,7 @@ class PlaylistPublicAdapter(private val dataSet: MutableList<playAdapterModel>, 
 
         convertView?.setOnClickListener {
             val intent = Intent(context, PlaylistEditorActivity::class.java).apply {
-                putExtra("", dataModel.id)
+                putExtra(EXTRA_NAME_PLAYLIST_ID, dataModel.id)
             }
             startActivity(context, intent, null)
         }

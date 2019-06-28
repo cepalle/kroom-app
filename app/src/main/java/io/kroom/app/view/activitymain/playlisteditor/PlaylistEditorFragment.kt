@@ -14,7 +14,7 @@ import io.kroom.app.view.activitymain.playlisteditor.tabs.PlaylistPublicFragment
 import kotlinx.android.synthetic.main.fragment_playlist_editor.*
 
 class PlaylistEditorFragment : Fragment() {
-    var model: PlaylistEditorViewModel? = null
+    var model: PlaylistEditorFragementViewModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Playlist editor"
@@ -28,7 +28,7 @@ class PlaylistEditorFragment : Fragment() {
             changeFragment(PlaylistPublicFragment())
         }
 
-        model = ViewModelProviders.of(this).get(PlaylistEditorViewModel::class.java)
+        model = ViewModelProviders.of(this).get(PlaylistEditorFragementViewModel::class.java)
 
         model?.let {
             tabs_playlist_navigation.setScrollPosition(it.tabPosition, 0.0f, true)
@@ -62,7 +62,6 @@ class PlaylistEditorFragment : Fragment() {
     private fun changeFragment(fragment: Fragment) {
         fragmentManager?.beginTransaction()
             ?.replace(R.id.tab_navigation_container, fragment)
-            ?.addToBackStack(null)
             ?.commit()
     }
 

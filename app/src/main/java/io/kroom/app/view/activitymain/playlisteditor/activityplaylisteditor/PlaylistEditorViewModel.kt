@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.playlisteditor
+package io.kroom.app.view.activitymain.playlisteditor.activityplaylisteditor
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
