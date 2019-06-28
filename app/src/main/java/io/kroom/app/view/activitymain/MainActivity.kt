@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import io.kroom.app.R
-import io.kroom.app.util.SharedPreferences
+import io.kroom.app.util.Session
 import io.kroom.app.view.activitymain.playlisteditor.PlaylistEditorFragment
 import io.kroom.app.view.activitymain.trackvoteevent.TrackVoteEventFragment
 import io.kroom.app.view.activitymain.user.UserFriendsFragment
@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Log.i("TEST", "is connected: ${SharedPreferences.isConnected(application)}")
-        if (!SharedPreferences.isConnected(application)) {
+        Log.i("TEST", "is connected: ${Session.isConnected(application)}")
+        if (!Session.isConnected(application)) {
             ContextCompat.startActivity(this, Intent(this, AuthActivity::class.java), null)
         }
 
@@ -35,6 +35,10 @@ class MainActivity : AppCompatActivity() {
             it.itemId.toRoute()?.let(::goToRoute)
             true
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun goToRoute(route: Routes) {

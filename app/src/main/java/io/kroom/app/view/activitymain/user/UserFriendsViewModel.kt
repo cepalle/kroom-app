@@ -6,16 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.kroom.app.repo.UserRepo
 import io.kroom.app.webservice.GraphClient
-import io.kroom.app.util.SharedPreferences
+import io.kroom.app.util.Session
 import io.reactivex.disposables.Disposable
 
 class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
     private val client = GraphClient {
-        SharedPreferences.getToken(getApplication())
+        Session.getToken(getApplication())
     }.client
 
     private val userRepo = UserRepo(client)
-    private val userId = SharedPreferences.getId(getApplication())
+    private val userId = Session.getId(getApplication())
 
     private var disposeUserById: Disposable? = null
     private var disposeAuto: Disposable? = null

@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import io.kroom.app.R
 import io.kroom.app.TMP.util.Dialogs
 import io.kroom.app.graphql.UserSignInMutation
-import io.kroom.app.util.SharedPreferences
+import io.kroom.app.util.Session
 import kotlinx.android.synthetic.main.fragment_user_sign_in.*
 
 class UserSignInFragment : Fragment() {
@@ -75,7 +75,7 @@ class UserSignInFragment : Fragment() {
     private fun onSuccess(user: UserSignInMutation.User) {
         Log.i("success-sign-in", "user sign up: $user")
 
-        SharedPreferences.setUser(
+        Session.setUser(
             this.activity?.application!!,
             user.id()!!, user.email()!!, user.userName(), user.token()!!
         )

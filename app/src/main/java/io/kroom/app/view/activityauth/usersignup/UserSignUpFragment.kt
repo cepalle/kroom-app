@@ -1,5 +1,7 @@
 package io.kroom.app.view.activityauth.usersignup
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,10 +12,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.tasks.Task
 import io.kroom.app.R
 import io.kroom.app.TMP.util.Dialogs
 import io.kroom.app.graphql.UserSignUpMutation
-import io.kroom.app.util.SharedPreferences
+import io.kroom.app.util.Session
 import kotlinx.android.synthetic.main.fragment_user_sign_up.*
 
 class UserSignUpFragment : Fragment() {
@@ -40,7 +45,47 @@ class UserSignUpFragment : Fragment() {
         })
 
         userSignUpGoogle.setOnClickListener {
-            Log.i("todo", "a faire")
+            onGoogleSignUp()
+        }
+    }
+
+    private fun onGoogleSignUp() {
+        val intent = model.signInGoogleIntent()
+        startActivityForResult(intent, GOOGLE_REQUEST_CODE, null)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == GOOGLE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            val googleResult = model.getGoogleResult(task)
+            googleResult.observe(this, Observer {
+                Log.i("DEBUG", "google result observer")
+
+                if (it == null) {
+                    Toast.makeText(activity, "it is null", Toast.LENGTH_SHORT).show()
+                } else {
+                    it.onFailure { t ->
+                        Toast.makeText(activity, "exception: ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                    it.onSuccess { userData ->
+                        Log.i("DEBUG", "on success activity result")
+                        userData.user()?.let { user ->
+                            Toast.makeText(activity, "" + user.token(), Toast.LENGTH_LONG).show()
+
+                            Session.setUser(
+                                activity?.application!!,
+                                user.id()!!,
+                                user.email()!!,
+                                user.userName(),
+                                user.token()!!
+                            )
+
+                        }
+                    }
+                }
+            })
         }
     }
 
@@ -81,7 +126,7 @@ class UserSignUpFragment : Fragment() {
         Log.i("success-sign-up", "user sign up: $user")
 
 
-        SharedPreferences.setUser(
+        Session.setUser(
             this.activity?.application!!,
             user.id()!!, user.email()!!, user.userName(), user.token()!!
         )
@@ -109,6 +154,10 @@ class UserSignUpFragment : Fragment() {
         signUpEmail.error = null
         signUpPassword.error = null
         signUpUsername.error = null
+    }
+
+    companion object {
+        const val GOOGLE_REQUEST_CODE = 8888
     }
 
 }

@@ -3,7 +3,7 @@ package io.kroom.app.util
 import android.app.Application
 import android.content.Context
 
-object SharedPreferences {
+object Session {
 
     fun isConnected(app: Application): Boolean {
         val sharedPreferences = app.getSharedPreferences("user", Context.MODE_PRIVATE)

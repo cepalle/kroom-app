@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import io.kroom.app.R
-import io.kroom.app.util.SharedPreferences
 
 class UserLoggedFragment : Fragment() {
 
@@ -22,7 +21,7 @@ class UserLoggedFragment : Fragment() {
 
         /*
         loggedLogoutAction.setOnClickListener {
-            SharedPreferences.removeUser()
+            Session.removeUser()
             if (SimpleSession.isSignedIn(MainActivity.app)) {
                 SimpleSession . logout ()
 
@@ -31,8 +30,8 @@ class UserLoggedFragment : Fragment() {
         }
 
 
-        loggedWelcomeText.text = "Welcome ${SharedPreferences.getUsername()} !"
+        loggedWelcomeText.text = "Welcome ${Session.getUsername()} !"
         */
-        // println("TOKEN USER ${SharedPreferences.getToken()}")
+        // println("TOKEN USER ${Session.getToken()}")
     }
 }
