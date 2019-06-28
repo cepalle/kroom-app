@@ -31,6 +31,4 @@ class UserSignUpViewModel(app: Application) : AndroidViewModel(app) {
     fun getSignUpResult() : LiveData<Result<UserSignUpMutation.Data>> {
         return result
     }
-
-
 }

@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        SharedPreferences.removeUser(application)
         Log.i("TEST", "is connected: ${SharedPreferences.isConnected(application)}")
         if (!SharedPreferences.isConnected(application)) {
             ContextCompat.startActivity(this, Intent(this, AuthActivity::class.java), null)

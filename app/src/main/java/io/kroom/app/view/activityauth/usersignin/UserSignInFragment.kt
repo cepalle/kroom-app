@@ -1,85 +1,93 @@
 package io.kroom.app.view.activityauth.usersignin
 
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import io.kroom.app.R
+import io.kroom.app.TMP.util.Dialogs
+import io.kroom.app.graphql.UserSignInMutation
+import io.kroom.app.util.SharedPreferences
+import kotlinx.android.synthetic.main.fragment_user_sign_in.*
 
 class UserSignInFragment : Fragment() {
-    /*
-    private val users = KroomApolloClient.Users
 
-    private val signWithGoogle = SignWithGoogle_TODO(MainActivity.app)
-
+    lateinit var model: UserSignInViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Sign in"
-
-        val view = inflater.inflate(R.layout.fragment_user_sign_in, container, false)
-        signWithGoogle.setAuthProvider()
-        return view
+        return inflater.inflate(R.layout.fragment_user_sign_in, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        model = ViewModelProviders.of(this).get(UserSignInViewModel::class.java)
 
-        signInAction.setOnClickListener {
-            onSignIn()
-        }
 
-        signInForgotPassword.setOnClickListener { MainActivity.app.goToRoute(Routes.USER_FORGOT_PASSWORD) }
+        signInAction.setOnClickListener { onSignIn() }
 
-        userSignInGoogle.setOnClickListener {
-            signWithGoogle.action()
-        }
+        signInForgotPassword.setOnClickListener { Log.e("TODO", "blsblsblalvlal") }
+
+        model.getSignInResult().observe(this, Observer { observe(it) })
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
-        SimpleSession.onActivityResult(requestCode, resultCode, data)
-    }
 
     private fun onSignIn() {
+        Log.i("TEST", "in onSignIn")
         clearFields()
 
-        MainActivity.app.hideKeyboard()
         signInAction.isEnabled = false
         signInLoading.visibility = View.VISIBLE
 
         Toast
-            .makeText(MainActivity.app.applicationContext, "Login your account...", Toast.LENGTH_SHORT)
+            .makeText(context, "Login your account...", Toast.LENGTH_SHORT)
             .show()
 
-        users.signIn(getRequest()) { res, exception ->
-            res?.let(this::onSuccess)
-            exception?.let(this::onFail)
-
-            signInLoading.visibility = View.INVISIBLE
-            signInAction.isEnabled = true
-        }
+        model.signIn(signInUsername.text.toString(), signInPassword.text.toString())
     }
 
 
-    override fun onSuccess(s: UserSignInMutation.UserSignIn) {
-        if (checkSignInFormError(s)) return
+    private fun observe(result: Result<UserSignInMutation.Data>) {
+        Log.i("TEST", "in observe")
+        result.onFailure(this::onFail)
+        result.onSuccess {
+            Log.i("TEST", "in observe -> onSuccess")
 
-        Log.println(Log.INFO, "success-sign-in", "user sign up: $s")
+            val userSignIn = it.UserSignIn()
+            if (userSignIn.errors().isNotEmpty()) {
+                userSignIn.errors().forEach { err -> getFieldByName(err.field())?.error = err.messages()[0] }
+                return@onSuccess
+            }
 
-        s.user()?.let {
-            SharedPreferences.setUser(it.id()!!, it.email()!!, it.userName(), it.token()!!)
-            MainActivity.app.goToRoute(Routes.TRACK_VOTE_EVENT)
+            userSignIn.user()?.let(this::onSuccess)
         }
+
+        signInLoading.visibility = View.INVISIBLE
+        signInAction.isEnabled = true
+    }
+
+    private fun onSuccess(user: UserSignInMutation.User) {
+        Log.i("success-sign-in", "user sign up: $user")
+
+        SharedPreferences.setUser(
+            this.activity?.application!!,
+            user.id()!!, user.email()!!, user.userName(), user.token()!!
+        )
+
+        activity?.finish()
     }
 
 
-    private fun checkSignInFormError(s: UserSignInMutation.UserSignIn): Boolean {
-        val errors = s.errors()
-        if (errors.size > 0) {
-            errors.forEach { getFieldByName(it.field())?.error = it.messages()[0] }
-            return true
-        }
-        return false
-    }
+    private fun onFail(f: Throwable) {
+        Log.i("fail-sign-in", "fail: $f")
 
-    override fun onFail(f: ApolloException) {
-        Log.println(Log.INFO, "fail-sign-in", "fail: $f")
-        Dialogs.errorDialog(MainActivity.app, "You encounter an error ${f.message}")
+        Dialogs.errorDialog(context!!, "You encounter an error ${f.message}")
             .show()
     }
 
@@ -91,16 +99,9 @@ class UserSignInFragment : Fragment() {
         return null
     }
 
-    private fun getRequest(): KroomApolloClient.Users.UserSignInRequest {
-        val password = signInPassword.text.toString()
-        val userName = signInUsername.text.toString()
-
-        return KroomApolloClient.Users.UserSignInRequest(userName, password)
-    }
-
     private fun clearFields() {
         signInPassword.error = null
         signInUsername.error = null
     }
-    */
+
 }
