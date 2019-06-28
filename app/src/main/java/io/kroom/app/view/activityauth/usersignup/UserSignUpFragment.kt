@@ -1,94 +1,97 @@
 package io.kroom.app.view.activityauth.usersignup
 
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import io.kroom.app.R
+import io.kroom.app.TMP.util.Dialogs
+import io.kroom.app.graphql.UserSignUpMutation
+import io.kroom.app.util.SharedPreferences
+import kotlinx.android.synthetic.main.fragment_user_sign_up.*
 
 class UserSignUpFragment : Fragment() {
 
-    /*
-    private val users = KroomApolloClient.Users
-    private val signWithGoogle = SignWithGoogle_TODO(MainActivity.app)
+
+    lateinit var model: UserSignUpViewModel
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Sign up"
-        val view = inflater.inflate(R.layout.fragment_user_sign_up, container, false)
-        signWithGoogle.setAuthProvider()
-        return view
+        return inflater.inflate(R.layout.fragment_user_sign_up, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        model = ViewModelProviders.of(this).get(UserSignUpViewModel::class.java)
 
-        signUpAction?.setOnClickListener {
+        signUpAction.setOnClickListener {
             this.onSignUp()
         }
 
-        userSignUpGoogle.setOnClickListener {
-            signWithGoogle.action()
-        }
-    }
+        model.getSignUpResult().observe(this, Observer {
+            observe(it)
+        })
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
-        SimpleSession.onActivityResult(requestCode, resultCode, data)
+        userSignUpGoogle.setOnClickListener {
+            Log.i("todo", "a faire")
+        }
     }
 
     private fun onSignUp() {
 
         clearFields()
 
-        MainActivity.app.hideKeyboard()
+
         signUpAction.isEnabled = false
         signUpLoading.visibility = View.VISIBLE
 
         Toast
-            .makeText(MainActivity.app.applicationContext, "Registering your account...", Toast.LENGTH_SHORT)
+            .makeText(context, "Registering your account...", Toast.LENGTH_SHORT)
             .show()
 
-        users.signUp(getRequest()) { res, exception ->
-            res?.let(this::onSuccess)
-            exception?.let(this::onFail)
+        model.signUp(signUpUsername.text.toString(), signUpEmail.text.toString(), signUpPassword.text.toString())
+    }
 
-            signUpLoading.visibility = View.INVISIBLE
-            signUpAction.isEnabled = true
+    private fun observe(result: Result<UserSignUpMutation.Data>) {
+        result.onFailure(this::onFail)
+        result.onSuccess {
+            val userSignUp = it.UserSignUp()
+            if (userSignUp.errors().isNotEmpty()) {
+                userSignUp.errors().forEach { err -> getFieldByName(err.field())?.error = err.messages()[0] }
+                return@onSuccess
+            }
+
+            userSignUp.user()?.let(this::onSuccess)
         }
+
+        signUpLoading.visibility = View.INVISIBLE
+        signUpAction.isEnabled = true
     }
 
-    private fun getRequest(): KroomApolloClient.Users.UserSignUpRequest {
-        val email = signUpEmail.text.toString()
-        val password = signUpPassword.text.toString()
-        val userName = signUpUsername.text.toString()
 
-        return KroomApolloClient.Users.UserSignUpRequest(userName, email, password)
-    }
+    fun onSuccess(user: UserSignUpMutation.User) {
 
-    override fun onSuccess(s: UserSignUpMutation.UserSignUp) {
-        if (checkSignUpFormError(s)) return
+        Log.i("success-sign-up", "user sign up: $user")
 
-        Log.println(Log.INFO, "success-sign-up", "user sign up: $s")
 
-        val user = s.user()
-        Dialogs.successDialog(
-            MainActivity.app,
-            "Your user id = ${user?.id()} email = ${user?.email()} token = ${user?.token()}"
+        SharedPreferences.setUser(
+            this.activity?.application!!,
+            user.id()!!, user.email()!!, user.userName(), user.token()!!
         )
-            .show()
-        s.user()?.let {
-            SharedPreferences.setUser(it.id()!!, it.email()!!, it.userName(), it.token()!!)
-            MainActivity.app.goToRoute(Routes.TRACK_VOTE_EVENT)
-        }
+
+        activity?.finish()
     }
 
-    private fun checkSignUpFormError(s: UserSignUpMutation.UserSignUp): Boolean {
-        val errors = s.errors()
-        if (errors.size > 0) {
-            errors.forEach { getFieldByName(it.field())?.error = it.messages()[0] }
-            return true
-        }
-        return false
-    }
-
-    override fun onFail(f: ApolloException) {
+    private fun onFail(f: Throwable) {
         Log.println(Log.INFO, "fail-sign-up", "fail: $f")
-        Dialogs.errorDialog(MainActivity.app, "You encounter an error ${f.message}")
+        Dialogs.errorDialog(context!!, "You encounter an error ${f.message}")
             .show()
 
     }
@@ -107,5 +110,5 @@ class UserSignUpFragment : Fragment() {
         signUpPassword.error = null
         signUpUsername.error = null
     }
-    */
+
 }

@@ -17,8 +17,8 @@ import kotlinx.android.synthetic.main.fragment_user_friends.*
 
 class UserFriendsFragment : Fragment() {
 
-    lateinit var adapterAutocompletion: ArrayAdapter<String>
-    lateinit var adapterFriendsList: ArrayAdapter<String>
+    private lateinit var adapterAutocompletion: ArrayAdapter<String>
+    private lateinit var adapterFriendsList: ArrayAdapter<String>
     var model: UserFriendsViewModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -51,7 +51,7 @@ class UserFriendsFragment : Fragment() {
         })
 
         errorMessage?.observe(this, Observer {
-            Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
+            userFriendsAddInput.error = it
         })
 
         // ---

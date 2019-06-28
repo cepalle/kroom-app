@@ -10,6 +10,11 @@ import io.kroom.app.view.activitymain.playlisteditor.PlaylistEditorFragment
 import io.kroom.app.view.activitymain.trackvoteevent.TrackVoteEventFragment
 import io.kroom.app.view.activitymain.user.UserFriendsFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import android.content.Intent
+import android.util.Log
+import androidx.core.content.ContextCompat
+import io.kroom.app.view.activityauth.AuthActivity
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,8 +22,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (SharedPreferences.isConnected(application)) {
-            // TODO launch activity SignIn or SignUp
+        SharedPreferences.removeUser(application)
+        Log.i("TEST", "is connected: ${SharedPreferences.isConnected(application)}")
+        if (!SharedPreferences.isConnected(application)) {
+            ContextCompat.startActivity(this, Intent(this, AuthActivity::class.java), null)
         }
 
         if (savedInstanceState == null) {

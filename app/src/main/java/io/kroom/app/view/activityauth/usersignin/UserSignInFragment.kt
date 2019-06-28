@@ -1,4 +1,4 @@
-package io.kroom.app.view.activityauth.usersignIn
+package io.kroom.app.view.activityauth.usersignin
 
 import androidx.fragment.app.Fragment
 
