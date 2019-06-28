@@ -24,12 +24,12 @@ class TrackVoteEventFragment : Fragment() {
         Session.getToken(this.activity?.application!!)?.let {
             Log.i("DEBUG", "IL SE PASSE QQCH")
 
-            trackVoteEventLogout.setOnClickListener {
+         /*   trackVoteEventLogout.setOnClickListener {
                 Log.i("DEBUG", "JE ME LOGOUT")
                 Session.removeUser(this.activity?.application!!)
-            }
-            val te = "${Session.getEmail(this.activity?.application!!)!!} - ${Session.getId(this.activity?.application!!)!!}"
-            trackVoteEventDebug.text = te
+            }*/
+         //   val te = "${Session.getEmail(this.activity?.application!!)!!} - ${Session.getId(this.activity?.application!!)!!}"
+           // trackVoteEventDebug.text = te
         }
     }
 }

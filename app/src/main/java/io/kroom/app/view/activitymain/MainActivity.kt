@@ -12,9 +12,13 @@ import io.kroom.app.view.activitymain.user.UserFriendsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import io.kroom.app.view.activityauth.AuthActivity
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -38,6 +42,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.head_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.LogoutAction -> {
+                Toast.makeText(this, "Logout !!!", Toast.LENGTH_SHORT).show()
+
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
     private fun goToRoute(route: Routes) {
         when (route) {
             Routes.TRACK_VOTE_EVENT -> changeFragment(TrackVoteEventFragment())
