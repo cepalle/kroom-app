@@ -1,20 +1,18 @@
-package io.kroom.app.view.activitymain.playlisteditor
+package io.kroom.app.view.activitymain.playlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.tabs.TabLayout
 import io.kroom.app.R
-import io.kroom.app.view.activitymain.playlisteditor.tabs.PlaylistAddFragment
-import io.kroom.app.view.activitymain.playlisteditor.tabs.PlaylistInvitedFragment
-import io.kroom.app.view.activitymain.playlisteditor.tabs.PlaylistPublicFragment
+import io.kroom.app.view.activitymain.playlist.tabs.PlaylistAddFragment
+import io.kroom.app.view.activitymain.playlist.tabs.PlaylistInvitedFragment
+import io.kroom.app.view.activitymain.playlist.tabs.PlaylistPublicFragment
 import kotlinx.android.synthetic.main.fragment_playlist_editor.*
 
-class PlaylistEditorFragment : Fragment() {
-    var model: PlaylistEditorFragementViewModel? = null
+class PlaylistFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Playlist editor"
@@ -28,25 +26,13 @@ class PlaylistEditorFragment : Fragment() {
             changeFragment(PlaylistPublicFragment())
         }
 
-        model = ViewModelProviders.of(this).get(PlaylistEditorFragementViewModel::class.java)
-
-        model?.let {
-            tabs_playlist_navigation.setScrollPosition(it.tabPosition, 0.0f, true)
-        }
-
         tabs_playlist_navigation.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 tab.position.toRoute()?.let(::goToRoute)
-                model?.tabPosition = tab.position
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab) {
-                if (tab.position != model?.tabPosition) {
-                    tab.position.toRoute()?.let(::goToRoute)
-                    model?.tabPosition = tab.position
-                }
-            }
+            override fun onTabReselected(tab: TabLayout.Tab) {}
         })
 
     }
