@@ -9,7 +9,6 @@ import io.kroom.app.util.Session
 import io.kroom.app.view.activitymain.playlist.PlaylistFragment
 import io.kroom.app.view.activitymain.trackvoteevent.TrackVoteEventFragment
 import io.kroom.app.view.activitymain.user.UserFriendsFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
 import android.util.Log
 import android.view.Menu
@@ -17,6 +16,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import io.kroom.app.view.activityauth.AuthActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             changeFragment(TrackVoteEventFragment())
         }
 
-        bottom_navigation.setOnNavigationItemSelectedListener {
+        bottomNavigationView.setOnNavigationItemSelectedListener {
             it.itemId.toRoute()?.let(::goToRoute)
             true
         }

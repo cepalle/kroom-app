@@ -23,7 +23,7 @@ class PlaylistEditorActivity : AppCompatActivity() {
 
         val playlistId: Int = intent.getIntExtra(EXTRA_NAME_PLAYLIST_ID, 0)
 
-        aeditor_tabs_playlist_navigation.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        playlistEditorNavigation.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 tab.position.toRoute()?.let(::goToRoute)
             }
@@ -44,7 +44,7 @@ class PlaylistEditorActivity : AppCompatActivity() {
 
     private fun changeFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.aeditor_tab_navigation_container, fragment)
+            .replace(R.id.playlistEditorNavigationContainer, fragment)
             .commit()
     }
 

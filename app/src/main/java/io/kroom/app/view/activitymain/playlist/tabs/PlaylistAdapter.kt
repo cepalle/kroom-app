@@ -25,7 +25,7 @@ data class playAdapterModel(
 const val EXTRA_NAME_PLAYLIST_ID = "PlaylistPublicAdapter.playlistId"
 
 class PlaylistPublicAdapter(private val dataSet: MutableList<playAdapterModel>, mContext: Context) :
-    ArrayAdapter<playAdapterModel>(mContext, R.layout.adapter_playlist_editor_public, dataSet) {
+    ArrayAdapter<playAdapterModel>(mContext, R.layout.adapter_playlist_public, dataSet) {
 
     fun updateDataSet(todos: List<playAdapterModel>) {
         dataSet.clear()
@@ -50,7 +50,7 @@ class PlaylistPublicAdapter(private val dataSet: MutableList<playAdapterModel>, 
         if (convertView == null) {
             viewHolder = ViewHolder()
             val inflater = LayoutInflater.from(context)
-            convertView = inflater.inflate(R.layout.adapter_playlist_editor_public, parent, false)
+            convertView = inflater.inflate(R.layout.adapter_playlist_public, parent, false)
             viewHolder.cacheName = convertView.findViewById(R.id.adapter_name)
             viewHolder.cacheNbTrack = convertView.findViewById(R.id.adapter_nb_track)
             viewHolder.cachePrivacy = convertView.findViewById(R.id.adapter_privacy)

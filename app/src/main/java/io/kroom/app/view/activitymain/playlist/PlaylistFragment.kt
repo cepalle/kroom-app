@@ -10,13 +10,13 @@ import io.kroom.app.R
 import io.kroom.app.view.activitymain.playlist.tabs.PlaylistAddFragment
 import io.kroom.app.view.activitymain.playlist.tabs.PlaylistInvitedFragment
 import io.kroom.app.view.activitymain.playlist.tabs.PlaylistPublicFragment
-import kotlinx.android.synthetic.main.fragment_playlist_editor.*
+import kotlinx.android.synthetic.main.fragment_playlist.*
 
 class PlaylistFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Playlist editor"
-        return inflater.inflate(R.layout.fragment_playlist_editor, container, false)
+        return inflater.inflate(R.layout.fragment_playlist, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,7 +26,7 @@ class PlaylistFragment : Fragment() {
             changeFragment(PlaylistPublicFragment())
         }
 
-        tabs_playlist_navigation.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        playlistNavigation.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 tab.position.toRoute()?.let(::goToRoute)
             }
@@ -47,7 +47,7 @@ class PlaylistFragment : Fragment() {
 
     private fun changeFragment(fragment: Fragment) {
         fragmentManager?.beginTransaction()
-            ?.replace(R.id.tab_navigation_container, fragment)
+            ?.replace(R.id.playlistNavigationContainer, fragment)
             ?.commit()
     }
 
