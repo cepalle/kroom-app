@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.playlisteditor.tabs
+package io.kroom.app.view.activitymain.playlist.tabs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import io.kroom.app.R
 import io.kroom.app.graphql.PlayListEditorsPublicQuery
-import kotlinx.android.synthetic.main.fragment_playlist_editor_tab_public.*
+import kotlinx.android.synthetic.main.fragment_playlist_tab_public.*
 
 class PlaylistPublicFragment : Fragment() {
 
@@ -21,14 +21,14 @@ class PlaylistPublicFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_playlist_editor_tab_public, container, false)
+        return inflater.inflate(R.layout.fragment_playlist_tab_public, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (list_public.adapter == null) {
-            list_public.adapter = adapterPublic
+        if (playlistPublicList.adapter == null) {
+            playlistPublicList.adapter = adapterPublic
             adapterPublic?.updateDataSet(
                 listOf(
                     playAdapterModel(0, "name", "username", 0, false)

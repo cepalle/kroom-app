@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.playlisteditor.tabs
+package io.kroom.app.view.activitymain.playlist.tabs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,12 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import io.kroom.app.R
-import kotlinx.android.synthetic.main.fragment_playlist_editor_tab_add.*
+import kotlinx.android.synthetic.main.fragment_playlist_tab_add.*
 
 class PlaylistAddFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_playlist_editor_tab_add, container, false)
+        return inflater.inflate(R.layout.fragment_playlist_tab_add, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,9 +26,9 @@ class PlaylistAddFragment : Fragment() {
             it.onSuccess {
                 if (it.PlayListEditorNew().errors().isEmpty()) {
                     Toast.makeText(context, "Playlist created", Toast.LENGTH_SHORT).show()
-                    input_name_edit.setText("")
+                    playlistAddNameEdit.setText("")
                 } else {
-                    input_name_edit.error = it.PlayListEditorNew().errors()[0].messages()[0]
+                    playlistAddNameEdit.error = it.PlayListEditorNew().errors()[0].messages()[0]
                 }
             }
             it.onFailure {
@@ -36,9 +36,9 @@ class PlaylistAddFragment : Fragment() {
             }
         })
 
-        btn_new_playlist.setOnClickListener {
-            val inputName = input_name_edit.text.toString()
-            val public = switch_public.isChecked
+        playlistAddBtnNew.setOnClickListener {
+            val inputName = playlistAddNameEdit.text.toString()
+            val public = playlistAddSwitchPublic.isChecked
             model.newPlaylist(inputName, public)
         }
     }

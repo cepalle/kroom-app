@@ -18,7 +18,6 @@ class UserFriendsFragment : Fragment() {
 
     private lateinit var adapterAutocompletion: ArrayAdapter<String>
     private lateinit var adapterFriendsList: ArrayAdapter<String>
-    var model: UserFriendsViewModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Friends management"
@@ -34,22 +33,22 @@ class UserFriendsFragment : Fragment() {
         userFriendsAddInput.setAdapter(adapterAutocompletion)
         userFriendsList.adapter = adapterFriendsList
 
-        model = ViewModelProviders.of(this).get(UserFriendsViewModel::class.java)
-        val autoCompletion = model?.getAutoCompletion()
-        val friendsList = model?.getFriendsList()
-        val errorMessage = model?.getErrorMessage()
+        val model = ViewModelProviders.of(this).get(UserFriendsViewModel::class.java)
+        val autoCompletion = model.getAutoCompletion()
+        val friendsList = model.getFriendsList()
+        val errorMessage = model.getErrorMessage()
 
-        updateAutoCompletion(autoCompletion?.value)
-        autoCompletion?.observe(this, Observer {
+        updateAutoCompletion(autoCompletion.value)
+        autoCompletion.observe(this, Observer {
             updateAutoCompletion(it)
         })
 
-        updateListFriends(friendsList?.value)
-        friendsList?.observe(this, Observer {
+        updateListFriends(friendsList.value)
+        friendsList.observe(this, Observer {
             updateListFriends(it)
         })
 
-        errorMessage?.observe(this, Observer {
+        errorMessage.observe(this, Observer {
             userFriendsAddInput.error = it
         })
 
@@ -63,26 +62,26 @@ class UserFriendsFragment : Fragment() {
                 s: CharSequence, start: Int,
                 before: Int, count: Int
             ) {
-                model?.updateAutoComplet(userFriendsAddInput.text.toString())
+                model.updateAutoComplet(userFriendsAddInput.text.toString())
             }
         })
 
         userFriendsAddSubmit.setOnClickListener {
             userFriendsAddInput.text.toString()
-            val friendID = model?.getAutoCompletion()?.value?.find {
+            val friendID = model.getAutoCompletion().value?.find {
                 it.first == userFriendsAddInput.text.toString()
             }?.second
             friendID?.let {
-                model?.addFriend(it)
+                model.addFriend(it)
             }
         }
 
         userFriendsList.setOnItemClickListener { _, _, position, _ ->
             adapterFriendsList.getItem(position)?.let { username ->
-                model?.getAutoCompletion()?.value?.find {
+                model.getAutoCompletion().value?.find {
                     it.first == username
                 }?.second?.let {
-                    model?.delFriend(it)
+                    model.delFriend(it)
                 }
             }
         }

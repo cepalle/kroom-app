@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.playlisteditor.tabs
+package io.kroom.app.view.activitymain.playlist.tabs
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

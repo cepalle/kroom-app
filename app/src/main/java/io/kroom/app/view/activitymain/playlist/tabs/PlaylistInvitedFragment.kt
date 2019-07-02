@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.playlisteditor.tabs
+package io.kroom.app.view.activitymain.playlist.tabs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import io.kroom.app.R
 import io.kroom.app.graphql.PlayListEditorByUserIdQuery
-import kotlinx.android.synthetic.main.fragment_playlist_editor_tab_invited.*
+import kotlinx.android.synthetic.main.fragment_playlist_tab_invited.*
 
 class PlaylistInvitedFragment : Fragment() {
 
@@ -21,14 +21,14 @@ class PlaylistInvitedFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_playlist_editor_tab_invited, container, false)
+        return inflater.inflate(R.layout.fragment_playlist_tab_invited, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (list_invited.adapter == null) {
-            list_invited.adapter = adapterIvited
+        if (playlistInvitedList.adapter == null) {
+            playlistInvitedList.adapter = adapterIvited
             adapterIvited?.updateDataSet(
                 listOf(
                     playAdapterModel(1, "name2", "username2", 101, false)

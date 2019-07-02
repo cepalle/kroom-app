@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.playlisteditor.tabs
+package io.kroom.app.view.activitymain.playlist.tabs
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,8 +11,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import io.kroom.app.R
-import io.kroom.app.view.activitymain.playlisteditor.activityplaylisteditor.PlaylistEditorActivity
-import io.kroom.app.view.activitymain.playlisteditor.activityplaylistreading.PlaylistReadingActivity
+import io.kroom.app.view.activitymain.playlist.tabs.activityplaylisteditor.PlaylistEditorActivity
+import io.kroom.app.view.activitymain.playlist.tabs.activityplaylistreading.PlaylistReadingActivity
 
 data class playAdapterModel(
     val id: Int,
@@ -25,7 +25,7 @@ data class playAdapterModel(
 const val EXTRA_NAME_PLAYLIST_ID = "PlaylistPublicAdapter.playlistId"
 
 class PlaylistPublicAdapter(private val dataSet: MutableList<playAdapterModel>, mContext: Context) :
-    ArrayAdapter<playAdapterModel>(mContext, R.layout.adapter_playlist_editor_public, dataSet) {
+    ArrayAdapter<playAdapterModel>(mContext, R.layout.adapter_playlist_public, dataSet) {
 
     fun updateDataSet(todos: List<playAdapterModel>) {
         dataSet.clear()
@@ -50,7 +50,7 @@ class PlaylistPublicAdapter(private val dataSet: MutableList<playAdapterModel>, 
         if (convertView == null) {
             viewHolder = ViewHolder()
             val inflater = LayoutInflater.from(context)
-            convertView = inflater.inflate(R.layout.adapter_playlist_editor_public, parent, false)
+            convertView = inflater.inflate(R.layout.adapter_playlist_public, parent, false)
             viewHolder.cacheName = convertView.findViewById(R.id.adapter_name)
             viewHolder.cacheNbTrack = convertView.findViewById(R.id.adapter_nb_track)
             viewHolder.cachePrivacy = convertView.findViewById(R.id.adapter_privacy)

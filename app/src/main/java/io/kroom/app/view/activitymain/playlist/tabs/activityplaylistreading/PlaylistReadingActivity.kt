@@ -1,9 +1,9 @@
-package io.kroom.app.view.activitymain.playlisteditor.activityplaylistreading
+package io.kroom.app.view.activitymain.playlist.tabs.activityplaylistreading
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import io.kroom.app.R
-import io.kroom.app.view.activitymain.playlisteditor.tabs.EXTRA_NAME_PLAYLIST_ID
+import io.kroom.app.view.activitymain.playlist.tabs.EXTRA_NAME_PLAYLIST_ID
 
 class PlaylistReadingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
