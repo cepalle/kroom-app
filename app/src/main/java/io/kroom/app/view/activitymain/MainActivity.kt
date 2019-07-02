@@ -2,6 +2,7 @@ package io.kroom.app.view.activitymain
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.os.Bundle
 
 import androidx.appcompat.app.AppCompatActivity
@@ -27,10 +28,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-     //   getSupportActionBar()?.setTitle("Logout");
-    //    getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
-       // getSupportActionBar()?.setDisplayShowHomeEnabled(true);
-
 
         Log.i("TEST", "is connected: ${Session.isConnected(application)}")
         if (!Session.isConnected(application)) {
@@ -54,18 +51,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.LogoutAction -> {
-           // if (Session.isConnected(Application()))
-          //  {
-
+            if (Session.isConnected(application)) {
+                Session.removeUser(application)
+                ContextCompat.startActivity(this, Intent(this, AuthActivity::class.java), null)
                 Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
-
-         //   }
+            }
             true
         }
 
         else -> {
-            // If we got here, the user's action was not recognized.
-            // Invoke the superclass to handle it.
             super.onOptionsItemSelected(item)
         }
     }
