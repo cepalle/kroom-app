@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "597039709452-9nff0bfebpiotuaathkujkm2h3v8500m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.kroom.app",
+            "certificate_hash": "900642fa58313c1d820ce8bfb92a1cbf85e61c5d"
+          }
+        },
+        {
           "client_id": "597039709452-fa25hdj5dhggt9cso0a0b6h31j8kqcuf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

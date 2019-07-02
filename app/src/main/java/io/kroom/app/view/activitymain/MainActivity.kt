@@ -1,5 +1,7 @@
 package io.kroom.app.view.activitymain
 
+import android.app.Activity
+import android.app.Application
 import android.os.Bundle
 
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +15,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
 import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -26,6 +27,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+     //   getSupportActionBar()?.setTitle("Logout");
+    //    getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
+       // getSupportActionBar()?.setDisplayShowHomeEnabled(true);
+
 
         Log.i("TEST", "is connected: ${Session.isConnected(application)}")
         if (!Session.isConnected(application)) {
@@ -47,16 +53,24 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.LogoutAction -> {
-                Toast.makeText(this, "Logout !!!", Toast.LENGTH_SHORT).show()
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.LogoutAction -> {
+           // if (Session.isConnected(Application()))
+          //  {
 
-            }
+                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
+
+         //   }
+            true
         }
 
-        return super.onOptionsItemSelected(item)
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
     }
+
     private fun goToRoute(route: Routes) {
         when (route) {
             Routes.TRACK_VOTE_EVENT -> changeFragment(TrackVoteEventFragment())
