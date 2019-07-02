@@ -37,4 +37,8 @@ class AuthActivity : AppCompatActivity() {
                 .replace(R.id.authFragmentContainer, UserSignUpFragment())
                 .commit()
     }
+
+    override fun onBackPressed() {
+        finishAffinity()
+    }
 }
