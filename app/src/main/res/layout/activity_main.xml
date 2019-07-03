@@ -5,7 +5,8 @@
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
                                                    tools:context="io.kroom.app.view.activitymain.MainActivity"
-                                                   android:id="@+id/relativeLayout2" android:orientation="vertical">
+                                                   android:id="@+id/relativeLayout2"
+                                                   android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fragment_container"
