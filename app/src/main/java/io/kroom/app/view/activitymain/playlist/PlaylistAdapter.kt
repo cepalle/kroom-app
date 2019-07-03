@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.playlist.tabs
+package io.kroom.app.view.activitymain.playlist
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,8 +11,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import io.kroom.app.R
-import io.kroom.app.view.activitymain.playlist.tabs.activityplaylisteditor.PlaylistEditorActivity
-import io.kroom.app.view.activitymain.playlist.tabs.activityplaylistreading.PlaylistReadingActivity
+import io.kroom.app.view.activitymain.playlist.activityplaylisteditor.PlaylistEditorActivity
+import io.kroom.app.view.activitymain.playlist.activityplaylistreading.PlaylistReadingActivity
 
 data class playAdapterModel(
     val id: Int,

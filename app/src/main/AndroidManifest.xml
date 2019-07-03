@@ -22,13 +22,13 @@
             </intent-filter>
 
         </activity>
-        <activity android:screenOrientation="portrait" android:name="io.kroom.app.view.activitymain.playlist.tabs.activityplaylisteditor.PlaylistEditorActivity" >
+        <activity android:screenOrientation="portrait" android:name="io.kroom.app.view.activitymain.playlist.activityplaylisteditor.PlaylistEditorActivity" >
             <!--Default Intent Filter-->
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:screenOrientation="portrait" android:name="io.kroom.app.view.activitymain.playlist.tabs.activityplaylistreading.PlaylistReadingActivity" >
+        <activity android:screenOrientation="portrait" android:name="io.kroom.app.view.activitymain.playlist.activityplaylistreading.PlaylistReadingActivity" >
             <!--Default Intent Filter-->
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />

@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.playlist.tabs
+package io.kroom.app.view.activitymain.playlist.publc
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import io.kroom.app.R
 import io.kroom.app.graphql.PlayListEditorsPublicQuery
+import io.kroom.app.view.activitymain.playlist.PlaylistPublicAdapter
+import io.kroom.app.view.activitymain.playlist.playAdapterModel
 import kotlinx.android.synthetic.main.fragment_playlist_tab_public.*
 
 class PlaylistPublicFragment : Fragment() {
@@ -29,11 +31,6 @@ class PlaylistPublicFragment : Fragment() {
 
         if (playlistPublicList.adapter == null) {
             playlistPublicList.adapter = adapterPublic
-            adapterPublic?.updateDataSet(
-                listOf(
-                    playAdapterModel(0, "name", "username", 0, false)
-                )
-            )
         }
 
         val model = ViewModelProviders.of(this).get(PlaylistPublicViewModel::class.java)
@@ -50,10 +47,10 @@ class PlaylistPublicFragment : Fragment() {
     private fun updatePlaylistPublic(res: Result<PlayListEditorsPublicQuery.Data>?) {
         if (res == null) return
         res.onFailure {
-            Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "error: ${it.message}", Toast.LENGTH_SHORT).show()
         }
         res.onSuccess {
-            it.PlayListEditorsPublic().map {
+            it.PlayListEditorsPublic().mapNotNull {
                 val userName = it.userMaster()?.userName()
                 val nbTrack = it.tracks()?.count()
 
@@ -66,8 +63,9 @@ class PlaylistPublicFragment : Fragment() {
                         it.public_()
                     )
                 else null
-            }.filterNotNull().let {
+            }.let {
                 adapterPublic?.updateDataSet(it)
+                adapterPublic?.notifyDataSetChanged()
             }
         }
     }

@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.playlist.tabs
+package io.kroom.app.view.activitymain.playlist.invited
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import io.kroom.app.R
 import io.kroom.app.graphql.PlayListEditorByUserIdQuery
+import io.kroom.app.view.activitymain.playlist.PlaylistPublicAdapter
+import io.kroom.app.view.activitymain.playlist.playAdapterModel
 import kotlinx.android.synthetic.main.fragment_playlist_tab_invited.*
 
 class PlaylistInvitedFragment : Fragment() {
@@ -29,11 +31,6 @@ class PlaylistInvitedFragment : Fragment() {
 
         if (playlistInvitedList.adapter == null) {
             playlistInvitedList.adapter = adapterIvited
-            adapterIvited?.updateDataSet(
-                listOf(
-                    playAdapterModel(1, "name2", "username2", 101, false)
-                )
-            )
         }
 
         val model = ViewModelProviders.of(this).get(PlaylistInvitedViewModel::class.java)
@@ -53,7 +50,7 @@ class PlaylistInvitedFragment : Fragment() {
             Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
         }
         res.onSuccess {
-            it.PlayListEditorByUserId().playListEditor()?.map {
+            it.PlayListEditorByUserId().playListEditor()?.mapNotNull {
                 val userName = it.userMaster()?.userName()
                 val nbTrack = it.tracks()?.count()
 
@@ -66,8 +63,9 @@ class PlaylistInvitedFragment : Fragment() {
                         it.public_()
                     )
                 else null
-            }?.filterNotNull()?.let {
+            }?.let {
                 adapterIvited?.updateDataSet(it)
+                adapterIvited?.notifyDataSetChanged()
             }
         }
     }

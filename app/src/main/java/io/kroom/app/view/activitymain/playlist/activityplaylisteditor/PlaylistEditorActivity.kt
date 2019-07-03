@@ -1,16 +1,18 @@
-package io.kroom.app.view.activitymain.playlist.tabs.activityplaylisteditor
+package io.kroom.app.view.activitymain.playlist.activityplaylisteditor
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import io.kroom.app.R
-import io.kroom.app.view.activitymain.playlist.tabs.activityplaylisteditor.tabs.PlaylistEditorOrderFragement
-import io.kroom.app.view.activitymain.playlist.tabs.activityplaylisteditor.tabs.PlaylistEditorTracksFragement
-import io.kroom.app.view.activitymain.playlist.tabs.activityplaylisteditor.tabs.PlaylistEditorUsersFragement
-import io.kroom.app.view.activitymain.playlist.tabs.EXTRA_NAME_PLAYLIST_ID
+import io.kroom.app.view.activitymain.playlist.EXTRA_NAME_PLAYLIST_ID
+import io.kroom.app.view.activitymain.playlist.activityplaylisteditor.order.PlaylistEditorOrderFragement
+import io.kroom.app.view.activitymain.playlist.activityplaylisteditor.track.PlaylistEditorTrackFragement
+import io.kroom.app.view.activitymain.playlist.activityplaylisteditor.user.PlaylistEditorUserFragement
 import kotlinx.android.synthetic.main.activity_playlist_editor.*
 
+
+// TODO delete playlist button
 class PlaylistEditorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,9 +38,15 @@ class PlaylistEditorActivity : AppCompatActivity() {
 
     private fun goToRoute(route: Routes) {
         when (route) {
-            Routes.ORDER -> changeFragment(PlaylistEditorOrderFragement())
-            Routes.TRACKS -> changeFragment(PlaylistEditorTracksFragement())
-            Routes.USERS -> changeFragment(PlaylistEditorUsersFragement())
+            Routes.ORDER -> changeFragment(
+                PlaylistEditorOrderFragement()
+            )
+            Routes.TRACKS -> changeFragment(
+                PlaylistEditorTrackFragement()
+            )
+            Routes.USERS -> changeFragment(
+                PlaylistEditorUserFragement()
+            )
         }
     }
 

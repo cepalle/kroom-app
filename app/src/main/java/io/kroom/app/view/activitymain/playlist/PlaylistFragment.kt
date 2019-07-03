@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import io.kroom.app.R
-import io.kroom.app.view.activitymain.playlist.tabs.PlaylistAddFragment
-import io.kroom.app.view.activitymain.playlist.tabs.PlaylistInvitedFragment
-import io.kroom.app.view.activitymain.playlist.tabs.PlaylistPublicFragment
+import io.kroom.app.view.activitymain.playlist.add.PlaylistAddFragment
+import io.kroom.app.view.activitymain.playlist.invited.PlaylistInvitedFragment
+import io.kroom.app.view.activitymain.playlist.publc.PlaylistPublicFragment
 import kotlinx.android.synthetic.main.fragment_playlist.*
 
 class PlaylistFragment : Fragment() {
