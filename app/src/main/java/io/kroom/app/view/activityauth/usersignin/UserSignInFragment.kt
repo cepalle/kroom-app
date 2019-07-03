@@ -41,16 +41,16 @@ class UserSignInFragment : Fragment() {
 
         signInForgotPassword.setOnClickListener { Log.e("TODO", "blsblsblalvlal") }
 
-        model.getSignInResult().observe(this, Observer { observe(it) })
-
         userSignInGoogle.setOnClickListener {
             onGoogleSignIn()
         }
     }
+
     private fun onGoogleSignIn() {
         val intent = model.signInGoogleIntent()
         startActivityForResult(intent, UserSignUpFragment.GOOGLE_REQUEST_CODE, null)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
@@ -60,7 +60,7 @@ class UserSignInFragment : Fragment() {
         if (requestCode == UserSignUpFragment.GOOGLE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             val googleResult = model.getGoogleResult(task)
-            googleResult.observe(this, Observer {
+            googleResult?.observe(this, Observer {
                 Log.i("DEBUG", "google result observer")
 
                 it.onFailure { t ->
@@ -99,6 +99,7 @@ class UserSignInFragment : Fragment() {
             .show()
 
         model.signIn(signInUsername.text.toString(), signInPassword.text.toString())
+            .observe(this, Observer { observe(it) })
     }
 
 
@@ -152,6 +153,7 @@ class UserSignInFragment : Fragment() {
         signInPassword.error = null
         signInUsername.error = null
     }
+
     companion object {
         const val GOOGLE_REQUEST_CODE = 9999
     }

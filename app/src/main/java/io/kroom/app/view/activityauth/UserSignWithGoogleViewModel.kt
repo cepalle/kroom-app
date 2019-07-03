@@ -1,11 +1,12 @@
 package io.kroom.app.view.activityauth
 
-import android.annotation.SuppressLint
 import android.app.Application
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -20,8 +21,6 @@ import io.kroom.app.webservice.GraphClient
 import kotlin.Result.Companion.failure
 import kotlin.Result.Companion.success
 
-typealias GoogleResult = LiveData<Result<UserSignWhithGoolgeMutation.UserSignWithGoogle>>
-
 open class UserSignWithGoogleViewModel(app: Application) : AndroidViewModel(app) {
 
     private val client = GraphClient {
@@ -29,7 +28,6 @@ open class UserSignWithGoogleViewModel(app: Application) : AndroidViewModel(app)
     }.client
 
     protected val userRepo = UserRepo(client)
-
 
     private var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestIdToken(app.getString(R.string.default_web_client_id))
@@ -47,19 +45,18 @@ open class UserSignWithGoogleViewModel(app: Application) : AndroidViewModel(app)
         return googleSignInClient.signInIntent
     }
 
-    @SuppressLint("CheckResult")
-    fun getGoogleResult(completedTask: Task<GoogleSignInAccount>): GoogleResult {
-        val data = MutableLiveData<Result<UserSignWhithGoolgeMutation.UserSignWithGoogle>>()
+    fun getGoogleResult(completedTask: Task<GoogleSignInAccount>)
+            : LiveData<Result<UserSignWhithGoolgeMutation.UserSignWithGoogle>>? {
 
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
-            if (account != null) {
 
-                googleToken = account.idToken.toString()
+            googleToken = account?.idToken.toString()
 
-                userRepo.signGoogleRequest(googleToken).subscribe { r ->
+            googleToken.let {
+                return Transformations.map(userRepo.signGoogleRequest(it)) { r ->
                     r.onFailure {
-                        data.postValue(failure(it))
+                        return@map failure<UserSignWhithGoolgeMutation.UserSignWithGoogle>(it)
                     }
                     r.onSuccess {
                         val id = it.UserSignWithGoogle().user()?.id()
@@ -76,14 +73,14 @@ open class UserSignWithGoogleViewModel(app: Application) : AndroidViewModel(app)
                                 token
                             )
                         }
-                        data.postValue(success(it.UserSignWithGoogle()))
+                        return@map success(it.UserSignWithGoogle())
                     }
+                    null
                 }
             }
         } catch (e: ApiException) {
-            data.postValue(failure(e))
+            Log.e(TAG, e.message)
         }
-
-        return data
+        return null
     }
 }

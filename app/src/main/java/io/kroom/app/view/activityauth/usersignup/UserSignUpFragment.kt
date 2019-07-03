@@ -38,10 +38,6 @@ class UserSignUpFragment : Fragment() {
             this.onSignUp()
         }
 
-        model.getSignUpResult().observe(this, Observer {
-            observe(it)
-        })
-
         userSignUpGoogle.setOnClickListener {
             onGoogleSignUp()
         }
@@ -60,9 +56,8 @@ class UserSignUpFragment : Fragment() {
         if (requestCode == GOOGLE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             val googleResult = model.getGoogleResult(task)
-            googleResult.observe(this, Observer {
+            googleResult?.observe(this, Observer {
                 Log.i("DEBUG", "google result observer")
-
                 it.onFailure { t ->
                     Log.i("DEBUG", "on failure")
                     Toast.makeText(activity, "exception: ${t.message}", Toast.LENGTH_SHORT).show()
@@ -97,6 +92,7 @@ class UserSignUpFragment : Fragment() {
             .show()
 
         model.signUp(signUpUsername.text.toString(), signUpEmail.text.toString(), signUpPassword.text.toString())
+            .observe(this, Observer { observe(it) })
     }
 
     private fun observe(result: Result<UserSignUpMutation.Data>) {

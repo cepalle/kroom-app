@@ -78,7 +78,7 @@ class UserFriendsFragment : Fragment() {
 
         userFriendsList.setOnItemClickListener { _, _, position, _ ->
             adapterFriendsList.getItem(position)?.let { username ->
-                model.getAutoCompletion().value?.find {
+                model.getCacheUSer().find {
                     it.first == username
                 }?.second?.let {
                     model.delFriend(it)
@@ -99,6 +99,7 @@ class UserFriendsFragment : Fragment() {
         adapterFriendsList.clear()
         adapterFriendsList.addAll(ls.map { it.first })
         adapterFriendsList.notifyDataSetChanged()
+        // userFriendsList.invalidate()
     }
 
 }

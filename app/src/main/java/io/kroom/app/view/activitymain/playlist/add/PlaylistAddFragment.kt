@@ -24,26 +24,23 @@ class PlaylistAddFragment : Fragment() {
 
         model = ViewModelProviders.of(this).get(PlaylistAddViewModel::class.java)
 
-        val result = model.result()
-
-        result.observe(this, Observer {
-            it.onSuccess {
-                if (it.PlayListEditorNew().errors().isEmpty()) {
-                    Toast.makeText(context, "Playlist created", Toast.LENGTH_SHORT).show()
-                    playlistAddNameEdit.setText("")
-                } else {
-                    playlistAddNameEdit.error = it.PlayListEditorNew().errors()[0].messages()[0]
-                }
-            }
-            it.onFailure {
-                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-            }
-        })
-
         playlistAddBtnNew.setOnClickListener {
             val inputName = playlistAddNameEdit.text.toString()
             val public = playlistAddSwitchPublic.isChecked
             model.newPlaylist(inputName, public)
+                ?.observe(this, Observer {
+                    it.onSuccess {
+                        if (it.PlayListEditorNew().errors().isEmpty()) {
+                            Toast.makeText(context, "Playlist created", Toast.LENGTH_SHORT).show()
+                            playlistAddNameEdit.setText("")
+                        } else {
+                            playlistAddNameEdit.error = it.PlayListEditorNew().errors()[0].messages()[0]
+                        }
+                    }
+                    it.onFailure {
+                        Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                })
         }
     }
 

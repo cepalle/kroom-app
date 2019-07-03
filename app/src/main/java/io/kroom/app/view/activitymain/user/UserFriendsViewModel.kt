@@ -1,13 +1,13 @@
 package io.kroom.app.view.activitymain.user
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.MediatorLiveData
 import io.kroom.app.repo.UserRepo
 import io.kroom.app.webservice.GraphClient
 import io.kroom.app.util.Session
-import io.reactivex.disposables.Disposable
 
 class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
     private val client = GraphClient {
@@ -17,80 +17,78 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
     private val userRepo = UserRepo(client)
     private val userId = Session.getId(getApplication())
 
-    private var disposeUserById: Disposable? = null
-    private var disposeAuto: Disposable? = null
-    private var disposeAddFriend: Disposable? = null
-    private var disposeDelFriend: Disposable? = null
-
     // ---
 
-    private val autoCompletion: MutableLiveData<List<Pair<String, Int>>> = MutableLiveData()
-    private val friendsList: MutableLiveData<List<Pair<String, Int>>> = MutableLiveData()
-    private val errorMessage: MutableLiveData<String> = MutableLiveData()
+    private val autoCompletion: MediatorLiveData<List<Pair<String, Int>>> = MediatorLiveData()
+    private val friendsList: MediatorLiveData<List<Pair<String, Int>>> = MediatorLiveData()
+    private val errorMessage: MediatorLiveData<String> = MediatorLiveData()
+
+    private val cacheUser: MutableSet<Pair<String, Int>> = hashSetOf()
 
     init {
-        disposeUserById = userId?.let {
-            userRepo.user(it).subscribe { r ->
+        userId?.let {
+            friendsList.addSource(userRepo.user(it)) { r ->
                 r.onFailure {
                     errorMessage.postValue(it.message)
                     friendsList.postValue(null)
                 }
                 r.onSuccess {
                     friendsList.postValue(
-                        it.UserGetById().user()?.friends()?.map {
+                        it.UserGetById().user()?.friends()?.mapNotNull {
                             val id = it.id()
                             if (id != null) Pair(it.userName(), id)
                             else null
-                        }?.filterNotNull()
+                        }?.map {
+                            cacheUser.add(it)
+                            it
+                        }
                     )
                 }
             }
+
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        disposeUserById?.dispose()
-        disposeAuto?.dispose()
-        disposeAddFriend?.dispose()
-        disposeDelFriend?.dispose()
-    }
-
     fun updateAutoComplet(prefix: String) {
-
-        disposeAuto?.dispose()
-        disposeAuto = userRepo.userNameAutocompletion(prefix).subscribe { r ->
+        autoCompletion.addSource(userRepo.userNameAutocompletion(prefix)) { r ->
             r.onFailure {
                 errorMessage.postValue(it.message)
                 autoCompletion.postValue(null)
             }
             r.onSuccess {
                 autoCompletion.postValue(
-                    it.UserNameAutocompletion().map {
+                    it.UserNameAutocompletion().mapNotNull {
                         val id = it.id()
                         if (id != null) Pair(it.userName(), id)
                         else null
-                    }.filterNotNull()
+                    }.map {
+                        cacheUser.add(it)
+                        it
+                    }
                 )
             }
         }
     }
 
     fun addFriend(friendId: Int) {
-        disposeAddFriend?.dispose()
-        disposeAddFriend = userId?.let {
-            userRepo.addFriend(it, friendId).subscribe { r ->
+        userId?.let {
+            friendsList.addSource(userRepo.addFriend(it, friendId)) { r ->
                 r.onFailure {
                     errorMessage.postValue(it.message)
                     friendsList.postValue(null)
                 }
                 r.onSuccess {
                     friendsList.postValue(
-                        it.UserAddFriend().user()?.friends()?.map {
+                        it.UserAddFriend().user()?.friends()?.mapNotNull {
                             val id = it.id()
                             if (id != null) Pair(it.userName(), id)
                             else null
-                        }?.filterNotNull()
+                        }?.map {
+                            Log.i("ADD", it.toString())
+
+                            cacheUser.add(it)
+                            it
+                        }
                     )
                 }
             }
@@ -98,20 +96,22 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun delFriend(friendId: Int) {
-        disposeDelFriend?.dispose()
-        disposeDelFriend = userId?.let {
-            userRepo.deleteFriend(it, friendId).subscribe { r ->
+        userId?.let {
+            friendsList.addSource(userRepo.deleteFriend(it, friendId)) { r ->
                 r.onFailure {
                     errorMessage.postValue(it.message)
                     friendsList.postValue(null)
                 }
                 r.onSuccess {
                     friendsList.postValue(
-                        it.UserDelFriend().user()?.friends()?.map {
+                        it.UserDelFriend().user()?.friends()?.mapNotNull {
                             val id = it.id()
                             if (id != null) Pair(it.userName(), id)
                             else null
-                        }?.filterNotNull()
+                        }?.map {
+                            cacheUser.add(it)
+                            it
+                        }
                     )
                 }
             }
@@ -128,6 +128,10 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun getErrorMessage(): LiveData<String> {
         return errorMessage
+    }
+
+    fun getCacheUSer(): Set<Pair<String, Int>> {
+        return cacheUser
     }
 
 }
