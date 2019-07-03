@@ -17,24 +17,10 @@ class PlaylistInvitedViewModel(app: Application) : AndroidViewModel(app) {
 
     private val playRepo = PlaylistEditorRepo(client)
 
-    private val listInvited = MutableLiveData<Result<PlayListEditorByUserIdQuery.Data>>()
-    private var dispose: Disposable? = null
-
-    init {
-        Session.getId(getApplication())?.let {
-            dispose = playRepo.playlistEditorByUserId(it).subscribe { r ->
-                listInvited.postValue(r)
-            }
+    fun getListInvited(): LiveData<Result<PlayListEditorByUserIdQuery.Data>>? {
+        return Session.getId(getApplication())?.let {
+            playRepo.playlistEditorByUserId(it)
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        dispose?.dispose()
-    }
-
-    fun getListInvited(): LiveData<Result<PlayListEditorByUserIdQuery.Data>> {
-        return listInvited
     }
 
 }

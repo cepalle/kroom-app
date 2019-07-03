@@ -1,39 +1,38 @@
 package io.kroom.app.repo
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.api.Response
 import io.kroom.app.graphql.PlayListEditorByUserIdQuery
 import io.kroom.app.graphql.PlayListEditorNewMutation
 import io.kroom.app.graphql.PlayListEditorsPublicQuery
-import io.reactivex.Single
-import io.reactivex.subjects.SingleSubject
 
 class PlaylistEditorRepo(val client: ApolloClient) {
 
     fun playlistEditorsPublic(
-    ): SingleSubject<Result<PlayListEditorsPublicQuery.Data>> {
-        val data: SingleSubject<Result<PlayListEditorsPublicQuery.Data>> =
-            SingleSubject.create()
+    ): LiveData<Result<PlayListEditorsPublicQuery.Data>> {
+        val data: MutableLiveData<Result<PlayListEditorsPublicQuery.Data>> =
+            MutableLiveData()
 
         client.query(
             PlayListEditorsPublicQuery.builder()
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.postValue(it) })
 
         return data
     }
 
     fun playlistEditorByUserId(
         userId: Int
-    ): SingleSubject<Result<PlayListEditorByUserIdQuery.Data>> {
-        val data: SingleSubject<Result<PlayListEditorByUserIdQuery.Data>> =
-            SingleSubject.create()
+    ): LiveData<Result<PlayListEditorByUserIdQuery.Data>> {
+        val data: MutableLiveData<Result<PlayListEditorByUserIdQuery.Data>> =
+            MutableLiveData()
 
         client.query(
             PlayListEditorByUserIdQuery.builder()
                 .id(userId)
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.postValue(it) })
 
         return data
     }
@@ -42,9 +41,9 @@ class PlaylistEditorRepo(val client: ApolloClient) {
         userMasterId: Int,
         name: String,
         public: Boolean
-    ): SingleSubject<Result<PlayListEditorNewMutation.Data>> {
-        val data: SingleSubject<Result<PlayListEditorNewMutation.Data>> =
-            SingleSubject.create()
+    ): LiveData<Result<PlayListEditorNewMutation.Data>> {
+        val data: MutableLiveData<Result<PlayListEditorNewMutation.Data>> =
+            MutableLiveData()
 
         client.mutate(
             PlayListEditorNewMutation.builder()
@@ -52,7 +51,7 @@ class PlaylistEditorRepo(val client: ApolloClient) {
                 .name(name)
                 .publc(public)
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.postValue(it) })
 
         return data
     }

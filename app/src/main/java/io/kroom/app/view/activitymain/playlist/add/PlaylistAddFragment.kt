@@ -13,6 +13,8 @@ import kotlinx.android.synthetic.main.fragment_playlist_tab_add.*
 
 class PlaylistAddFragment : Fragment() {
 
+    lateinit var model: PlaylistAddViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_playlist_tab_add, container, false)
     }
@@ -20,9 +22,11 @@ class PlaylistAddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val model = ViewModelProviders.of(this).get(PlaylistAddViewModel::class.java)
+        model = ViewModelProviders.of(this).get(PlaylistAddViewModel::class.java)
 
-        model.result().observe(this, Observer {
+        val result = model.result()
+
+        result.observe(this, Observer {
             it.onSuccess {
                 if (it.PlayListEditorNew().errors().isEmpty()) {
                     Toast.makeText(context, "Playlist created", Toast.LENGTH_SHORT).show()

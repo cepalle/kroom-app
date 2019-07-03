@@ -28,7 +28,11 @@ class PlaylistFragment : Fragment() {
 
         playlistNavigation.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                tab.position.toRoute()?.let(::goToRoute)
+                when (tab.position) {
+                    1 -> changeFragment(PlaylistInvitedFragment())
+                    2 -> changeFragment(PlaylistAddFragment())
+                    else -> changeFragment(PlaylistPublicFragment())
+                }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {}
@@ -37,25 +41,10 @@ class PlaylistFragment : Fragment() {
 
     }
 
-    private fun goToRoute(route: Routes) {
-        when (route) {
-            Routes.PUBLIC -> changeFragment(PlaylistPublicFragment())
-            Routes.PRIVATE -> changeFragment(PlaylistInvitedFragment())
-            Routes.ADD -> changeFragment(PlaylistAddFragment())
-        }
-    }
-
     private fun changeFragment(fragment: Fragment) {
         fragmentManager?.beginTransaction()
             ?.replace(R.id.playlistNavigationContainer, fragment)
             ?.commit()
     }
 
-    private enum class Routes(val id: Int) {
-        PUBLIC(0),
-        PRIVATE(1),
-        ADD(2);
-    }
-
-    private fun Int.toRoute(): Routes? = Routes.values().find { it.id == this }
 }

@@ -1,26 +1,26 @@
 package io.kroom.app.repo
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.api.Response
 import io.kroom.app.graphql.*
-import io.reactivex.Single
-import io.reactivex.subjects.SingleSubject
+
 
 class UserRepo(val client: ApolloClient) {
 
     fun user(
         id: Int
-    ): SingleSubject<Result<UserByIdQuery.Data>> {
-        val data: SingleSubject<Result<UserByIdQuery.Data>> =
-            SingleSubject.create()
+    ): LiveData<Result<UserByIdQuery.Data>> {
+        val data: MutableLiveData<Result<UserByIdQuery.Data>> =
+            MutableLiveData()
 
         client.query(
             UserByIdQuery.builder()
                 .id(id)
                 .build()
         ).enqueue(CallBackHandler {
-            data.onSuccess(it)
+            data.postValue(it)
         })
 
         return data
@@ -30,9 +30,9 @@ class UserRepo(val client: ApolloClient) {
         userName: String,
         email: String,
         pass: String
-    ): SingleSubject<Result<UserSignUpMutation.Data>> {
-        val data: SingleSubject<Result<UserSignUpMutation.Data>> =
-            SingleSubject.create()
+    ): LiveData<Result<UserSignUpMutation.Data>> {
+        val data: MutableLiveData<Result<UserSignUpMutation.Data>> =
+            MutableLiveData()
 
         client.mutate(
             UserSignUpMutation.builder()
@@ -40,7 +40,7 @@ class UserRepo(val client: ApolloClient) {
                 .email(email)
                 .pass(pass)
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.postValue(it) })
 
         return data
     }
@@ -48,31 +48,31 @@ class UserRepo(val client: ApolloClient) {
     fun signIn(
         userName: String,
         pass: String
-    ): SingleSubject<Result<UserSignInMutation.Data>> {
-        val data: SingleSubject<Result<UserSignInMutation.Data>> =
-            SingleSubject.create()
+    ): LiveData<Result<UserSignInMutation.Data>> {
+        val data: MutableLiveData<Result<UserSignInMutation.Data>> =
+            MutableLiveData()
 
         client.mutate(
             UserSignInMutation.builder()
                 .userName(userName)
                 .pass(pass)
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.postValue(it) })
 
         return data
     }
 
     fun signGoogleRequest(
         token: String
-    ): SingleSubject<Result<UserSignWhithGoolgeMutation.Data>> {
-        val data: SingleSubject<Result<UserSignWhithGoolgeMutation.Data>> =
-            SingleSubject.create()
+    ): LiveData<Result<UserSignWhithGoolgeMutation.Data>> {
+        val data: MutableLiveData<Result<UserSignWhithGoolgeMutation.Data>> =
+            MutableLiveData()
 
         client.mutate(
             UserSignWhithGoolgeMutation.builder()
                 .token(token)
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.postValue(it) })
 
         return data
     }
@@ -80,16 +80,16 @@ class UserRepo(val client: ApolloClient) {
     fun addFriend(
         userId: Int,
         friendId: Int
-    ): SingleSubject<Result<UserAddFriendMutation.Data>> {
-        val data: SingleSubject<Result<UserAddFriendMutation.Data>> =
-            SingleSubject.create()
+    ): LiveData<Result<UserAddFriendMutation.Data>> {
+        val data: MutableLiveData<Result<UserAddFriendMutation.Data>> =
+            MutableLiveData()
 
         client.mutate(
             UserAddFriendMutation.builder()
                 .userId(userId)
                 .friendId(friendId)
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.postValue(it) })
 
         return data
     }
@@ -97,25 +97,25 @@ class UserRepo(val client: ApolloClient) {
     fun deleteFriend(
         userId: Int,
         friendId: Int
-    ): SingleSubject<Result<UserDeleteFriendMutation.Data>> {
-        val data: SingleSubject<Result<UserDeleteFriendMutation.Data>> =
-            SingleSubject.create()
+    ): LiveData<Result<UserDeleteFriendMutation.Data>> {
+        val data: MutableLiveData<Result<UserDeleteFriendMutation.Data>> =
+            MutableLiveData()
 
         client.mutate(
             UserDeleteFriendMutation.builder()
                 .userId(userId)
                 .friendId(friendId)
                 .build()
-        ).enqueue(CallBackHandler { data.onSuccess(it) })
+        ).enqueue(CallBackHandler { data.postValue(it) })
 
         return data
     }
 
     fun userNameAutocompletion(
         prefix: String
-    ): SingleSubject<Result<UserNameAutocompletionQuery.Data>> {
-        val data: SingleSubject<Result<UserNameAutocompletionQuery.Data>> =
-            SingleSubject.create()
+    ): LiveData<Result<UserNameAutocompletionQuery.Data>> {
+        val data: MutableLiveData<Result<UserNameAutocompletionQuery.Data>> =
+            MutableLiveData()
         Log.i("TEST", "userNameAutocompletion")
 
         client.query(
@@ -125,7 +125,7 @@ class UserRepo(val client: ApolloClient) {
         ).enqueue(CallBackHandler {
             Log.i("TEST", "CallBackHandler")
 
-            data.onSuccess(it)
+            data.postValue(it)
         })
 
         return data

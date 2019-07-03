@@ -1,6 +1,7 @@
 package io.kroom.app.view.activitymain.playlist.invited
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,8 +38,8 @@ class PlaylistInvitedFragment : Fragment() {
 
         val listInvited = model.getListInvited()
 
-        updatePlaylistInvited(listInvited.value)
-        listInvited.observe(this, Observer {
+        updatePlaylistInvited(listInvited?.value)
+        listInvited?.observe(this, Observer {
             updatePlaylistInvited(it)
         })
 

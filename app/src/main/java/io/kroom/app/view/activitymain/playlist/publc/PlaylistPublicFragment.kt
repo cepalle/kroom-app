@@ -47,7 +47,7 @@ class PlaylistPublicFragment : Fragment() {
     private fun updatePlaylistPublic(res: Result<PlayListEditorsPublicQuery.Data>?) {
         if (res == null) return
         res.onFailure {
-            Toast.makeText(activity, "error: ${it.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
         }
         res.onSuccess {
             it.PlayListEditorsPublic().mapNotNull {
