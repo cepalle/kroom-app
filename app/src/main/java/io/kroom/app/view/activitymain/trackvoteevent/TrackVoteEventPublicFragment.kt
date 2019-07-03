@@ -11,7 +11,7 @@ import io.kroom.app.util.Session
 import kotlinx.android.synthetic.main.fragment_track_vote_event.*
 
 
-class TrackVoteEventFragment : Fragment() {
+class TrackVoteEventPublicFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Track Vote Event"
         return inflater.inflate(R.layout.fragment_track_vote_event, container, false)
@@ -19,6 +19,9 @@ class TrackVoteEventFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (savedInstanceState == null) {
+          //  changeFragment(PlaylistPublicFragment())
+        }
         Log.i("DEBUG", "HELLO WORLD")
 
         Session.getToken(this.activity?.application!!)?.let {

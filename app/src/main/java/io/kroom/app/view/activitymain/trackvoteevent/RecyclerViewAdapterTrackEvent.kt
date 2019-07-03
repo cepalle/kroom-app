@@ -1,6 +1,7 @@
 package io.kroom.app.view.activitymain.trackvoteevent
 
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.R
 import io.kroom.app.graphql.TrackVoteEventsPublicQuery
 
-class RecyclerViewAdapterTrackEvent : RecyclerView.Adapter<RecyclerViewAdapterTrackEvent.TrackEventVoteViewHolder>() {
+class RecyclerViewAdapterTrackEvent(contex: Context) : RecyclerView.Adapter<RecyclerViewAdapterTrackEvent.TrackEventVoteViewHolder>() {
 
     private var clientEvent: TrackVoteEventsPublicQuery.TrackVoteEventsPublic? = null
     // private lateinit var trackVoteEvent: List<TrackVoteEvent>
