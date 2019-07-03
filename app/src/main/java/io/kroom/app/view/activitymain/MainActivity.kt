@@ -53,9 +53,8 @@ class MainActivity : AppCompatActivity() {
         R.id.LogoutAction -> {
             if (Session.isConnected(application)) {
                 Session.removeUser(application)
-                ContextCompat.startActivity(this, Intent(this, AuthActivity::class.java), null)
-                finishAffinity()
                 Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
+                finishAffinity()
             }
             true
         }
