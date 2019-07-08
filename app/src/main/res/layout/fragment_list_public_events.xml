@@ -10,14 +10,11 @@
         android:text="@string/list_music_track_vote"
         tools:context=".view.activitymain.trackvoteevent.musictrackvote.MusicTrackVoteFragment">
 
-
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listPublicEvents"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/row_item_track_vote_public_event">
-
     </androidx.recyclerview.widget.RecyclerView>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

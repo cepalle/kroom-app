@@ -16,15 +16,17 @@ import kotlinx.android.synthetic.main.activity_playlist_editor.*
 // TODO delete playlist button
 class PlaylistEditorActivity : AppCompatActivity() {
 
+    var playlistId: Int = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_playlist_editor)
 
-        if (savedInstanceState == null) {
-            changeFragment(PlaylistEditorOrderFragement())
-        }
+        playlistId = intent.getIntExtra(EXTRA_NAME_PLAYLIST_ID, 0)
 
-        val playlistId: Int = intent.getIntExtra(EXTRA_NAME_PLAYLIST_ID, 0)
+        if (savedInstanceState == null) {
+            changeFragment(PlaylistEditorOrderFragement(playlistId))
+        }
 
         playlistEditorNavigation.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -45,7 +47,7 @@ class PlaylistEditorActivity : AppCompatActivity() {
     private fun goToRoute(route: Routes) {
         when (route) {
             Routes.ORDER -> changeFragment(
-                PlaylistEditorOrderFragement()
+                PlaylistEditorOrderFragement(playlistId)
             )
             Routes.TRACKS -> changeFragment(
                 PlaylistEditorTrackFragement()

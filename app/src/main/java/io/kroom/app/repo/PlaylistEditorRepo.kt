@@ -3,6 +3,7 @@ package io.kroom.app.repo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.ApolloClient
+import io.kroom.app.graphql.PlayListEditorByIdQuery
 import io.kroom.app.graphql.PlayListEditorByUserIdQuery
 import io.kroom.app.graphql.PlayListEditorNewMutation
 import io.kroom.app.graphql.PlayListEditorsPublicQuery
@@ -50,6 +51,21 @@ class PlaylistEditorRepo(val client: ApolloClient) {
                 .userMasterId(userMasterId)
                 .name(name)
                 .publc(public)
+                .build()
+        ).enqueue(CallBackHandler { data.postValue(it) })
+
+        return data
+    }
+
+    fun PlayListEditorById(
+        id: Int
+    ): LiveData<Result<PlayListEditorByIdQuery.Data>> {
+        val data: MutableLiveData<Result<PlayListEditorByIdQuery.Data>> =
+            MutableLiveData()
+
+        client.query(
+            PlayListEditorByIdQuery.builder()
+                .id(id)
                 .build()
         ).enqueue(CallBackHandler { data.postValue(it) })
 
