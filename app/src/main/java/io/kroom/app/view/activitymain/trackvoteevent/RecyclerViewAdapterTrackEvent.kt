@@ -6,15 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.SwitchCompat
 import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.R
-import io.kroom.app.graphql.TrackVoteEventsPublicQuery
 import io.kroom.app.view.activitymain.model.TrackVoteEvent
 
 class RecyclerViewAdapterTrackEvent(context: Context, private val dataSet: MutableList<TrackVoteEvent>) : RecyclerView.Adapter<RecyclerViewAdapterTrackEvent.TrackEventVoteHolder>() {
 
     private var trackVoteEventList: MutableList<TrackVoteEvent> = dataSet
     private var _context: Context = context
+
 
     // private lateinit var trackVoteEvent: List<TrackVoteEvent>
 
@@ -30,32 +32,39 @@ class RecyclerViewAdapterTrackEvent(context: Context, private val dataSet: Mutab
     }
 
     override fun onBindViewHolder(holder: TrackEventVoteHolder, position: Int) {
-        val event : TrackVoteEvent = trackVoteEventList[position]
+        val event: TrackVoteEvent = trackVoteEventList[position]
 
     }
 
-    inner class TrackEventVoteHolder(itemView: View): RecyclerView.ViewHolder(itemView),
-    View.OnClickListener{
+    inner class TrackEventVoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
 
-        private val itemEventTrackPublic : LinearLayout
+        private val swithcEventSubcribe: SwitchCompat
+        private val swithcEventSubcribeText: AppCompatTextView
 
-        init{
+        init {
 
-            itemEventTrackPublic = itemView.findViewById(R.id.linearlayoutEventPublic)
-
-        }
-        override fun onClick(view: View){
-
-       /*     listener.onContactSelected(_contact.get(adapterPosition))
-            notifyItemChanged(lastIndexContactSelected)
-            lastIndexContactSelected = adapterPosition
-            indexContactSelected = -1
-            notifyItemChanged(adapterPosition)*/
-
+            swithcEventSubcribe = itemView.findViewById(R.id.itemTrackVoteEventSwitch)
+            swithcEventSubcribeText = itemView.findViewById(R.id.itemTrackVoteEventsSubcribe)
+            swithcEventSubcribeText.text = swithcEventSubcribe.isChecked.toString()
+            swithcEventSubcribe.setOnCheckedChangeListener { compoundButton: CompoundButton, b: Boolean ->
+                swithcEventSubcribe.text = if (swithcEventSubcribe.isChecked) "Unscribe" else "Suscribe"
+            }
         }
 
+        override fun onClick(view: View) {
 
+            when (itemView.getId()) {
+
+                R.id.linearlayoutEventPublic -> Toast.makeText(_context, "show event", Toast.LENGTH_SHORT).show()
+            }
+
+        }
     }
+
+
+}
+
 
     /*inner class ContactsHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
@@ -99,7 +108,7 @@ class RecyclerViewAdapterTrackEvent(context: Context, private val dataSet: Mutab
             notifyItemChanged(adapterPosition)
         }
     }*/
-}
+
 
 /*
 data class playAdapterModel(

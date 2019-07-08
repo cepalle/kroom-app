@@ -54,6 +54,7 @@
     <string name="event_name">Event Name</string>
     <string name="event_schedule">19/06/2019</string>
     <string name="event_location">Location</string>
+    <string name="event_switch">Subcribe</string>
 
 
 </resources>

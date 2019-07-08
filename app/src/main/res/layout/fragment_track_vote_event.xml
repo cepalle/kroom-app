@@ -6,15 +6,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <ImageView
-            android:id="@+id/musicTrackVoteCoverSmall"
+    <VideoView
+            android:id="@+id/musicTrackVoteVideo"
             android:layout_width="350dp"
             android:layout_height="200dp"
             android:layout_weight="1"
             android:contentDescription="@string/track_vote_cover_small"
             android:foregroundGravity="center"
 
-            tools:srcCompat="@tools:sample/backgrounds/scenic[0]"
             app:layout_constraintBottom_toTopOf="@+id/list_track_vote"
             android:layout_marginTop="4dp"
             app:layout_constraintTop_toTopOf="parent"
