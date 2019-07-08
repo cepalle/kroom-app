@@ -29,9 +29,10 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun changeFragment(position: Int) {
-        if (position == 0) supportFragmentManager.beginTransaction()
-            .replace(R.id.authFragmentContainer, UserSignInFragment())
-            .commit()
+        if (position == 0)
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.authFragmentContainer, UserSignInFragment())
+                .commit()
         else
             supportFragmentManager.beginTransaction()
                 .replace(R.id.authFragmentContainer, UserSignUpFragment())

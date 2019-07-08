@@ -1,6 +1,7 @@
 package io.kroom.app.view.activitymain.playlist.activityplaylisteditor
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
@@ -34,6 +35,11 @@ class PlaylistEditorActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.playlist_editor_menu, menu)
+        return true
     }
 
     private fun goToRoute(route: Routes) {
