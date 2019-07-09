@@ -2,6 +2,7 @@ package io.kroom.app.view.activitymain.playlist.activityplaylisteditor.order
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +18,6 @@ data class TrackAdapterOrderModel(
     val id: Int
 )
 
-const val EXTRA_NAME_PLAYLIST_ID = "PlaylistPublicAdapter.playlistId"
-
 class PlaylistAdapterOrder(
     private val dataSet: MutableList<TrackAdapterOrderModel>,
     mContext: Context,
@@ -26,6 +25,7 @@ class PlaylistAdapterOrder(
 ) : ArrayAdapter<TrackAdapterOrderModel>(mContext, R.layout.adapter_playlist_order, dataSet) {
 
     fun updateDataSet(todos: List<TrackAdapterOrderModel>) {
+        Log.i("SUB3", todos.toString())
         dataSet.clear()
         dataSet.addAll(todos)
     }
@@ -43,6 +43,8 @@ class PlaylistAdapterOrder(
         var convertView = convertView
         val dataModel = dataSet[position]
         val viewHolder: ViewHolder // view lookup cache stored in tag
+
+        Log.i("SUB4", "")
 
         if (convertView == null) {
             viewHolder = ViewHolder()

@@ -53,6 +53,7 @@ class PlaylistEditorOrderFragement(val playlistId: Int) : Fragment() {
         val errorMessage = model.getErrorMessage()
 
         adapterTracks = PlaylistAdapterOrder(arrayListOf(), context!!, model)
+        playlistEditorTabOrderAddListTrack.adapter = adapterTracks
 
         playlistEditorTabOrderAutoCompleteTextView.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -76,10 +77,19 @@ class PlaylistEditorOrderFragement(val playlistId: Int) : Fragment() {
             // playlistEditorTabOrderAutoCompleteTextView.error = it
         })
 
-        updateListTracks(tracksList.value)
+        // updateListTracks(tracksList.value)
+        updateListTracks(
+            listOf(
+                TrackAdapterOrderModel("title", "artist", 1),
+                TrackAdapterOrderModel("title2", "artist2", 2)
+            )
+        )
+        /*
         tracksList.observe(this, Observer {
+            Log.i("SUB2", "")
             updateListTracks(it)
         })
+        */
 
         playlistEditorTabOrderAdd.setOnClickListener {
             val map = model.getCacheAutoComplet()

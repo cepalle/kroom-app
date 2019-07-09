@@ -43,5 +43,6 @@ class GraphClient(private val getToken: () -> String?) {
         .subscriptionTransportFactory(
             WebSocketSubscriptionTransport.Factory(subscriptionBaseUrl, okHttpClient)
         )
+        .subscriptionConnectionParams(mapOf(Pair("Kroom-token-id", getToken() ?: "")))
         .build()
 }

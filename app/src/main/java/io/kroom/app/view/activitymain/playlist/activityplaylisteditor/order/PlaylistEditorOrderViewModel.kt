@@ -1,6 +1,7 @@
 package io.kroom.app.view.activitymain.playlist.activityplaylisteditor.order
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -45,6 +46,7 @@ class PlaylistEditorOrderViewModel(app: Application, private val playlistId: Int
                 trackList.postValue(null)
             }
             r.onSuccess {
+                Log.i("SUB", it.toString())
                 trackList.postValue(
                     it.PlayListEditorById().playListEditor()?.tracks()?.mapNotNull {
                         val artist = it.artist()

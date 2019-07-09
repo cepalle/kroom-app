@@ -6,7 +6,7 @@
                                                    android:layout_height="100dp"
                                                    android:background="@color/colorPrimary"
                                                    android:orientation="vertical"
-                                                   android:padding="10dp" android:id="@+id/relativeLayout">
+                                                   android:padding="10dp" android:id="@+id/adapterPlaylistOrder">
 
     <TextView
             android:text="TITLE"
