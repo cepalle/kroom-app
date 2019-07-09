@@ -9,6 +9,8 @@ import io.kroom.app.view.activitymain.playlist.tabs.EXTRA_NAME_PLAYLIST_ID
 import io.kroom.app.view.activitymain.playlist.tabs.activityplaylisteditor.tabs.PlaylistEditorOrderFragement
 import io.kroom.app.view.activitymain.playlist.tabs.activityplaylisteditor.tabs.PlaylistEditorTracksFragement
 import io.kroom.app.view.activitymain.playlist.tabs.activityplaylisteditor.tabs.PlaylistEditorUsersFragement
+import io.kroom.app.view.activitymain.trackvoteevent.event.add.TrackVoteEventAddFragment
+import kotlinx.android.synthetic.main.activity_music_track_vote_event_editor.*
 import kotlinx.android.synthetic.main.activity_playlist_editor.*
 
 class TrackVoteEventActivity : AppCompatActivity() {
@@ -21,9 +23,8 @@ class TrackVoteEventActivity : AppCompatActivity() {
             changeFragment(PlaylistEditorOrderFragement())
         }
 
-        val playlistId: Int = intent.getIntExtra(EXTRA_NAME_PLAYLIST_ID, 0)
 
-        playlistEditorNavigation.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        trackVoteEditorNavigation.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 tab.position.toRoute()?.let(::goToRoute)
             }
@@ -36,22 +37,22 @@ class TrackVoteEventActivity : AppCompatActivity() {
 
     private fun goToRoute(route: Routes) {
         when (route) {
-            Routes.ORDER -> changeFragment(PlaylistEditorOrderFragement())
-            Routes.TRACKS -> changeFragment(PlaylistEditorTracksFragement())
-            Routes.USERS -> changeFragment(PlaylistEditorUsersFragement())
+            Routes.PUBLIC -> changeFragment(TrackVoteEventPublicFragment())
+            Routes.PRIVATE-> changeFragment(TrackVoteEventPrivateFragment())
+            Routes.ADD -> changeFragment(TrackVoteEventAddFragment())
         }
     }
 
     private fun changeFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.playlistEditorNavigationContainer, fragment)
+            .replace(R.id.trackVoteEditorNavigationContainer, fragment)
             .commit()
     }
 
     private enum class Routes(val id: Int) {
-        ORDER(0),
-        TRACKS(1),
-        USERS(2);
+        PUBLIC(0),
+        PRIVATE(1),
+        ADD(2);
     }
 
     private fun Int.toRoute(): Routes? = Routes.values().find { it.id == this }
