@@ -3,10 +3,12 @@ package io.kroom.app.view.activitymain.playlist.activityplaylisteditor.order
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -50,7 +52,6 @@ class PlaylistEditorOrderFragement(val playlistId: Int) : Fragment() {
         val tracksList = model.getTracksList()
         val errorMessage = model.getErrorMessage()
 
-
         adapterTracks = PlaylistAdapterOrder(arrayListOf(), context!!, model)
 
         playlistEditorTabOrderAutoCompleteTextView.addTextChangedListener(object : TextWatcher {
@@ -71,14 +72,23 @@ class PlaylistEditorOrderFragement(val playlistId: Int) : Fragment() {
         })
 
         errorMessage.observe(this, Observer {
-            playlistEditorTabOrderAutoCompleteTextView.error = it
+            Toast.makeText(this.context, it, Toast.LENGTH_SHORT).show()
+            // playlistEditorTabOrderAutoCompleteTextView.error = it
         })
-
 
         updateListTracks(tracksList.value)
         tracksList.observe(this, Observer {
             updateListTracks(it)
         })
+
+        playlistEditorTabOrderAdd.setOnClickListener {
+            val map = model.getCacheAutoComplet()
+            val str = playlistEditorTabOrderAutoCompleteTextView.text.toString()
+            val id = map[str]
+            id?.let {
+                model.trackAdd(it)
+            }
+        }
     }
 
 }

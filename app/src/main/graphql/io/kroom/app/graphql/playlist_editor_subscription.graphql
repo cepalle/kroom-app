@@ -3,6 +3,14 @@ subscription PlayListEditorByIdSubscription($id: Int!) {
         playListEditor {
             id
             name
+            tracks {
+                id
+                title
+                artist {
+                    id
+                    name
+                }
+            }
         }
         errors {
             field

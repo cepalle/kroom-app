@@ -1,6 +1,7 @@
 package io.kroom.app.webservice
 
 import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.subscription.WebSocketSubscriptionTransport
 
 import okhttp3.Interceptor
 
@@ -9,6 +10,7 @@ import java.util.concurrent.TimeUnit
 
 //private const val url = "https://c4b73dbc.ngrok.io/graphql"
 private const val url = "http://192.168.43.132:8080/graphql"
+private const val subscriptionBaseUrl = "ws://192.168.43.132:8080/graphql"
 
 class GraphClient(private val getToken: () -> String?) {
     private fun tokenInterceptor(builder: Interceptor.Chain): okhttp3.Response {
@@ -42,5 +44,6 @@ class GraphClient(private val getToken: () -> String?) {
     val client: ApolloClient = ApolloClient.builder()
         .serverUrl(url)
         .okHttpClient(okHttpClient)
+        .subscriptionTransportFactory(WebSocketSubscriptionTransport.Factory(subscriptionBaseUrl, okHttpClient))
         .build()
 }

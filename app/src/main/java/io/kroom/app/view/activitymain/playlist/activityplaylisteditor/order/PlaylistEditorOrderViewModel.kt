@@ -32,16 +32,14 @@ class PlaylistEditorOrderViewModel(app: Application, private val playlistId: Int
 
     private val playlistRepo = PlaylistEditorRepo(client)
     private val deezerRepo = DeezerRepo(client)
-    private val userId = Session.getId(getApplication())
 
     private val autoCompletion: MediatorLiveData<List<AutoCompletView>> = MediatorLiveData()
     private val trackList: MediatorLiveData<List<TrackAdapterOrderModel>> = MediatorLiveData()
     private val errorMessage: MediatorLiveData<String> = MediatorLiveData()
-
-    private val cacheTrack: MutableSet<Pair<String, Int>> = hashSetOf()
+    private val cacheAutoComplet: MutableMap<String, Int> = mutableMapOf()
 
     init {
-        trackList.addSource(playlistRepo.playListEditorById(playlistId)) { r ->
+        trackList.addSource(playlistRepo.playListEditorSub(playlistId)) { r ->
             r.onFailure {
                 errorMessage.postValue(it.message)
                 trackList.postValue(null)
@@ -70,6 +68,9 @@ class PlaylistEditorOrderViewModel(app: Application, private val playlistId: Int
                         val artist = it.artist()
                         artist ?: return@mapNotNull null
                         AutoCompletView(it.title() + artist.name(), it.id())
+                    }?.map {
+                        cacheAutoComplet[it.str] = it.id
+                        it
                     }
                 )
             }
@@ -88,6 +89,10 @@ class PlaylistEditorOrderViewModel(app: Application, private val playlistId: Int
         playlistRepo.playListEditorDelTrack(playlistId, trackId)
     }
 
+    fun trackAdd(trackId: Int) {
+        playlistRepo.playListEditorAddTrack(playlistId, trackId)
+    }
+
     // ---
 
     fun getAutoCompletion(): LiveData<List<AutoCompletView>> {
@@ -102,8 +107,8 @@ class PlaylistEditorOrderViewModel(app: Application, private val playlistId: Int
         return errorMessage
     }
 
-    fun getCacheUSer(): Set<Pair<String, Int>> {
-        return cacheTrack
+    fun getCacheAutoComplet(): Map<String, Int> {
+        return cacheAutoComplet
     }
 
 }

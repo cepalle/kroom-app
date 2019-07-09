@@ -110,6 +110,23 @@ class PlaylistEditorRepo(private val client: ApolloClient) {
         return data
     }
 
+    fun playListEditorAddTrack(
+        playlistId: Int,
+        trackId: Int
+    ): LiveData<Result<PlayListEditorAddTrackMutation.Data>> {
+        val data: MutableLiveData<Result<PlayListEditorAddTrackMutation.Data>> =
+            MutableLiveData()
+
+        client.mutate(
+            PlayListEditorAddTrackMutation.builder()
+                .playListId(playlistId)
+                .trackId(trackId)
+                .build()
+        ).enqueue(CallBackHandler { data.postValue(it) })
+
+        return data
+    }
+
     fun playListEditorSub(
         playlistId: Int
     ): LiveData<Result<PlayListEditorByIdSubscription.Data>> {
