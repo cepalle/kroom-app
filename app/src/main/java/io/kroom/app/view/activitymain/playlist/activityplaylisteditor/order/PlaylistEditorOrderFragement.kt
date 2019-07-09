@@ -17,28 +17,24 @@ import kotlinx.android.synthetic.main.fragment_playlist_editor_tab_order.*
 class PlaylistEditorOrderFragement(val playlistId: Int) : Fragment() {
 
     private lateinit var adapterAutocompletion: ArrayAdapter<String>
-    private val adapterTracks by lazy {
-        context?.let {
-            PlaylistAdapterOrder(arrayListOf(), it)
-        }
-    }
+    private lateinit var adapterTracks: PlaylistAdapterOrder
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_playlist_editor_tab_order, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        fun updateAutoCompletion(ls: List<Pair<String, Int>>?) {
+        fun updateAutoCompletion(ls: List<AutoCompletView>?) {
             ls ?: return
             adapterAutocompletion.clear()
-            adapterAutocompletion.addAll(ls.map { it.first })
+            adapterAutocompletion.addAll(ls.map { it.str })
             adapterAutocompletion.notifyDataSetChanged()
         }
 
-        fun updateListTracks(ls: List<Pair<String, Int>>?) {
+        fun updateListTracks(ls: List<TrackAdapterOrderModel>?) {
             ls ?: return
-            adapterTracks?.updateDataSet(ls)
-            adapterTracks?.notifyDataSetChanged()
+            adapterTracks.updateDataSet(ls)
+            adapterTracks.notifyDataSetChanged()
         }
 
         super.onViewCreated(view, savedInstanceState)
@@ -53,6 +49,9 @@ class PlaylistEditorOrderFragement(val playlistId: Int) : Fragment() {
         val autoCompletion = model.getAutoCompletion()
         val tracksList = model.getTracksList()
         val errorMessage = model.getErrorMessage()
+
+
+        adapterTracks = PlaylistAdapterOrder(arrayListOf(), context!!, model)
 
         playlistEditorTabOrderAutoCompleteTextView.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}

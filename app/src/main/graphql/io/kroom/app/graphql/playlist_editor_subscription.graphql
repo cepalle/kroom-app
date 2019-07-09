@@ -1,0 +1,12 @@
+subscription PlayListEditorByIdSubscription($id: Int!) {
+    PlayListEditorById(id: $id) {
+        playListEditor {
+            id
+            name
+        }
+        errors {
+            field
+            messages
+        }
+    }
+}

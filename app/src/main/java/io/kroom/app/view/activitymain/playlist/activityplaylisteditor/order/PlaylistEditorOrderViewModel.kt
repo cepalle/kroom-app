@@ -20,12 +20,6 @@ class PlaylistEditorOrderViewModelFactory(private val mApplication: Application,
     }
 }
 
-data class TrackListView(
-    val title: String,
-    val artist: String,
-    val id: Int
-)
-
 data class AutoCompletView(
     val str: String,
     val id: Int
@@ -41,13 +35,13 @@ class PlaylistEditorOrderViewModel(app: Application, private val playlistId: Int
     private val userId = Session.getId(getApplication())
 
     private val autoCompletion: MediatorLiveData<List<AutoCompletView>> = MediatorLiveData()
-    private val trackList: MediatorLiveData<List<TrackListView>> = MediatorLiveData()
+    private val trackList: MediatorLiveData<List<TrackAdapterOrderModel>> = MediatorLiveData()
     private val errorMessage: MediatorLiveData<String> = MediatorLiveData()
 
     private val cacheTrack: MutableSet<Pair<String, Int>> = hashSetOf()
 
     init {
-        trackList.addSource(playlistRepo.PlayListEditorById(playlistId)) { r ->
+        trackList.addSource(playlistRepo.playListEditorById(playlistId)) { r ->
             r.onFailure {
                 errorMessage.postValue(it.message)
                 trackList.postValue(null)
@@ -57,7 +51,7 @@ class PlaylistEditorOrderViewModel(app: Application, private val playlistId: Int
                     it.PlayListEditorById().playListEditor()?.tracks()?.mapNotNull {
                         val artist = it.artist()
                         artist ?: return@mapNotNull null
-                        TrackListView(it.title(), artist.name(), it.id())
+                        TrackAdapterOrderModel(it.title(), artist.name(), it.id())
                     }
                 )
             }
@@ -82,13 +76,25 @@ class PlaylistEditorOrderViewModel(app: Application, private val playlistId: Int
         }
     }
 
+    fun trackUp(trackId: Int) {
+        playlistRepo.playListEditorMoveTrack(playlistId, trackId, true)
+    }
+
+    fun trackDown(trackId: Int) {
+        playlistRepo.playListEditorMoveTrack(playlistId, trackId, true)
+    }
+
+    fun trackDel(trackId: Int) {
+        playlistRepo.playListEditorDelTrack(playlistId, trackId)
+    }
+
     // ---
 
     fun getAutoCompletion(): LiveData<List<AutoCompletView>> {
         return autoCompletion
     }
 
-    fun getTracksList(): LiveData<List<TrackListView>> {
+    fun getTracksList(): LiveData<List<TrackAdapterOrderModel>> {
         return trackList
     }
 

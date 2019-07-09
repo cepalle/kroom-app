@@ -2,42 +2,40 @@ package io.kroom.app.view.activitymain.playlist.activityplaylisteditor.order
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import io.kroom.app.R
 
 
-data class playAdapterOrderModel(
-    val id: Int,
-    val name: String,
-    val userName: String,
-    val nbTrack: Int,
-    val public: Boolean
+data class TrackAdapterOrderModel(
+    val title: String,
+    val artist: String,
+    val id: Int
 )
 
 const val EXTRA_NAME_PLAYLIST_ID = "PlaylistPublicAdapter.playlistId"
 
-class PlaylistAdapterOrder(private val dataSet: MutableList<playAdapterOrderModel>, mContext: Context) :
-    ArrayAdapter<playAdapterOrderModel>(mContext, R.layout.adapter_playlist_public, dataSet) {
+class PlaylistAdapterOrder(
+    private val dataSet: MutableList<TrackAdapterOrderModel>,
+    mContext: Context,
+    private val model: PlaylistEditorOrderViewModel
+) : ArrayAdapter<TrackAdapterOrderModel>(mContext, R.layout.adapter_playlist_order, dataSet) {
 
-    fun updateDataSet(todos: List<playAdapterOrderModel>) {
+    fun updateDataSet(todos: List<TrackAdapterOrderModel>) {
         dataSet.clear()
         dataSet.addAll(todos)
     }
 
     private class ViewHolder {
-        var cacheName: TextView? = null
-        var cacheUserName: TextView? = null
-        var cacheNbTrack: TextView? = null
-        var cachePrivacy: TextView? = null
-        var cacheButtonReading: Button? = null
-        var cacheButtonEdition: Button? = null
+        var cacheTitle: TextView? = null
+        var cacheArtistName: TextView? = null
+        var cacheBtnUp: Button? = null
+        var cacheBtnDown: Button? = null
+        var cacheBtnDel: Button? = null
     }
 
     @SuppressLint("SetTextI18n")
@@ -49,25 +47,30 @@ class PlaylistAdapterOrder(private val dataSet: MutableList<playAdapterOrderMode
         if (convertView == null) {
             viewHolder = ViewHolder()
             val inflater = LayoutInflater.from(context)
-            convertView = inflater.inflate(R.layout.adapter_playlist_public, parent, false)
-            viewHolder.cacheName = convertView.findViewById(R.id.adapter_name)
-            viewHolder.cacheNbTrack = convertView.findViewById(R.id.adapter_nb_track)
-            viewHolder.cachePrivacy = convertView.findViewById(R.id.adapter_privacy)
-            viewHolder.cacheUserName = convertView.findViewById(R.id.adapter_user_name)
-            viewHolder.cacheButtonReading = convertView.findViewById(R.id.adapter_button_reading)
-            viewHolder.cacheButtonEdition = convertView.findViewById(R.id.adapter_button_edition)
+            convertView = inflater.inflate(R.layout.adapter_playlist_order, parent, false)
+            viewHolder.cacheTitle = convertView.findViewById(R.id.trackAdapterTitle)
+            viewHolder.cacheArtistName = convertView.findViewById(R.id.trackAdapterArtist)
+            viewHolder.cacheBtnUp = convertView.findViewById(R.id.trackAdapterButtonUp)
+            viewHolder.cacheBtnDown = convertView.findViewById(R.id.trackAdapterButtonDown)
+            viewHolder.cacheBtnDel = convertView.findViewById(R.id.trackAdapterButtonDel)
 
             convertView.tag = viewHolder
         } else {
             viewHolder = convertView.tag as ViewHolder
         }
 
-        viewHolder.cacheName?.text = dataModel.name
-        viewHolder.cacheUserName?.text = "by ${dataModel.userName}"
-        viewHolder.cacheNbTrack?.text = "${dataModel.nbTrack} Tracks"
-        viewHolder.cachePrivacy?.text = if (dataModel.public) "public" else "private"
+        viewHolder.cacheTitle?.text = dataModel.title
+        viewHolder.cacheArtistName?.text = "by ${dataModel.artist}"
+        viewHolder.cacheBtnDel?.setOnClickListener {
+            model.trackDel(dataModel.id)
+        }
+        viewHolder.cacheBtnDown?.setOnClickListener {
+            model.trackDown(dataModel.id)
+        }
+        viewHolder.cacheBtnUp?.setOnClickListener {
+            model.trackUp(dataModel.id)
+        }
 
-        // convertView?.setBackgroundColor(dataModel.color.toColor())
         return convertView!!
     }
 }
