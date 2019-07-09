@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.trackvoteevent
+package io.kroom.app.view.activitymain.trackvoteevent.event.add
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import io.kroom.app.R
 import io.kroom.app.view.activitymain.playlist.tabs.PlaylistAddViewModel
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_playlist_tab_add.*
 class TrackVoteEventAddFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_playlist_tab_add, container, false)
+        return inflater.inflate(R.layout.fragment_event_add, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

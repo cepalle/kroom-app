@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.trackvoteevent
+package io.kroom.app.view.activitymain.trackvoteevent.event
 
 
 import android.content.Context
@@ -6,11 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.appcompat.widget.SwitchCompat
 import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.R
-import io.kroom.app.view.activitymain.model.TrackVoteEvent
+import io.kroom.app.view.activitymain.trackvoteevent.model.TrackVoteEvent
 
 class RecyclerViewAdapterTrackEvent(context: Context, private val dataSet: MutableList<TrackVoteEvent>) : RecyclerView.Adapter<RecyclerViewAdapterTrackEvent.TrackEventVoteHolder>() {
 

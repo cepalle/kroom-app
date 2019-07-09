@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.trackvoteevent
+package io.kroom.app.view.activitymain.trackvoteevent.event
 
 
 import android.app.Application
@@ -11,7 +11,7 @@ import io.kroom.app.webservice.GraphClient
 import io.reactivex.disposables.Disposable
 
 
-class MusicTrackVoteEventsViewModel (app: Application) : AndroidViewModel(app){
+class TrackVoteEventsViewModel (app: Application) : AndroidViewModel(app){
 
     private val client = GraphClient {
         Session.getToken(getApplication())

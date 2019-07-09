@@ -2,10 +2,7 @@ package io.kroom.app.repo
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
-import io.kroom.app.graphql.TrackVoteEventAddOrUpdateVoteMutation
-import io.kroom.app.graphql.TrackVoteEventByIdQuery
-import io.kroom.app.graphql.TrackVoteEventByUserIdQuery
-import io.kroom.app.graphql.TrackVoteEventsPublicQuery
+import io.kroom.app.graphql.*
 import io.reactivex.Single
 import io.reactivex.subjects.SingleSubject
 
@@ -76,4 +73,22 @@ class TrackVoteEventRepo(val client: ApolloClient) {
         return data
     }
 
+    fun setTrackVoteEventNew(
+        userIdMaster: Int,
+        name: String,
+        public: Boolean
+    ): SingleSubject<Result<TrackVoteEventNewMutation.Data>> {
+        val data: SingleSubject<Result<TrackVoteEventNewMutation.Data>> =
+            SingleSubject.create()
+
+        client.mutate(
+            TrackVoteEventNewMutation.builder()
+                .userIdMaster(userIdMaster)
+                .name(name)
+                .open(public)
+                .build()
+        ).enqueue(CallBackHandler { data.onSuccess(it) })
+
+        return data
+    }
 }

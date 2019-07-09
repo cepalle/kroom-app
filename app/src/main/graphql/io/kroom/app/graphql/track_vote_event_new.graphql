@@ -1,0 +1,16 @@
+mutation TrackVoteEventNewMutation(
+    $userIdMaster: Int!
+    $name: String!
+    $open: Boolean!
+) {
+    TrackVoteEventNew(userIdMaster: $userIdMaster, name: $name, public: $open) {
+        trackVoteEvent{
+            id
+            name
+        }
+        errors {
+            field
+            messages
+        }
+    }
+}

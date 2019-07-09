@@ -34,7 +34,6 @@
                 android:id="@+id/itemTrackVoteEventName"
                 android:layout_width="250dp"
                 android:layout_height="60dp"
-                android:TextSize="5sp"
                 android:layout_marginStart="1dp"
                 android:layout_weight="1"
                 android:gravity="center|center_horizontal|center_vertical"

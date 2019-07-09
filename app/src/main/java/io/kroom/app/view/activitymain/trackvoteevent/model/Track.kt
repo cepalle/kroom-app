@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.model
+package io.kroom.app.view.activitymain.trackvoteevent.model
 
 import com.deezer.sdk.model.Artist
 
