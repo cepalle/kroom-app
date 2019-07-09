@@ -6,44 +6,42 @@ import com.apollographql.apollo.subscription.WebSocketSubscriptionTransport
 import okhttp3.Interceptor
 
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import java.util.concurrent.TimeUnit
 
 //private const val url = "https://c4b73dbc.ngrok.io/graphql"
-private const val url = "http://192.168.43.132:8080/graphql"
+private const val baseUrl = "http://192.168.43.132:8080/graphql"
 private const val subscriptionBaseUrl = "ws://192.168.43.132:8080/graphql"
 
 class GraphClient(private val getToken: () -> String?) {
-    private fun tokenInterceptor(builder: Interceptor.Chain): okhttp3.Response {
-        val token = getToken()
-        return if (token != null) {
-            builder.proceed(
-                builder.request().newBuilder().header(
+
+    private fun interceptor(it: Interceptor.Chain): Response {
+        return it.proceed(
+            it.request().newBuilder()
+                .header(
                     "Kroom-token-id",
-                    token
-                ).build()
-            )
-        } else {
-            builder.proceed(builder.request())
-        }
+                    getToken() ?: ""
+                )
+                .addHeader(
+                    "Kroom-token-id",
+                    getToken() ?: ""
+                )
+                .build()
+        )
     }
 
     private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
         .writeTimeout(15, TimeUnit.SECONDS)
         .readTimeout(15, TimeUnit.SECONDS)
-        .addInterceptor(::tokenInterceptor)
-        .addNetworkInterceptor {
-            it.proceed(
-                it.request().newBuilder().header(
-                    "Authorization",
-                    "Bearer TOKEN"
-                ).build()
-            )
-        }
+        .addInterceptor(::interceptor)
+        .addNetworkInterceptor(::interceptor)
         .build()
 
     val client: ApolloClient = ApolloClient.builder()
-        .serverUrl(url)
+        .serverUrl(baseUrl)
         .okHttpClient(okHttpClient)
-        .subscriptionTransportFactory(WebSocketSubscriptionTransport.Factory(subscriptionBaseUrl, okHttpClient))
+        .subscriptionTransportFactory(
+            WebSocketSubscriptionTransport.Factory(subscriptionBaseUrl, okHttpClient)
+        )
         .build()
 }

@@ -14,7 +14,7 @@
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintVertical_bias="0.0" android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toStartOf="@+id/playlistEditorTabOrderAdd"
-            app:layout_constraintHorizontal_bias="0.0"/>
+            app:layout_constraintHorizontal_bias="0.0" android:textSize="14sp"/>
     <Button
             android:text="add"
             android:layout_width="wrap_content"

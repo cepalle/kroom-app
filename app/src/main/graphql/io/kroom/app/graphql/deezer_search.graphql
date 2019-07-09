@@ -7,10 +7,6 @@ query DeezerSearchQuery($search: String!) {
                 id
                 name
             }
-            album {
-                cover
-                title
-            }
         }
         errors {
             messages

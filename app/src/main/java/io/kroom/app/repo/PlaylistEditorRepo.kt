@@ -1,5 +1,6 @@
 package io.kroom.app.repo
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.ApolloClient
@@ -153,6 +154,7 @@ class PlaylistEditorRepo(private val client: ApolloClient) {
             override fun onCompleted() {}
 
             override fun onFailure(e: ApolloException) {
+                Log.e("ERROR", e.toString())
                 data.postValue(failure(e))
             }
 
