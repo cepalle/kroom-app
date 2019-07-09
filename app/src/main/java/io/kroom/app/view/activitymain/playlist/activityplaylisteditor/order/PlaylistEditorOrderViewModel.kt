@@ -46,7 +46,6 @@ class PlaylistEditorOrderViewModel(app: Application, private val playlistId: Int
                 trackList.postValue(null)
             }
             r.onSuccess {
-                Log.i("SUB", it.toString())
                 trackList.postValue(
                     it.PlayListEditorById().playListEditor()?.tracks()?.mapNotNull {
                         val artist = it.artist()
@@ -84,7 +83,7 @@ class PlaylistEditorOrderViewModel(app: Application, private val playlistId: Int
     }
 
     fun trackDown(trackId: Int) {
-        playlistRepo.playListEditorMoveTrack(playlistId, trackId, true)
+        playlistRepo.playListEditorMoveTrack(playlistId, trackId, false)
     }
 
     fun trackDel(trackId: Int) {

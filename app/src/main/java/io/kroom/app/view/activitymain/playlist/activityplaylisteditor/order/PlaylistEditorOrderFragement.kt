@@ -77,19 +77,10 @@ class PlaylistEditorOrderFragement(val playlistId: Int) : Fragment() {
             // playlistEditorTabOrderAutoCompleteTextView.error = it
         })
 
-        // updateListTracks(tracksList.value)
-        updateListTracks(
-            listOf(
-                TrackAdapterOrderModel("title", "artist", 1),
-                TrackAdapterOrderModel("title2", "artist2", 2)
-            )
-        )
-        /*
+        updateListTracks(tracksList.value)
         tracksList.observe(this, Observer {
-            Log.i("SUB2", "")
             updateListTracks(it)
         })
-        */
 
         playlistEditorTabOrderAdd.setOnClickListener {
             val map = model.getCacheAutoComplet()
