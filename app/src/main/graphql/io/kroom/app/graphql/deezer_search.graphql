@@ -1,0 +1,20 @@
+query DeezerSearchQuery($search: String!) {
+    DeezerSearch(search: $search, strict: false) {
+        search {
+            id
+            title
+            artist {
+                id
+                name
+            }
+            album {
+                cover
+                title
+            }
+        }
+        errors {
+            messages
+            field
+        }
+    }
+}

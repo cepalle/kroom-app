@@ -28,6 +28,19 @@ class PlaylistEditorOrderFragement(val playlistId: Int) : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        fun updateAutoCompletion(ls: List<Pair<String, Int>>?) {
+            ls ?: return
+            adapterAutocompletion.clear()
+            adapterAutocompletion.addAll(ls.map { it.first })
+            adapterAutocompletion.notifyDataSetChanged()
+        }
+
+        fun updateListTracks(ls: List<Pair<String, Int>>?) {
+            ls ?: return
+            adapterTracks?.updateDataSet(ls)
+            adapterTracks?.notifyDataSetChanged()
+        }
+
         super.onViewCreated(view, savedInstanceState)
 
         adapterAutocompletion = ArrayAdapter(activity!!, R.layout.select_dialog_item_material, java.util.ArrayList())
@@ -67,19 +80,6 @@ class PlaylistEditorOrderFragement(val playlistId: Int) : Fragment() {
         tracksList.observe(this, Observer {
             updateListTracks(it)
         })
-    }
-
-    private fun updateAutoCompletion(ls: List<Pair<String, Int>>?) {
-        ls ?: return
-        adapterAutocompletion.clear()
-        adapterAutocompletion.addAll(ls.map { it.first })
-        adapterAutocompletion.notifyDataSetChanged()
-    }
-
-    private fun updateListTracks(ls: List<Pair<String, Int>>?) {
-        ls ?: return
-        adapterTracks?.updateDataSet(ls)
-        adapterTracks?.notifyDataSetChanged()
     }
 
 }

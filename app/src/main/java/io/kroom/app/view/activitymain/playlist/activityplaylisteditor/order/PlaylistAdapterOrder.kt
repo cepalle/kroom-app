@@ -66,18 +66,6 @@ class PlaylistAdapterOrder(private val dataSet: MutableList<playAdapterOrderMode
         viewHolder.cacheUserName?.text = "by ${dataModel.userName}"
         viewHolder.cacheNbTrack?.text = "${dataModel.nbTrack} Tracks"
         viewHolder.cachePrivacy?.text = if (dataModel.public) "public" else "private"
-        viewHolder.cacheButtonEdition?.setOnClickListener {
-            val intent = Intent(context, PlaylistEditorActivity::class.java).apply {
-                putExtra(EXTRA_NAME_PLAYLIST_ID, dataModel.id)
-            }
-            ContextCompat.startActivity(context, intent, null)
-        }
-        viewHolder.cacheButtonReading?.setOnClickListener {
-            val intent = Intent(context, PlaylistReadingActivity::class.java).apply {
-                putExtra(EXTRA_NAME_PLAYLIST_ID, dataModel.id)
-            }
-            ContextCompat.startActivity(context, intent, null)
-        }
 
         // convertView?.setBackgroundColor(dataModel.color.toColor())
         return convertView!!

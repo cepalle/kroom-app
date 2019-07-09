@@ -7,7 +7,7 @@ import com.apollographql.apollo.ApolloClient
 import io.kroom.app.graphql.*
 
 
-class UserRepo(val client: ApolloClient) {
+class UserRepo(private val client: ApolloClient) {
 
     fun user(
         id: Int

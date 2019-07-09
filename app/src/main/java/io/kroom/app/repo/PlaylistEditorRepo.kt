@@ -8,7 +8,7 @@ import io.kroom.app.graphql.PlayListEditorByUserIdQuery
 import io.kroom.app.graphql.PlayListEditorNewMutation
 import io.kroom.app.graphql.PlayListEditorsPublicQuery
 
-class PlaylistEditorRepo(val client: ApolloClient) {
+class PlaylistEditorRepo(private val client: ApolloClient) {
 
     fun playlistEditorsPublic(
     ): LiveData<Result<PlayListEditorsPublicQuery.Data>> {

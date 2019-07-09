@@ -5,6 +5,14 @@ query PlayListEditorByIdQuery($id: Int!) {
             tracks {
                 id
                 title
+                artist {
+                    id
+                    name
+                }
+                album {
+                    cover
+                    title
+                }
             }
         }
         errors {

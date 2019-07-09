@@ -9,7 +9,7 @@ import io.kroom.app.graphql.TrackVoteEventByUserIdQuery
 import io.kroom.app.graphql.TrackVoteEventsPublicQuery
 
 
-class TrackVoteEventRepo(val client: ApolloClient) {
+class TrackVoteEventRepo(private val client: ApolloClient) {
 
     fun trackVoteEventAddOrUpdateVote(
         eventId: Int,
