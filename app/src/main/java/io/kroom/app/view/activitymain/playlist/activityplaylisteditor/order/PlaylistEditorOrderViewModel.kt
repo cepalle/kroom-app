@@ -9,6 +9,8 @@ import io.kroom.app.util.Session
 import io.kroom.app.webservice.GraphClient
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.apollographql.apollo.ApolloSubscriptionCall
+import io.kroom.app.graphql.PlayListEditorByIdSubscription
 import io.kroom.app.repo.DeezerRepo
 import io.kroom.app.repo.PlaylistEditorRepo
 
@@ -39,8 +41,12 @@ class PlaylistEditorOrderViewModel(app: Application, private val playlistId: Int
     private val errorMessage: MediatorLiveData<String> = MediatorLiveData()
     private val cacheAutoComplet: MutableMap<String, Int> = mutableMapOf()
 
+    private var sCall: ApolloSubscriptionCall<PlayListEditorByIdSubscription.Data>
+
     init {
-        trackList.addSource(playlistRepo.playListEditorSub(playlistId)) { r ->
+        val (lData, subCall) = playlistRepo.playListEditorSub(playlistId)
+        sCall = subCall
+        trackList.addSource(lData) { r ->
             r.onFailure {
                 errorMessage.postValue(it.message)
                 trackList.postValue(null)
@@ -110,6 +116,11 @@ class PlaylistEditorOrderViewModel(app: Application, private val playlistId: Int
 
     fun getCacheAutoComplet(): Map<String, Int> {
         return cacheAutoComplet
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        sCall.cancel()
     }
 
 }

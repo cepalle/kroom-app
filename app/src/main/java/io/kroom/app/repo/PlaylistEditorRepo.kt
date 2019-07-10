@@ -128,17 +128,23 @@ class PlaylistEditorRepo(private val client: ApolloClient) {
         return data
     }
 
+    data class playListEditorSubRes(
+        val lData: LiveData<Result<PlayListEditorByIdSubscription.Data>>,
+        val subCall: ApolloSubscriptionCall<PlayListEditorByIdSubscription.Data>
+    )
+
     fun playListEditorSub(
         playlistId: Int
-    ): LiveData<Result<PlayListEditorByIdSubscription.Data>> {
+    ): playListEditorSubRes {
         val data: MutableLiveData<Result<PlayListEditorByIdSubscription.Data>> =
             MutableLiveData()
 
-        client.subscribe(
+        val subCall: ApolloSubscriptionCall<PlayListEditorByIdSubscription.Data> = client.subscribe(
             PlayListEditorByIdSubscription.builder()
                 .id(playlistId)
                 .build()
-        ).execute(object : ApolloSubscriptionCall.Callback<PlayListEditorByIdSubscription.Data> {
+        )
+        subCall.execute(object : ApolloSubscriptionCall.Callback<PlayListEditorByIdSubscription.Data> {
             override fun onResponse(response: Response<PlayListEditorByIdSubscription.Data>) {
                 data.postValue(
                     if (response.errors().isEmpty()) {
@@ -160,7 +166,7 @@ class PlaylistEditorRepo(private val client: ApolloClient) {
 
         })
 
-        return data
+        return playListEditorSubRes(data, subCall)
     }
 
 }
