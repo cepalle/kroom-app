@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import io.kroom.app.R
 import io.kroom.app.view.activitymain.playlist.add.PlaylistAddFragment
-import io.kroom.app.view.activitymain.playlist.invited.PlaylistInvitedFragment
+import io.kroom.app.view.activitymain.playlist.privat.PlaylistPrivateFragment
 import io.kroom.app.view.activitymain.playlist.publc.PlaylistPublicFragment
 import kotlinx.android.synthetic.main.fragment_playlist.*
 
@@ -29,7 +29,7 @@ class PlaylistFragment : Fragment() {
         playlistNavigation.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
-                    1 -> changeFragment(PlaylistInvitedFragment())
+                    1 -> changeFragment(PlaylistPrivateFragment())
                     2 -> changeFragment(PlaylistAddFragment())
                     else -> changeFragment(PlaylistPublicFragment())
                 }

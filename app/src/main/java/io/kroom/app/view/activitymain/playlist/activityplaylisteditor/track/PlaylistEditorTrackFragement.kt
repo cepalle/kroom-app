@@ -1,9 +1,8 @@
-package io.kroom.app.view.activitymain.playlist.activityplaylisteditor.order
+package io.kroom.app.view.activitymain.playlist.activityplaylisteditor.track
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,16 +12,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import io.kroom.app.R
-import kotlinx.android.synthetic.main.fragment_playlist_editor_tab_order.*
+import kotlinx.android.synthetic.main.fragment_playlist_editor_tab_track.*
 
 
-class PlaylistEditorOrderFragement(val playlistId: Int) : Fragment() {
+class PlaylistEditorTrackFragement(val playlistId: Int) : Fragment() {
 
     private lateinit var adapterAutocompletion: ArrayAdapter<String>
     private lateinit var adapterTracks: PlaylistAdapterOrder
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_playlist_editor_tab_order, container, false)
+        return inflater.inflate(R.layout.fragment_playlist_editor_tab_track, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

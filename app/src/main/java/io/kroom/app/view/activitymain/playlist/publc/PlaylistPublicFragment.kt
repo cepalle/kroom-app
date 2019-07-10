@@ -74,10 +74,11 @@ class PlaylistPublicFragment : Fragment() {
                         it.public_()
                     )
                 else null
-            }.let {
-                adapterPublic?.updateDataSet(it)
-                adapterPublic?.notifyDataSetChanged()
-            }
+            }.sortedBy { it.name }
+                .let {
+                    adapterPublic?.updateDataSet(it)
+                    adapterPublic?.notifyDataSetChanged()
+                }
         }
     }
 

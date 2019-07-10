@@ -11,7 +11,7 @@ import io.kroom.app.R
 import io.kroom.app.repo.PlaylistEditorRepo
 import io.kroom.app.util.Session
 import io.kroom.app.view.activitymain.playlist.EXTRA_NAME_PLAYLIST_ID
-import io.kroom.app.view.activitymain.playlist.activityplaylisteditor.order.PlaylistEditorOrderFragement
+import io.kroom.app.view.activitymain.playlist.activityplaylisteditor.track.PlaylistEditorTrackFragement
 import io.kroom.app.view.activitymain.playlist.activityplaylisteditor.user.PlaylistEditorUserFragement
 import io.kroom.app.webservice.GraphClient
 
@@ -28,7 +28,7 @@ class PlaylistEditorActivity : AppCompatActivity() {
         playlistId = intent.getIntExtra(EXTRA_NAME_PLAYLIST_ID, 0)
 
         if (savedInstanceState == null) {
-            changeFragment(PlaylistEditorOrderFragement(playlistId))
+            changeFragment(PlaylistEditorTrackFragement(playlistId))
         }
 
     }
@@ -43,7 +43,7 @@ class PlaylistEditorActivity : AppCompatActivity() {
         super.onOptionsItemSelected(item)
         item ?: return true
         when (item.itemId) {
-            R.id.playlistEditorMenuTrack -> changeFragment(PlaylistEditorOrderFragement(playlistId))
+            R.id.playlistEditorMenuTrack -> changeFragment(PlaylistEditorTrackFragement(playlistId))
             R.id.playlistEditorMenuUser -> changeFragment(PlaylistEditorUserFragement(playlistId))
             R.id.playlistEditorMenuDelete -> {
                 val client = GraphClient {

@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.playlist.invited
+package io.kroom.app.view.activitymain.playlist.privat
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ import io.kroom.app.view.activitymain.playlist.playAdapterModel
 import io.kroom.app.webservice.GraphClient
 import kotlinx.android.synthetic.main.fragment_playlist_tab_invited.*
 
-class PlaylistInvitedFragment : Fragment() {
+class PlaylistPrivateFragment : Fragment() {
 
     private val adapterIvited by lazy {
         context?.let {
@@ -76,10 +76,12 @@ class PlaylistInvitedFragment : Fragment() {
                         it.public_()
                     )
                 else null
-            }?.let {
-                adapterIvited?.updateDataSet(it)
-                adapterIvited?.notifyDataSetChanged()
-            }
+            }?.filter { !it.public }
+                ?.sortedBy { it.name }
+                ?.let {
+                    adapterIvited?.updateDataSet(it)
+                    adapterIvited?.notifyDataSetChanged()
+                }
         }
     }
 
