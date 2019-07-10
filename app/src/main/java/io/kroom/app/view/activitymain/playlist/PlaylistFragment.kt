@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_playlist.*
 class PlaylistFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        requireActivity().title = "Playlist editor"
+        requireActivity().title = "Playlist"
         return inflater.inflate(R.layout.fragment_playlist, container, false)
     }
 

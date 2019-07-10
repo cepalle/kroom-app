@@ -22,6 +22,7 @@ class PlaylistEditorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        title = "Playlist Editor"
         setContentView(R.layout.activity_playlist_editor)
 
         playlistId = intent.getIntExtra(EXTRA_NAME_PLAYLIST_ID, 0)
@@ -43,7 +44,7 @@ class PlaylistEditorActivity : AppCompatActivity() {
         item ?: return true
         when (item.itemId) {
             R.id.playlistEditorMenuTrack -> changeFragment(PlaylistEditorOrderFragement(playlistId))
-            R.id.playlistEditorMenuUser -> changeFragment(PlaylistEditorUserFragement())
+            R.id.playlistEditorMenuUser -> changeFragment(PlaylistEditorUserFragement(playlistId))
             R.id.playlistEditorMenuDelete -> {
                 val client = GraphClient {
                     Session.getToken(application)

@@ -11,29 +11,30 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import io.kroom.app.R
-import io.kroom.app.view.activitymain.user.UserFriendsViewModel
-import kotlinx.android.synthetic.main.fragment_user_friends.*
+import kotlinx.android.synthetic.main.fragment_playlist_editor_tab_users.*
 import java.util.ArrayList
 
-class PlaylistEditorUserFragement : Fragment() {
+class PlaylistEditorUserFragement(private val playlistId: Int) : Fragment() {
     private lateinit var adapterAutocompletion: ArrayAdapter<String>
-    private lateinit var adapterFriendsList: ArrayAdapter<String>
+    private lateinit var adapterUserList: ArrayAdapter<String>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        requireActivity().title = "Friends management"
-        return inflater.inflate(R.layout.fragment_user_friends, container, false)
+        return inflater.inflate(R.layout.fragment_playlist_editor_tab_users, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         adapterAutocompletion = ArrayAdapter(activity!!, R.layout.select_dialog_item_material, ArrayList())
-        adapterFriendsList = ArrayAdapter(activity!!, R.layout.select_dialog_item_material, ArrayList())
+        adapterUserList = ArrayAdapter(activity!!, R.layout.select_dialog_item_material, ArrayList())
 
-        userFriendsAddInput.setAdapter(adapterAutocompletion)
-        userFriendsList.adapter = adapterFriendsList
+        playlistEditorTabUsersAddInput.setAdapter(adapterAutocompletion)
+        playlistEditorTabUsersFriendsList.adapter = adapterUserList
 
-        val model = ViewModelProviders.of(this).get(UserFriendsViewModel::class.java)
+        val model = ViewModelProviders.of(
+            this,
+            PlaylistEditorUserViewModelFactory(this.activity!!.application, playlistId)
+        ).get(PlaylistEditorUserViewModel::class.java)
         val autoCompletion = model.getAutoCompletion()
         val friendsList = model.getFriendsList()
         val errorMessage = model.getErrorMessage()
@@ -43,18 +44,18 @@ class PlaylistEditorUserFragement : Fragment() {
             updateAutoCompletion(it)
         })
 
-        updateListFriends(friendsList.value)
+        updateListUser(friendsList.value)
         friendsList.observe(this, Observer {
-            updateListFriends(it)
+            updateListUser(it)
         })
 
         errorMessage.observe(this, Observer {
-            userFriendsAddInput.error = it
+            playlistEditorTabUsersAddInput.error = it
         })
 
         // ---
 
-        userFriendsAddInput.addTextChangedListener(object : TextWatcher {
+        playlistEditorTabUsersAddInput.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -62,24 +63,24 @@ class PlaylistEditorUserFragement : Fragment() {
                 s: CharSequence, start: Int,
                 before: Int, count: Int
             ) {
-                model.updateAutoComplet(userFriendsAddInput.text.toString())
+                model.updateAutoComplet(playlistEditorTabUsersAddInput.text.toString())
             }
         })
 
-        userFriendsAddSubmit.setOnClickListener {
+        playlistEditorTabUsersAddSubmit.setOnClickListener {
             model.getAutoCompletion().value?.find {
-                it.first == userFriendsAddInput.text.toString()
+                it.first == playlistEditorTabUsersAddInput.text.toString()
             }?.second?.let {
-                model.addFriend(it)
+                model.addUser(it)
             }
         }
 
-        userFriendsList.setOnItemClickListener { _, _, position, _ ->
-            adapterFriendsList.getItem(position)?.let { username ->
+        playlistEditorTabUsersFriendsList.setOnItemClickListener { _, _, position, _ ->
+            adapterUserList.getItem(position)?.let { username ->
                 model.getCacheUSer().find {
                     it.first == username
                 }?.second?.let {
-                    model.delFriend(it)
+                    model.delUser(it)
                 }
             }
         }
@@ -92,11 +93,11 @@ class PlaylistEditorUserFragement : Fragment() {
         adapterAutocompletion.notifyDataSetChanged()
     }
 
-    private fun updateListFriends(ls: List<Pair<String, Int>>?) {
+    private fun updateListUser(ls: List<Pair<String, Int>>?) {
         ls ?: return
-        adapterFriendsList.clear()
-        adapterFriendsList.addAll(ls.map { it.first })
-        adapterFriendsList.notifyDataSetChanged()
+        adapterUserList.clear()
+        adapterUserList.addAll(ls.map { it.first })
+        adapterUserList.notifyDataSetChanged()
         // userFriendsList.invalidate()
     }
 }
