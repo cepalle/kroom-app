@@ -143,6 +143,40 @@ class PlaylistEditorRepo(private val client: ApolloClient) {
         return data
     }
 
+    fun addUser(
+        playlistId: Int,
+        userId: Int
+    ): LiveData<Result<PlayListEditorAddUserMutation.Data>> {
+        val data: MutableLiveData<Result<PlayListEditorAddUserMutation.Data>> =
+            MutableLiveData()
+
+        client.mutate(
+            PlayListEditorAddUserMutation.builder()
+                .playlistId(playlistId)
+                .userId(userId)
+                .build()
+        ).enqueue(CallBackHandler { data.postValue(it) })
+
+        return data
+    }
+
+    fun delUser(
+        playlistId: Int,
+        userId: Int
+    ): LiveData<Result<PlayListEditorDelUserMutation.Data>> {
+        val data: MutableLiveData<Result<PlayListEditorDelUserMutation.Data>> =
+            MutableLiveData()
+
+        client.mutate(
+            PlayListEditorDelUserMutation.builder()
+                .playlistId(playlistId)
+                .userId(userId)
+                .build()
+        ).enqueue(CallBackHandler { data.postValue(it) })
+
+        return data
+    }
+
     data class playListEditorSubRes(
         val lData: LiveData<Result<PlayListEditorByIdSubscription.Data>>,
         val subCall: ApolloSubscriptionCall<PlayListEditorByIdSubscription.Data>
