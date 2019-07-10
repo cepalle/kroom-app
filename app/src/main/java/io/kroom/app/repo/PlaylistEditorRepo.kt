@@ -13,7 +13,7 @@ import kotlin.Result.Companion.success
 
 class PlaylistEditorRepo(private val client: ApolloClient) {
 
-    fun playlistEditorsPublic(
+    fun public(
     ): LiveData<Result<PlayListEditorsPublicQuery.Data>> {
         val data: MutableLiveData<Result<PlayListEditorsPublicQuery.Data>> =
             MutableLiveData()
@@ -26,7 +26,7 @@ class PlaylistEditorRepo(private val client: ApolloClient) {
         return data
     }
 
-    fun playlistEditorByUserId(
+    fun byUserId(
         userId: Int
     ): LiveData<Result<PlayListEditorByUserIdQuery.Data>> {
         val data: MutableLiveData<Result<PlayListEditorByUserIdQuery.Data>> =
@@ -41,7 +41,7 @@ class PlaylistEditorRepo(private val client: ApolloClient) {
         return data
     }
 
-    fun playlistEditorNew(
+    fun new(
         userMasterId: Int,
         name: String,
         public: Boolean
@@ -60,7 +60,22 @@ class PlaylistEditorRepo(private val client: ApolloClient) {
         return data
     }
 
-    fun playListEditorById(
+    fun del(
+        id: Int
+    ): LiveData<Result<PlayListEditorDelMutation.Data>> {
+        val data: MutableLiveData<Result<PlayListEditorDelMutation.Data>> =
+            MutableLiveData()
+
+        client.mutate(
+            PlayListEditorDelMutation.builder()
+                .id(id)
+                .build()
+        ).enqueue(CallBackHandler { data.postValue(it) })
+
+        return data
+    }
+
+    fun byId(
         id: Int
     ): LiveData<Result<PlayListEditorByIdQuery.Data>> {
         val data: MutableLiveData<Result<PlayListEditorByIdQuery.Data>> =
@@ -75,7 +90,7 @@ class PlaylistEditorRepo(private val client: ApolloClient) {
         return data
     }
 
-    fun playListEditorMoveTrack(
+    fun moveTrack(
         playlistId: Int,
         trackId: Int,
         up: Boolean
@@ -94,7 +109,7 @@ class PlaylistEditorRepo(private val client: ApolloClient) {
         return data
     }
 
-    fun playListEditorDelTrack(
+    fun delTrack(
         playlistId: Int,
         trackId: Int
     ): LiveData<Result<PlayListEditorDelTrackMutation.Data>> {
@@ -111,7 +126,7 @@ class PlaylistEditorRepo(private val client: ApolloClient) {
         return data
     }
 
-    fun playListEditorAddTrack(
+    fun addTrack(
         playlistId: Int,
         trackId: Int
     ): LiveData<Result<PlayListEditorAddTrackMutation.Data>> {
@@ -133,7 +148,7 @@ class PlaylistEditorRepo(private val client: ApolloClient) {
         val subCall: ApolloSubscriptionCall<PlayListEditorByIdSubscription.Data>
     )
 
-    fun playListEditorSub(
+    fun subById(
         playlistId: Int
     ): playListEditorSubRes {
         val data: MutableLiveData<Result<PlayListEditorByIdSubscription.Data>> =

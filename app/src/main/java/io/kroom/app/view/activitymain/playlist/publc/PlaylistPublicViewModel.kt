@@ -16,7 +16,7 @@ class PlaylistPublicViewModel(app: Application) : AndroidViewModel(app) {
     private val playRepo = PlaylistEditorRepo(client)
 
     fun getListPublic(): LiveData<Result<PlayListEditorsPublicQuery.Data>> {
-        return playRepo.playlistEditorsPublic()
+        return playRepo.public()
     }
 
 }

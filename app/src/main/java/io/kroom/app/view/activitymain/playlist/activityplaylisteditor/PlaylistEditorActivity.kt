@@ -2,18 +2,20 @@ package io.kroom.app.view.activitymain.playlist.activityplaylisteditor
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayout
+import androidx.lifecycle.Observer
 import io.kroom.app.R
+import io.kroom.app.repo.PlaylistEditorRepo
+import io.kroom.app.util.Session
 import io.kroom.app.view.activitymain.playlist.EXTRA_NAME_PLAYLIST_ID
 import io.kroom.app.view.activitymain.playlist.activityplaylisteditor.order.PlaylistEditorOrderFragement
-import io.kroom.app.view.activitymain.playlist.activityplaylisteditor.track.PlaylistEditorTrackFragement
 import io.kroom.app.view.activitymain.playlist.activityplaylisteditor.user.PlaylistEditorUserFragement
-import kotlinx.android.synthetic.main.activity_playlist_editor.*
+import io.kroom.app.webservice.GraphClient
 
 
-// TODO delete playlist button
 class PlaylistEditorActivity : AppCompatActivity() {
 
     var playlistId: Int = -1
@@ -28,34 +30,43 @@ class PlaylistEditorActivity : AppCompatActivity() {
             changeFragment(PlaylistEditorOrderFragement(playlistId))
         }
 
-        playlistEditorNavigation.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                tab.position.toRoute()?.let(::goToRoute)
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-        })
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // show menu if is master ?
         menuInflater.inflate(R.menu.playlist_editor_menu, menu)
         return true
     }
 
-    private fun goToRoute(route: Routes) {
-        when (route) {
-            Routes.ORDER -> changeFragment(
-                PlaylistEditorOrderFragement(playlistId)
-            )
-            Routes.TRACKS -> changeFragment(
-                PlaylistEditorTrackFragement()
-            )
-            Routes.USERS -> changeFragment(
-                PlaylistEditorUserFragement()
-            )
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        super.onOptionsItemSelected(item)
+        item ?: return true
+        when (item.itemId) {
+            R.id.playlistEditorMenuTrack -> changeFragment(PlaylistEditorOrderFragement(playlistId))
+            R.id.playlistEditorMenuUser -> changeFragment(PlaylistEditorUserFragement())
+            R.id.playlistEditorMenuDelete -> {
+                val client = GraphClient {
+                    Session.getToken(application)
+                }.client
+
+                val playlistRepo = PlaylistEditorRepo(client)
+
+                playlistRepo.del(playlistId).observe(this, Observer {
+                    it.onSuccess {
+                        if (it.PlayListEditorDel().errors().isEmpty()) {
+                            finish()
+                        } else {
+                            Toast.makeText(this, it.PlayListEditorDel().errors()[0].messages()[0], Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
+                    it.onFailure {
+                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
         }
+        return true
     }
 
     private fun changeFragment(fragment: Fragment) {
@@ -64,11 +75,4 @@ class PlaylistEditorActivity : AppCompatActivity() {
             .commit()
     }
 
-    private enum class Routes(val id: Int) {
-        ORDER(0),
-        TRACKS(1),
-        USERS(2);
-    }
-
-    private fun Int.toRoute(): Routes? = Routes.values().find { it.id == this }
 }

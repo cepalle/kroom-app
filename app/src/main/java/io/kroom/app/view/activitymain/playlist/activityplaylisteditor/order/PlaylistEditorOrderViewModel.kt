@@ -1,7 +1,6 @@
 package io.kroom.app.view.activitymain.playlist.activityplaylisteditor.order
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -44,7 +43,7 @@ class PlaylistEditorOrderViewModel(app: Application, private val playlistId: Int
     private var sCall: ApolloSubscriptionCall<PlayListEditorByIdSubscription.Data>
 
     init {
-        val (lData, subCall) = playlistRepo.playListEditorSub(playlistId)
+        val (lData, subCall) = playlistRepo.subById(playlistId)
         sCall = subCall
         trackList.addSource(lData) { r ->
             r.onFailure {
@@ -85,19 +84,19 @@ class PlaylistEditorOrderViewModel(app: Application, private val playlistId: Int
     }
 
     fun trackUp(trackId: Int) {
-        playlistRepo.playListEditorMoveTrack(playlistId, trackId, true)
+        playlistRepo.moveTrack(playlistId, trackId, true)
     }
 
     fun trackDown(trackId: Int) {
-        playlistRepo.playListEditorMoveTrack(playlistId, trackId, false)
+        playlistRepo.moveTrack(playlistId, trackId, false)
     }
 
     fun trackDel(trackId: Int) {
-        playlistRepo.playListEditorDelTrack(playlistId, trackId)
+        playlistRepo.delTrack(playlistId, trackId)
     }
 
     fun trackAdd(trackId: Int) {
-        playlistRepo.playListEditorAddTrack(playlistId, trackId)
+        playlistRepo.addTrack(playlistId, trackId)
     }
 
     // ---

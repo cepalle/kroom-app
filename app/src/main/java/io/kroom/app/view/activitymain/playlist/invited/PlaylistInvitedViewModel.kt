@@ -17,7 +17,7 @@ class PlaylistInvitedViewModel(app: Application) : AndroidViewModel(app) {
 
     fun getListInvited(): LiveData<Result<PlayListEditorByUserIdQuery.Data>>? {
         return Session.getId(getApplication())?.let {
-            playRepo.playlistEditorByUserId(it)
+            playRepo.byUserId(it)
         }
     }
 
