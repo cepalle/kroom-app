@@ -1,18 +1,20 @@
 package io.kroom.app.view.activitymain.playlist.invited
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import io.kroom.app.R
 import io.kroom.app.graphql.PlayListEditorByUserIdQuery
+import io.kroom.app.repo.PlaylistEditorRepo
+import io.kroom.app.util.Session
 import io.kroom.app.view.activitymain.playlist.PlaylistPublicAdapter
 import io.kroom.app.view.activitymain.playlist.playAdapterModel
+import io.kroom.app.webservice.GraphClient
 import kotlinx.android.synthetic.main.fragment_playlist_tab_invited.*
 
 class PlaylistInvitedFragment : Fragment() {
@@ -34,9 +36,19 @@ class PlaylistInvitedFragment : Fragment() {
             playlistInvitedList.adapter = adapterIvited
         }
 
-        val model = ViewModelProviders.of(this).get(PlaylistInvitedViewModel::class.java)
+        val client = GraphClient {
+            Session.getToken(activity!!.application)
+        }.client
 
-        val listInvited = model.getListInvited()
+        val playRepo = PlaylistEditorRepo(client)
+
+        fun getListInvited(): LiveData<Result<PlayListEditorByUserIdQuery.Data>>? {
+            return Session.getId(activity!!.application)?.let {
+                playRepo.byUserId(it)
+            }
+        }
+
+        val listInvited = getListInvited()
 
         updatePlaylistInvited(listInvited?.value)
         listInvited?.observe(this, Observer {
