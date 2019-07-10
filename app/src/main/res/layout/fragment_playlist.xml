@@ -15,15 +15,15 @@
 
         <com.google.android.material.tabs.TabItem
                 android:id="@+id/playlistTabPublic"
-                android:icon="@drawable/ic_launcher_background"
+                android:icon="@drawable/icons8_foule_160"
                 android:text="public" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
         <com.google.android.material.tabs.TabItem
                 android:id="@+id/playlistTabInvited"
-                android:icon="@drawable/ic_home_black_24dp"
+                android:icon="@drawable/icons8_debloquer_prive_100"
                 android:text="private" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
         <com.google.android.material.tabs.TabItem
                 android:id="@+id/playlistTabAdd"
-                android:icon="@drawable/ic_music_note_black_24dp"
+                android:icon="@drawable/icons8_plus_100"
                 android:text="add" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
     </com.google.android.material.tabs.TabLayout>
