@@ -3,11 +3,7 @@ package io.kroom.app.repo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.ApolloClient
-import io.kroom.app.graphql.TrackVoteEventAddOrUpdateVoteMutation
-import io.kroom.app.graphql.TrackVoteEventByIdQuery
-import io.kroom.app.graphql.TrackVoteEventByUserIdQuery
-import io.kroom.app.graphql.TrackVoteEventsPublicQuery
-
+import io.kroom.app.graphql.*
 
 class TrackVoteEventRepo(private val client: ApolloClient) {
 
@@ -76,4 +72,22 @@ class TrackVoteEventRepo(private val client: ApolloClient) {
         return data
     }
 
+    fun setTrackVoteEventNew(
+        userIdMaster: Int,
+        name: String,
+        public: Boolean
+    ): LiveData<Result<TrackVoteEventNewMutation.Data>> {
+        val data: MutableLiveData<Result<TrackVoteEventNewMutation.Data>> =
+            MutableLiveData()
+
+        client.mutate(
+            TrackVoteEventNewMutation.builder()
+                .userIdMaster(userIdMaster)
+                .name(name)
+                .open(public)
+                .build()
+        ).enqueue(CallBackHandler { data.postValue(it) })
+
+        return data
+    }
 }

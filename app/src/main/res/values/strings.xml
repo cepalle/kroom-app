@@ -54,6 +54,12 @@
     <string name="event_name">Event Name</string>
     <string name="event_schedule">19/06/2019</string>
     <string name="event_location">Location</string>
+    <string name="event_switch">Subcribe</string>
+    <string name="New_Event_Name">Name</string>
+    <string name="New_Event_Public_Private">public</string>
+    <string name="create_an_event">Create an Event</string>
+    <string name="video_container">videoContainer</string>
+    <string name="playlist_name">Name</string>
 
 
 </resources>
