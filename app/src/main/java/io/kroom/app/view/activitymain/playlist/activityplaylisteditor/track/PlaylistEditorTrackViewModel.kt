@@ -71,9 +71,7 @@ class PlaylistEditorOrderViewModel(app: Application, private val playlistId: Int
             r.onSuccess {
                 autoCompletion.postValue(
                     it.DeezerSearch().search()?.mapNotNull {
-                        val artist = it.artist()
-                        artist ?: return@mapNotNull null
-                        AutoCompletView("${it.title()} / ${artist.name()}", it.id())
+                        AutoCompletView("${it.title()} / ${it.artistName()}", it.id())
                     }?.map {
                         cacheAutoComplet[it.str] = it.id
                         it

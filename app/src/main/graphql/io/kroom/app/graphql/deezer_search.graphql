@@ -3,10 +3,7 @@ query DeezerSearchQuery($search: String!) {
         search {
             id
             title
-            artist {
-                id
-                name
-            }
+            artistName
         }
         errors {
             messages
