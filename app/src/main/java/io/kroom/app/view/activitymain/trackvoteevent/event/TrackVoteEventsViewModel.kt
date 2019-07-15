@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import io.kroom.app.graphql.TrackVoteEventsPublicQuery
 import io.kroom.app.repo.TrackVoteEventRepo
 import io.kroom.app.util.Session
+import io.kroom.app.view.activitymain.trackvoteevent.model.TrackVoteEvent
 import io.kroom.app.webservice.GraphClient
 
 
@@ -19,8 +20,16 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
 
     private val trackVoteEventRepo = TrackVoteEventRepo(client)
 
+    private val selectedTrackVoteEvent: MutableLiveData<TrackVoteEvent> = MutableLiveData()
+
+    //  private val EventListPublicResutl : LiveData<Result<List<TrackVoteEventsPublicQuery.Data>>>? = null
+
     fun getTrackVoteEventPublicList(): LiveData<Result<TrackVoteEventsPublicQuery.Data>> {
         return trackVoteEventRepo.getTrackVoteEventsPublic()
+    }
+
+    fun getSelectedTrackVoteEvent(): MutableLiveData<TrackVoteEvent>? {
+        return selectedTrackVoteEvent
     }
 
 }
