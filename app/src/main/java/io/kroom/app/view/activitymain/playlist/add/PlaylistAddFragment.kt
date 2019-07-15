@@ -23,7 +23,9 @@ class PlaylistAddFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val client = GraphClient {
-            Session.getToken(activity!!.application)
+            activity?.let {
+                Session.getToken(it.application)
+            }
         }.client
 
         val playRepo = PlaylistEditorRepo(client)
