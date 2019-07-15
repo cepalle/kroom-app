@@ -11,8 +11,7 @@ import io.kroom.app.util.Session
 
 class TrackVoteEventPrivateFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        requireActivity().title = "Track Vote Event"
-        return inflater.inflate(R.layout.fragment_event, container, false)
+        return inflater.inflate(R.layout.fragment_list_private_events, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

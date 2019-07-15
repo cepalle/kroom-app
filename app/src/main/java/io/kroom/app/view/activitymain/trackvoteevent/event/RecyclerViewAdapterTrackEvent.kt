@@ -1,23 +1,34 @@
 package io.kroom.app.view.activitymain.trackvoteevent.event
 
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.R
+import io.kroom.app.graphql.TrackVoteEventsPublicQuery
 import io.kroom.app.view.activitymain.trackvoteevent.model.TrackVoteEvent
+import kotlinx.android.synthetic.main.row_item_track_vote_public_event.view.*
 
-class RecyclerViewAdapterTrackEvent(context: Context, private val dataSet: MutableList<TrackVoteEvent>) : RecyclerView.Adapter<RecyclerViewAdapterTrackEvent.TrackEventVoteHolder>() {
+class RecyclerViewAdapterTrackEvent(
+    private val trackVoteEventList: List<EventModel>,
+    val onTrackVoteEventListener: (EventModel) -> Result<TrackVoteEventsPublicQuery.TrackVoteEventsPublic>
+) : RecyclerView.Adapter<RecyclerViewAdapterTrackEvent.TrackEventVoteHolder>() {
 
-    private var trackVoteEventList: MutableList<TrackVoteEvent> = dataSet
-    private var _context: Context = context
+    data class EventModel(
+        val id: Int,
+        val userMasterName: String,
+        val name: String,
+        val public: Boolean,
+        val scheduleBegin: Long,
+        val scheduleEnd: Long,
+        val latitude: Float,
+        val longitude: Float
+    )
 
+    private var _trackVoteEventList: List<EventModel> = trackVoteEventList
 
-    // private lateinit var trackVoteEvent: List<TrackVoteEvent>
-
+    // private lateinit var trackVoteEvent: List<EventModel>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackEventVoteHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -25,38 +36,29 @@ class RecyclerViewAdapterTrackEvent(context: Context, private val dataSet: Mutab
         return TrackEventVoteHolder(itemView)
     }
 
-    override fun getItemCount(): Int {
-        return trackVoteEventList.size
+    override fun getItemCount() = trackVoteEventList.size
+
+    fun setEventList(tracVoteEventList: List<EventModel>) {
+        _trackVoteEventList = tracVoteEventList
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: TrackEventVoteHolder, position: Int) {
-        val event: TrackVoteEvent = trackVoteEventList[position]
-        holder.userMasterEvent.text = event.userMaster.userName
-        holder.nameEvent.text = event.name
-        holder.locationEvent.text = "long: " + event.longitude + " lat: " + event.latitude
+
+        (holder as TrackEventVoteHolder).bind(trackVoteEventList[position], onTrackVoteEventListener)
     }
 
-    inner class TrackEventVoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
-        View.OnClickListener {
-
-         val userMasterEvent: TextView
-         val nameEvent: TextView
-         val scheduleEvent: TextView
-         val locationEvent: TextView
-        init {
-            userMasterEvent = itemView.findViewById(R.id.itemTrackVoteEventUserMaster)
-            nameEvent = itemView.findViewById(R.id.itemTrackVoteEventName)
-            scheduleEvent = itemView.findViewById(R.id.itemTrackVoteEventSchedule)
-            locationEvent = itemView.findViewById(R.id.itemTrackVoteEventLocation)
-        }
-
-        override fun onClick(view: View) {
-
-            when (itemView.getId()) {
-
-                R.id.linearlayoutEventPublic -> Toast.makeText(_context, "show event", Toast.LENGTH_SHORT).show()
-            }
-
+    inner class TrackEventVoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(
+            trackVoteEvent: EventModel,
+            onTrackVoteEventListener: (EventModel) -> Result<TrackVoteEventsPublicQuery.TrackVoteEventsPublic>
+        ) {
+            itemView.itemTrackVoteEventUserMaster.text = trackVoteEvent.userMasterName
+            itemView.itemTrackVoteEventName.text = trackVoteEvent.name
+            itemView.itemTrackVoteEventSchedule.text = trackVoteEvent.scheduleBegin.toString()
+            itemView.itemTrackVoteEventLocation.text =
+                "long: " + trackVoteEvent.longitude + " lat: " + trackVoteEvent.latitude
         }
     }
 }
+

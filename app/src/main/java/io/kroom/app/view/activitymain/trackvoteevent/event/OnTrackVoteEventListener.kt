@@ -1,6 +1,7 @@
 package io.kroom.app.view.activitymain.trackvoteevent.event
+import io.kroom.app.view.activitymain.trackvoteevent.model.TrackVoteEvent
 
 interface OnTrackVoteEventListener {
-  //  OnsTrackVoteEventSelected()
+   fun OnsTrackVoteEventSelected(trackEventVote: TrackVoteEvent) = UInt
 
 }
