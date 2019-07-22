@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.Transformations.map
+import io.kroom.app.graphql.TrackVoteEventsPublicQuery
 //import io.kroom.app.graphql.TrackVoteEventByUserIdQuery
 //import io.kroom.app.graphql.TrackVoteEventsPublicQuery
 import io.kroom.app.repo.TrackVoteEventRepo
@@ -27,11 +28,11 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
     private val selectedTrackVoteEventPublic: MutableLiveData<EventModel> = MutableLiveData()
     private val selectedTrackVoteEventPrivate: MutableLiveData<EventModel> = MutableLiveData()
 
-    //  private val eventPublicResutl: LiveData<Result<TrackVoteEventsPublicQuery.Data>> = trackVoteEventRepo.getTrackVoteEventsPublic()
+    private val eventPublicResutl: LiveData<Result<TrackVoteEventsPublicQuery.Data>> = trackVoteEventRepo.getTrackVoteEventsPublic()
     //  private val eventPrivateResult: LiveData<Result<TrackVoteEventByUserIdQuery.Data>> = trackVoteEventRepo.getTrackVoteEventByUserId(id)
 
 
-    /* fun getTrackVoteEventPublicList():LiveData<List<EventModel>>{
+   fun getTrackVoteEventPublicList():LiveData<List<EventModel>>{
          return map(eventPublicResutl, {
              it.onSuccess {
                  return@map  it.TrackVoteEventsPublic().map {
@@ -52,7 +53,7 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
              }
              return@map listOf<EventModel>()
          })
-     }*/
+     }
 
     /* fun getTrackVoteEventPrivateList(): LiveData<List<EventModel>>{
          return map(eventPrivateResult) {

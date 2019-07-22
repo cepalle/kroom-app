@@ -42,13 +42,13 @@ class TrackVoteEventPublicFragment : Fragment() {
 
         listPublicEvents.setLayoutManager(context?.let { CustomLayoutManager(it) })
         listPublicEvents.setHasFixedSize(true)
-        /*  listPublicEvents.adapter = RecyclerViewAdapterTrackEvent(
+          listPublicEvents.adapter = RecyclerViewAdapterTrackEvent(
               trackVoteEventList,
               { eventItem: EventModel ->
                   OnsTrackVoteEventSelected(eventItem)
-              })*/
+              })
 
-        /*    activity?.let {
+            activity?.let {
                 val eventsPublicViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)
                 eventsPublicViewModel.getTrackVoteEventPublicList().observe(viewLifecycleOwner, Observer {
                     trackVoteEventList
@@ -61,7 +61,7 @@ class TrackVoteEventPublicFragment : Fragment() {
                 })
 
                 //    Toast.makeText(this.context, "click", Toast.LENGTH_SHORT).show()
-            }*/
+            }
     }
 
     fun OnsTrackVoteEventSelected(eventVoteItem: EventModel) {

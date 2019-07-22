@@ -8,14 +8,15 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import io.kroom.app.R
 import io.kroom.app.view.activitymain.trackvoteevent.event.add.TrackVoteEventAddFragment
-import io.kroom.app.view.activitymain.trackvoteevent.event.eventprivate.TrackVoteEventPrivateFragment
 import io.kroom.app.view.activitymain.trackvoteevent.event.eventpublic.TrackVoteEventPublicFragment
+import io.kroom.app.view.activitymain.trackvoteevent.event.eventprivate.TrackVoteEventPrivateFragment
 import kotlinx.android.synthetic.main.fragment_event.*
 
 class TrackVoteEventFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Eventlist editor"
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_event, container, false)
     }
 
@@ -28,7 +29,11 @@ class TrackVoteEventFragment : Fragment() {
 
         eventListNavigation.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                tab.position.toRoute()?.let(::goToRoute)
+                when (tab.position) {
+                    1 -> changeFragment(TrackVoteEventPrivateFragment())
+                    2 -> changeFragment(TrackVoteEventAddFragment())
+                    else -> changeFragment(TrackVoteEventPublicFragment())
+                }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {}
@@ -37,29 +42,9 @@ class TrackVoteEventFragment : Fragment() {
 
     }
 
-    private fun goToRoute(route: Routes) {
-        when (route) {
-            Routes.PUBLIC -> changeFragment(
-                TrackVoteEventPublicFragment()
-            )
-            Routes.PRIVATE -> changeFragment(
-                TrackVoteEventPrivateFragment()
-            )
-            Routes.ADD -> changeFragment(TrackVoteEventAddFragment())
-        }
-    }
-
     private fun changeFragment(fragment: Fragment) {
         fragmentManager?.beginTransaction()
-            ?.replace(R.id.fragment_container, fragment)
+            ?.replace(R.id.eventNavigationContainer, fragment)
             ?.commit()
     }
-
-    private enum class Routes(val id: Int) {
-        PUBLIC(0),
-        PRIVATE(1),
-        ADD(2);
-    }
-
-    private fun Int.toRoute(): Routes? = Routes.values().find { it.id == this }
 }
