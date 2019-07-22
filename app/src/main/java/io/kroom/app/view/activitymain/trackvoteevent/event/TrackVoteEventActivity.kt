@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import io.kroom.app.R
 import io.kroom.app.view.activitymain.trackvoteevent.event.add.TrackVoteEventAddFragment
+import io.kroom.app.view.activitymain.trackvoteevent.event.eventprivate.TrackVoteEventPrivateFragment
+import io.kroom.app.view.activitymain.trackvoteevent.event.eventpublic.TrackVoteEventPublicFragment
 import kotlinx.android.synthetic.main.activity_music_track_vote_event_editor.*
 
 class TrackVoteEventActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.trackvoteevent.event
+package io.kroom.app.view.activitymain.trackvoteevent.event.eventprivate
 
 import android.os.Bundle
 import android.util.Log

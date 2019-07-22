@@ -6,25 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.R
-import io.kroom.app.graphql.TrackVoteEventsPublicQuery
-import io.kroom.app.view.activitymain.trackvoteevent.model.TrackVoteEvent
-import kotlinx.android.synthetic.main.row_item_track_vote_public_event.view.*
+import io.kroom.app.view.activitymain.trackvoteevent.model.EventModel
+import kotlinx.android.synthetic.main.row_item_track_vote_event.view.*
 
 class RecyclerViewAdapterTrackEvent(
     private val trackVoteEventList: List<EventModel>,
-    val onTrackVoteEventListener: (EventModel) -> Result<TrackVoteEventsPublicQuery.TrackVoteEventsPublic>
+    val onTrackVoteEventListener: (EventModel) -> Unit
 ) : RecyclerView.Adapter<RecyclerViewAdapterTrackEvent.TrackEventVoteHolder>() {
 
-    data class EventModel(
-        val id: Int,
-        val userMasterName: String,
-        val name: String,
-        val public: Boolean,
-        val scheduleBegin: Long,
-        val scheduleEnd: Long,
-        val latitude: Float,
-        val longitude: Float
-    )
+    /*   data class EventModel(
+           val id: Int,
+           val userMasterName: String,
+           val name: String,
+           val public: Boolean,
+           val scheduleBegin: Long,
+           val scheduleEnd: Long,
+           val latitude: Float,
+           val longitude: Float
+       )*/
 
     private var _trackVoteEventList: List<EventModel> = trackVoteEventList
 
@@ -32,7 +31,7 @@ class RecyclerViewAdapterTrackEvent(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackEventVoteHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val itemView = layoutInflater.inflate(R.layout.row_item_track_vote_public_event, parent, false)
+        val itemView = layoutInflater.inflate(R.layout.row_item_track_vote_event, parent, false)
         return TrackEventVoteHolder(itemView)
     }
 
@@ -51,7 +50,7 @@ class RecyclerViewAdapterTrackEvent(
     inner class TrackEventVoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(
             trackVoteEvent: EventModel,
-            onTrackVoteEventListener: (EventModel) -> Result<TrackVoteEventsPublicQuery.TrackVoteEventsPublic>
+            onTrackVoteEventListener: (EventModel) -> Unit
         ) {
             itemView.itemTrackVoteEventUserMaster.text = trackVoteEvent.userMasterName
             itemView.itemTrackVoteEventName.text = trackVoteEvent.name
@@ -61,4 +60,3 @@ class RecyclerViewAdapterTrackEvent(
         }
     }
 }
-

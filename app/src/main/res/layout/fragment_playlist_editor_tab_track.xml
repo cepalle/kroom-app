@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <AutoCompleteTextView
             android:layout_width="0dp"
             android:layout_height="44dp"
@@ -30,7 +31,7 @@
             android:id="@+id/playlistEditorTabOrderAddListTrack"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            tools:listitem="@layout/row_item_track_vote_public_event"
+            tools:listitem="@layout/row_item_track_vote_event"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/playlistEditorTabOrderAutoCompleteTextView"
             app:layout_constraintStart_toStartOf="parent"

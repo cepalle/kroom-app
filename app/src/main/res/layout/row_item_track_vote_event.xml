@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimary"
-            android:id="@+id/linearlayoutEventPublic"
+            android:id="@+id/linearlayoutEvent"
             android:layout_marginTop="2dp"
             android:orientation="horizontal">
         <TextView

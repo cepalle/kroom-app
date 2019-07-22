@@ -30,7 +30,7 @@
     <string name="todo">TODO</string>
     <string name="misspassword">forgot password ?</string>
     <string name="ou">OU</string>
-    <string name="email_adress">Email adress</string>
+    <string name="email_adress">Email address</string>
     <string name="send_email">Send email</string>
 
 
@@ -55,11 +55,16 @@
     <string name="event_schedule">19/06/2019</string>
     <string name="event_location">Location</string>
     <string name="event_switch">Subcribe</string>
-    <string name="New_Event_Name">Name</string>
-    <string name="New_Event_Public_Private">public</string>
+    <string name="new_event_name">Name</string>
+    <string name="new_event_public_Private">public</string>
     <string name="create_an_event">Create an Event</string>
     <string name="video_container">videoContainer</string>
-    <string name="playlist_name">Name</string>
+    <string name="add_existing_playlist">Add Existing Playlist</string>
+    <string name="add_new_event">Add New Event</string>
+    <string name="new_event_public_private">public</string>
+    <string name="event_tab_public">public</string>
+    <string name="event_tab_private">private</string>
+    <string name="event_tab_add">add</string>
 
 
 </resources>
