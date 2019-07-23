@@ -10,10 +10,4 @@ data class EventModel @JvmOverloads constructor(
     val scheduleEnd: Long,
     val latitude: Float?,
     val longitude: Float?
-) {
-    constructor(id: Int, userMasterName: String, name : String, public : Boolean, scheduleBegin : Long, scheduleEnd : Long, latitude : Float, longitude : Float)
-            : this(id, "", "", false, -1, -1, null, null)
-
-
-
-}
+)

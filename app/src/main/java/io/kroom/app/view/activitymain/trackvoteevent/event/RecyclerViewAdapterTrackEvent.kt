@@ -10,20 +10,10 @@ import io.kroom.app.view.activitymain.trackvoteevent.model.EventModel
 import kotlinx.android.synthetic.main.row_item_track_vote_event.view.*
 
 class RecyclerViewAdapterTrackEvent(
-    private val trackVoteEventList: List<EventModel>,
+    val trackVoteEventList: List<EventModel>,
     val onTrackVoteEventListener: (EventModel) -> Unit
 ) : RecyclerView.Adapter<RecyclerViewAdapterTrackEvent.TrackEventVoteHolder>() {
 
-    /*   data class EventModel(
-           val id: Int,
-           val userMasterName: String,
-           val name: String,
-           val public: Boolean,
-           val scheduleBegin: Long,
-           val scheduleEnd: Long,
-           val latitude: Float,
-           val longitude: Float
-       )*/
 
     private var _trackVoteEventList: List<EventModel> = trackVoteEventList
 
@@ -47,7 +37,7 @@ class RecyclerViewAdapterTrackEvent(
         (holder as TrackEventVoteHolder).bind(trackVoteEventList[position], onTrackVoteEventListener)
     }
 
-    inner class TrackEventVoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+     class TrackEventVoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(
             trackVoteEvent: EventModel,
             onTrackVoteEventListener: (EventModel) -> Unit

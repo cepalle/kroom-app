@@ -22,40 +22,41 @@ class TrackVoteEventPublicFragment : Fragment() {
     private var adapterTrackEventPublic: RecyclerViewAdapterTrackEvent? = null
     private var recyclerViewEventsPublic: RecyclerView? = null
     private var trackVoteEventList: List<EventModel> = listOf()
-    lateinit var eventItem: EventModel
+    lateinit var eventsPublicViewModel: TrackVoteEventsViewModel
+
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view: View? = inflater.inflate(R.layout.fragment_list_public_events, container, false)
 
         recyclerViewEventsPublic = view?.findViewById(R.id.listPublicEvents)
+        if (adapterTrackEventPublic != null && trackVoteEventList != null) {
+            adapterTrackEventPublic!!.setEventList(trackVoteEventList)
+        }
 
         return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        trackVoteEventList = createTestData()
 
-        if (adapterTrackEventPublic != null && trackVoteEventList != null) {
-            adapterTrackEventPublic!!.setEventList(trackVoteEventList)
-        }
 
-        listPublicEvents.setLayoutManager(context?.let { CustomLayoutManager(it) })
-        listPublicEvents.setHasFixedSize(true)
-          listPublicEvents.adapter = RecyclerViewAdapterTrackEvent(
+
+        recyclerViewEventsPublic?.setLayoutManager(context?.let { CustomLayoutManager(it) })
+        recyclerViewEventsPublic?.setHasFixedSize(true)
+        recyclerViewEventsPublic?.adapter = RecyclerViewAdapterTrackEvent(
               trackVoteEventList,
               { eventItem: EventModel ->
-                  OnsTrackVoteEventSelected(eventItem)
+                  OnsTrackVoteEventSelected( eventItem )
+
               })
+       
 
             activity?.let {
-                val eventsPublicViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)
+                eventsPublicViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)
                 eventsPublicViewModel.getTrackVoteEventPublicList().observe(viewLifecycleOwner, Observer {
-                    trackVoteEventList
-                   /* if (eventItem != null)
-                    {
-                        eventsPublicViewModel.getSelectedTrackVoteEvent()?.postValue(eventItem)
-                    }*/
+                   trackVoteEventList = it
                     adapterTrackEventPublic?.setEventList(trackVoteEventList)
 
                 })
@@ -63,9 +64,16 @@ class TrackVoteEventPublicFragment : Fragment() {
                 //    Toast.makeText(this.context, "click", Toast.LENGTH_SHORT).show()
             }
     }
+    private fun createTestData() : List<EventModel> {
+        val EventList = ArrayList<EventModel>()
+        EventList.add(EventModel(100411, "toto", "titi", true, 8888888, 77777777, null, null))
+        EventList.add(EventModel(101119, "toto", "titi", true, 8888888, 77777777, null, null))
+        EventList.add(EventModel(101624, "toto", "titi", true, 8888888, 77777777, null, null))
+        return EventList
+    }
 
-    fun OnsTrackVoteEventSelected(eventVoteItem: EventModel) {
-        eventItem = eventVoteItem
+    fun OnsTrackVoteEventSelected(eventItem: EventModel) {
+        eventsPublicViewModel.getSelectedTrackVoteEventPublic()?.postValue(eventItem)
         fragmentManager!!.beginTransaction().replace(R.id.fragment_container, MusicTrackVoteFragment())
             .addToBackStack(null)
             .commit()

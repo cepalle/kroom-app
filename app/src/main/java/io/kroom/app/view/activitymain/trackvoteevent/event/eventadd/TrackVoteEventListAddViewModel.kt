@@ -1,9 +1,8 @@
-package io.kroom.app.view.activitymain.trackvoteevent.event.add
+package io.kroom.app.view.activitymain.trackvoteevent.event.eventadd
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import io.kroom.app.graphql.TrackVoteEventNewMutation
 import io.kroom.app.repo.TrackVoteEventRepo
 import io.kroom.app.util.Session
