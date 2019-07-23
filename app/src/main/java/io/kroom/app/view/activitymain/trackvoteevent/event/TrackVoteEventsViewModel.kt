@@ -5,8 +5,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.Transformations.map
+import io.kroom.app.graphql.TrackVoteEventByUserIdQuery
 import io.kroom.app.graphql.TrackVoteEventsPublicQuery
 //import io.kroom.app.graphql.TrackVoteEventByUserIdQuery
 //import io.kroom.app.graphql.TrackVoteEventsPublicQuery
@@ -22,18 +22,23 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
         Session.getToken(getApplication())
     }.client
 
+
     private val trackVoteEventRepo = TrackVoteEventRepo(client)
-    private var id: Int = Session.getId(app)!!
 
     private val selectedTrackVoteEventPublic: MutableLiveData<EventModel> = MutableLiveData()
     private val selectedTrackVoteEventPrivate: MutableLiveData<EventModel> = MutableLiveData()
 
-    private val eventPublicResutl: LiveData<Result<TrackVoteEventsPublicQuery.Data>> = trackVoteEventRepo.getTrackVoteEventsPublic()
-    //  private val eventPrivateResult: LiveData<Result<TrackVoteEventByUserIdQuery.Data>> = trackVoteEventRepo.getTrackVoteEventByUserId(id)
+    private val eventPublicResult: LiveData<Result<TrackVoteEventsPublicQuery.Data>> = trackVoteEventRepo.getTrackVoteEventsPublic()
+
+
+    private val eventPrivateResult: LiveData<Result<TrackVoteEventByUserIdQuery.Data>> = Session.getId( this.getApplication())!!.let {
+        trackVoteEventRepo.getTrackVoteEventByUserId(it)
+    }
+
 
 
    fun getTrackVoteEventPublicList():LiveData<List<EventModel>>{
-         return map(eventPublicResutl, {
+       return map(eventPublicResult, {
              it.onSuccess {
                  return@map  it.TrackVoteEventsPublic().map {
                      EventModel(
@@ -55,20 +60,21 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
          })
      }
 
-    /* fun getTrackVoteEventPrivateList(): LiveData<List<EventModel>>{
+   fun getTrackVoteEventPrivateList(): LiveData<List<EventModel>>{
          return map(eventPrivateResult) {
              it.onSuccess {
-                 return@map  it.TrackVoteEventByUserId(id).trackVoteEvents()?.map{
+                 return@map it.TrackVoteEventByUserId().trackVoteEvents()?.map{
                      EventModel(
                          it.id(),
                          it.userMaster()?.userName() ?: return@map null,
-                                 it.name(),
+                         it.name(),
                          it.public_(),
-                         0, 0,
+                         0,
+                         0,
                          it.latitude()?.toFloat() ?: return@map null,
                          it.longitude()?.toFloat() ?: return@map null
-                     )
-                 }.filterNotNull()
+                         )
+                 }?.filterNotNull()
              }
              it.onFailure {
                  // TODO
@@ -76,7 +82,7 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
              }
              return@map listOf<EventModel>()
          }
-     }*/
+     }
 
     fun getSelectedTrackVoteEventPublic(): MutableLiveData<EventModel>? {
         return selectedTrackVoteEventPublic
