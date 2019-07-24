@@ -74,7 +74,7 @@ class TrackVoteEventPublicFragment : Fragment() {
 
     fun OnsTrackVoteEventSelected(eventItem: EventModel) {
         eventsPublicViewModel.getSelectedTrackVoteEventPublic()?.postValue(eventItem)
-        fragmentManager!!.beginTransaction().replace(R.id.fragment_container, MusicTrackVoteFragment())
+        fragmentManager!!.beginTransaction().replace(R.id.container, MusicTrackVoteFragment())
             .addToBackStack(null)
             .commit()
     }
