@@ -1,5 +1,7 @@
 package io.kroom.app.view.activitymain.trackvoteevent.event.eventpublic
 
+import android.content.Intent
+import android.content.Intent.EXTRA_REFERRER_NAME
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,14 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.R
-import io.kroom.app.graphql.TrackVoteEventsPublicQuery
 import io.kroom.app.view.activitymain.trackvoteevent.CustomLayoutManager
 import io.kroom.app.view.activitymain.trackvoteevent.event.RecyclerViewAdapterTrackEvent
 import io.kroom.app.view.activitymain.trackvoteevent.event.TrackVoteEventsViewModel
 import io.kroom.app.view.activitymain.trackvoteevent.model.EventModel
-import io.kroom.app.view.activitymain.trackvoteevent.musictrackvote.MusicTrackVoteFragment
-import kotlinx.android.synthetic.main.fragment_list_public_events.*
-
+import io.kroom.app.view.activitymain.trackvoteevent.musictrackvote.MusicTrackVoteActivity
 
 class TrackVoteEventPublicFragment : Fragment() {
     private var adapterTrackEventPublic: RecyclerViewAdapterTrackEvent? = null
@@ -51,7 +50,6 @@ class TrackVoteEventPublicFragment : Fragment() {
                   OnsTrackVoteEventSelected( eventItem )
 
               })
-       
 
             activity?.let {
                 eventsPublicViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)
@@ -74,9 +72,13 @@ class TrackVoteEventPublicFragment : Fragment() {
 
     fun OnsTrackVoteEventSelected(eventItem: EventModel) {
         eventsPublicViewModel.getSelectedTrackVoteEventPublic()?.postValue(eventItem)
-        fragmentManager!!.beginTransaction().replace(R.id.container, MusicTrackVoteFragment())
-            .addToBackStack(null)
-            .commit()
+
+        val musicTrackVoteActivityIntent = Intent(activity, MusicTrackVoteActivity::class.java)
+
+        musicTrackVoteActivityIntent.putExtra(EXTRA_REFERRER_NAME, "MusicTrackVotePublicFragment()" )
+        startActivity(musicTrackVoteActivityIntent)
+
     }
 
 }
+

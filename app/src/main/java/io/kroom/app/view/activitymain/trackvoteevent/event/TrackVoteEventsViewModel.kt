@@ -87,6 +87,10 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
     fun getSelectedTrackVoteEventPublic(): MutableLiveData<EventModel>? {
         return selectedTrackVoteEventPublic
     }
+
+    fun getSelectedTrackVoteEventPrivate(): MutableLiveData<EventModel>? {
+        return selectedTrackVoteEventPrivate
+    }
 }
 
 

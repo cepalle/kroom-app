@@ -18,11 +18,14 @@ import kotlinx.android.synthetic.main.fragment_list_public_events.*
 import kotlinx.android.synthetic.main.fragment_list_track_vote_event.*
 
 
-class MusicTrackVoteFragment : Fragment() {
+class MusicTrackVotePublicFragment : Fragment() {
+
+
     private var adapterTrackVote: RecyclerViewAdapterTrackVote? = null
     private var recyclerViewTrackVote: RecyclerView? = null
     private var trackVoteList: List<Track> = listOf()
     lateinit var trackItem: Track
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Music tracks vote"
