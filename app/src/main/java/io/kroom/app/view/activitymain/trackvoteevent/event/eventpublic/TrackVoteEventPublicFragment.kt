@@ -26,10 +26,10 @@ class TrackVoteEventPublicFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view: View? = inflater.inflate(R.layout.fragment_list_public_events, container, false)
+        val view: View? = inflater.inflate(R.layout.fragment_list_public_events, container, false)
 
         recyclerViewEventsPublic = view?.findViewById(R.id.listPublicEvents)
-        if (adapterTrackEventPublic != null && trackVoteEventList != null) {
+        if (!(adapterTrackEventPublic == null || trackVoteEventList == null)) {
             adapterTrackEventPublic!!.setEventList(trackVoteEventList)
         }
 
@@ -49,7 +49,7 @@ class TrackVoteEventPublicFragment : Fragment() {
               { eventItem: EventModel ->
                   OnsTrackVoteEventSelected( eventItem )
 
-              })
+              } )
 
             activity?.let {
                 eventsPublicViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)

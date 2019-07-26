@@ -1,9 +1,12 @@
 package io.kroom.app.repo
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.ApolloClient
 import io.kroom.app.graphql.*
+import kotlin.coroutines.coroutineContext
 
 class TrackVoteEventRepo(private val client: ApolloClient) {
 
@@ -48,7 +51,6 @@ class TrackVoteEventRepo(private val client: ApolloClient) {
     ): LiveData<Result<TrackVoteEventByUserIdQuery.Data>> {
         val data: MutableLiveData<Result<TrackVoteEventByUserIdQuery.Data>> =
             MutableLiveData()
-
         val queryCall = TrackVoteEventByUserIdQuery
             .builder()
             .userId(userId)

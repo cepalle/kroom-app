@@ -17,7 +17,7 @@
             android:backgroundTint="@color/colorPrimary"
             android:id="@+id/linearlayoutEvent"
             android:layout_marginTop="2dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal" android:clickable="true" android:focusable="true">
         <TextView
                 android:id="@+id/itemTrackVoteEventUserMaster"
                 android:layout_width="250dp"

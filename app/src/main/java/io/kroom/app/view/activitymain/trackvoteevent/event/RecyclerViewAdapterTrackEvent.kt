@@ -25,7 +25,9 @@ class RecyclerViewAdapterTrackEvent(
         return TrackEventVoteHolder(itemView)
     }
 
-    override fun getItemCount() = trackVoteEventList.size
+    override fun getItemCount() : Int {
+        return trackVoteEventList.size
+    }
 
     fun setEventList(tracVoteEventList: List<EventModel>) {
         _trackVoteEventList = tracVoteEventList
