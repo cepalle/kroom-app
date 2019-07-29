@@ -5,20 +5,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.R
 import io.kroom.app.view.activitymain.trackvoteevent.CustomLayoutManager
-import io.kroom.app.view.activitymain.trackvoteevent.event.eventpublic.RecyclerViewAdapterTrackEventPublic
 import io.kroom.app.view.activitymain.trackvoteevent.event.TrackVoteEventsViewModel
 import io.kroom.app.view.activitymain.trackvoteevent.model.EventModel
 import io.kroom.app.view.activitymain.trackvoteevent.musictrackvote.MusicTrackVoteActivity
-import kotlinx.android.synthetic.main.fragment_list_public_events.*
+
 
 class TrackVoteEventPrivateFragment : Fragment() {
-    private var adapterTrackEventPrivate: RecyclerViewAdapterTrackEventPublic? = null
+    private var adapterTrackEventPrivate: RecyclerViewAdapterTrackEventPrivate? = null
     private var recyclerViewEventsPrivate: RecyclerView? = null
     private var trackVoteEventListPrivate: List<EventModel> = listOf()
     lateinit var eventsPrivateViewModel: TrackVoteEventsViewModel
@@ -39,25 +39,22 @@ class TrackVoteEventPrivateFragment : Fragment() {
             adapterTrackEventPrivate!!.setEventList(trackVoteEventListPrivate)
         }
 
-        listPublicEvents.setLayoutManager(context?.let { CustomLayoutManager(it) })
-        listPublicEvents.setHasFixedSize(true)
-        listPublicEvents.adapter =
-            RecyclerViewAdapterTrackEventPublic(
+        recyclerViewEventsPrivate?.setLayoutManager(context?.let { CustomLayoutManager(it) })
+        recyclerViewEventsPrivate?.setHasFixedSize(true)
+        adapterTrackEventPrivate =
+            RecyclerViewAdapterTrackEventPrivate(
                 trackVoteEventListPrivate,
-                { eventItem: EventModel ->
-                    OnsTrackVoteEventSelected(eventItem)
-                })
+                { eventItem: EventModel -> OnsTrackVoteEventSelected(eventItem) })
+        recyclerViewEventsPrivate?.setAdapter(adapterTrackEventPrivate)
 
         activity?.let {
             eventsPrivateViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)
             eventsPrivateViewModel.getTrackVoteEventPrivateList().observe(viewLifecycleOwner, Observer {
                 trackVoteEventListPrivate = it
-                adapterTrackEventPrivate!!.setEventList(trackVoteEventListPrivate)
-
+                adapterTrackEventPrivate?.setEventList(trackVoteEventListPrivate)
+                adapterTrackEventPrivate?.notifyDataSetChanged()
+                Toast.makeText(this.context, it.size.toString(), Toast.LENGTH_LONG).show()
             })
-
-            //    Toast.makeText(this.context, "click", Toast.LENGTH_SHORT).show()
-
         }
     }
 

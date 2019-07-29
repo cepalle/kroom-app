@@ -15,7 +15,7 @@ class TrackVoteEventListAddViewModel(app: Application) : AndroidViewModel(app) {
 
     private val eventRepo = TrackVoteEventRepo(client)
 
-    fun newPlaylist(name: String, public: Boolean): LiveData<Result<TrackVoteEventNewMutation.Data>>? {
+    fun newEventlist(name: String, public: Boolean): LiveData<Result<TrackVoteEventNewMutation.Data>>? {
         return Session.getId(getApplication())?.let {
             eventRepo.setTrackVoteEventNew(it, name, public)
         }

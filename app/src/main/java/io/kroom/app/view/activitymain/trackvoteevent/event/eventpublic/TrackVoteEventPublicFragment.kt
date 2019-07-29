@@ -29,7 +29,7 @@ class TrackVoteEventPublicFragment : Fragment() {
         val view: View? = inflater.inflate(R.layout.fragment_list_public_events, container, false)
 
         recyclerViewEventsPublic = view?.findViewById(R.id.listPublicEvents)
-        if (adapterTrackEventPublicPublic != null && trackVoteEventList != null) {
+        if (adapterTrackEventPublicPublic != null ) {
             adapterTrackEventPublicPublic!!.setEventList(trackVoteEventList)
         }
 
@@ -43,7 +43,6 @@ class TrackVoteEventPublicFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-           // trackVoteEventList = createTestData()
 
 
         recyclerViewEventsPublic?.setLayoutManager(context?.let { CustomLayoutManager(it) })
@@ -61,19 +60,9 @@ class TrackVoteEventPublicFragment : Fragment() {
                 adapterTrackEventPublicPublic?.setEventList(trackVoteEventList)
                 adapterTrackEventPublicPublic?.notifyDataSetChanged()
                 Toast.makeText(this.context, it.size.toString(), Toast.LENGTH_LONG).show()
-
             })
-
-            //    Toast.makeText(this.context, "click", Toast.LENGTH_SHORT).show()
         }
     }
-     /* private fun createTestData() : List<EventModel> {
-          val EventList = ArrayList<EventModel>()
-          EventList.add(EventModel(100411, 1,"toto", "titi", true, 8888888, 77777777, 9.999F, 888.8F))
-          EventList.add(EventModel(101119, 1,"toto", "titi", true, 8888888, 77777777, 9999999F, 8888888F))
-          EventList.add(EventModel(101624, 1,"toto", "titi", true, 8888888, 77777777, 8888888F, 99999999F))
-          return EventList
-      }*/
 
     fun OnsTrackVoteEventSelected(eventItem: EventModel) {
         eventsPublicViewModel.getSelectedTrackVoteEventPublic()?.postValue(eventItem)
@@ -82,8 +71,6 @@ class TrackVoteEventPublicFragment : Fragment() {
 
         musicTrackVoteActivityIntent.putExtra(EXTRA_REFERRER_NAME, "MusicTrackVotePublicFragment()")
         startActivity(musicTrackVoteActivityIntent)
-
     }
-
 }
 

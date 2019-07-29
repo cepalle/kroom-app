@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import io.kroom.app.R
 import io.kroom.app.repo.TrackVoteEventRepo
 import io.kroom.app.util.Session
+import io.kroom.app.view.activitymain.trackvoteevent.event.TrackVoteEventsViewModel
 import io.kroom.app.webservice.GraphClient
 import kotlinx.android.synthetic.main.fragment_event_add.*
 
@@ -19,6 +20,7 @@ class TrackVoteEventAddFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_event_add, container, false)
+        lateinit var eventsAddViewModel: TrackVoteEventsViewModel
     }
 
 

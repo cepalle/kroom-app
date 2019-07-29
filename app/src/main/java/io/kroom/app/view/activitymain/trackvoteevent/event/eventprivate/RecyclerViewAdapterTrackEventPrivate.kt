@@ -26,7 +26,7 @@ class RecyclerViewAdapterTrackEventPrivate(
     }
 
     override fun getItemCount(): Int {
-        return trackVoteEventList.size
+        return _trackVoteEventList.size
     }
 
     fun setEventList(tracVoteEventList: List<EventModel>) {
@@ -36,8 +36,8 @@ class RecyclerViewAdapterTrackEventPrivate(
 
     override fun onBindViewHolder(holder: TrackEventVoteHolder, position: Int) {
 
-        (holder as TrackEventVoteHolder).bind(trackVoteEventList[position])
-        (holder as TrackEventVoteHolder).clickableItem.setOnClickListener { onTrackVoteEventListener(_trackVoteEventList[position]) }
+        holder.bind(_trackVoteEventList[position])
+        holder.clickableItem.setOnClickListener { onTrackVoteEventListener(_trackVoteEventList[position]) }
 
     }
 
