@@ -2,6 +2,7 @@ package io.kroom.app.util
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 
 object Session {
 

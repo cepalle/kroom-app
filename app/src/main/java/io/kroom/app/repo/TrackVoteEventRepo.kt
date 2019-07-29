@@ -1,6 +1,7 @@
 package io.kroom.app.repo
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -61,14 +62,11 @@ class TrackVoteEventRepo(private val client: ApolloClient) {
     }
 
 
-
-
     fun getTrackVoteEventsPublic(
 
     ): LiveData<Result<TrackVoteEventsPublicQuery.Data>> {
         val data: MutableLiveData<Result<TrackVoteEventsPublicQuery.Data>> =
             MutableLiveData()
-
         val queryCall = TrackVoteEventsPublicQuery
             .builder()
             .build()

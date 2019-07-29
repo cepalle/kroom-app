@@ -53,6 +53,7 @@ open class UserSignWithGoogleViewModel(app: Application) : AndroidViewModel(app)
 
             googleToken = account?.idToken.toString()
 
+
             googleToken.let {
                 return Transformations.map(userRepo.signGoogleRequest(it)) { r ->
                     r.onFailure {
@@ -63,7 +64,6 @@ open class UserSignWithGoogleViewModel(app: Application) : AndroidViewModel(app)
                         val email = it.UserSignWithGoogle().user()?.email()
                         val userNAme = it.UserSignWithGoogle().user()?.userName()
                         val token = it.UserSignWithGoogle().user()?.token()
-
                         if (id != null && email != null && userNAme != null && token != null) {
                             Session.setUser(
                                 getApplication(),
@@ -73,6 +73,7 @@ open class UserSignWithGoogleViewModel(app: Application) : AndroidViewModel(app)
                                 token
                             )
                         }
+                        Log.i("TOKENNNNNNNNNNNNNNNNNN", Session.getToken(getApplication()).toString() )
                         return@map success(it.UserSignWithGoogle())
                     }
                     null

@@ -2,13 +2,17 @@ query TrackVoteEventsPublicQuery{
     TrackVoteEventsPublic {
         id
         userMaster {
+            id
             userName
         }
         name
         public
-        latitude
-        longitude
         scheduleBegin
         scheduleEnd
+        latitude
+        longitude
+
     }
+
 }
+

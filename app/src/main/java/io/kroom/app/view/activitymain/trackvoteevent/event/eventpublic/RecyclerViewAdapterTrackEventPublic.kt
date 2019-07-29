@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.trackvoteevent.event
+package io.kroom.app.view.activitymain.trackvoteevent.event.eventpublic
 
 
 import android.view.LayoutInflater
@@ -9,10 +9,10 @@ import io.kroom.app.R
 import io.kroom.app.view.activitymain.trackvoteevent.model.EventModel
 import kotlinx.android.synthetic.main.row_item_track_vote_event.view.*
 
-class RecyclerViewAdapterTrackEvent(
+class RecyclerViewAdapterTrackEventPublic(
     val trackVoteEventList: List<EventModel>,
     val onTrackVoteEventListener: (EventModel) -> Unit
-) : RecyclerView.Adapter<RecyclerViewAdapterTrackEvent.TrackEventVoteHolder>() {
+) : RecyclerView.Adapter<RecyclerViewAdapterTrackEventPublic.TrackEventVoteHolder>() {
 
 
     private var _trackVoteEventList: List<EventModel> = trackVoteEventList
@@ -25,7 +25,7 @@ class RecyclerViewAdapterTrackEvent(
         return TrackEventVoteHolder(itemView)
     }
 
-    override fun getItemCount() : Int {
+    override fun getItemCount(): Int {
         return trackVoteEventList.size
     }
 
@@ -36,19 +36,20 @@ class RecyclerViewAdapterTrackEvent(
 
     override fun onBindViewHolder(holder: TrackEventVoteHolder, position: Int) {
 
-        (holder as TrackEventVoteHolder).bind(trackVoteEventList[position], onTrackVoteEventListener)
+        (holder as TrackEventVoteHolder).bind(_trackVoteEventList[position])
+        (holder as TrackEventVoteHolder).clickableItem.setOnClickListener { onTrackVoteEventListener(_trackVoteEventList[position]) }
+
     }
 
-     class TrackEventVoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(
-            trackVoteEvent: EventModel,
-            onTrackVoteEventListener: (EventModel) -> Unit
-        ) {
+    class TrackEventVoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val clickableItem = itemView.linearlayoutEvent
+        fun bind(trackVoteEvent: EventModel) {
             itemView.itemTrackVoteEventUserMaster.text = trackVoteEvent.userMasterName
             itemView.itemTrackVoteEventName.text = trackVoteEvent.name
             itemView.itemTrackVoteEventSchedule.text = trackVoteEvent.scheduleBegin.toString()
             itemView.itemTrackVoteEventLocation.text =
-                "long: " + trackVoteEvent.longitude + " lat: " + trackVoteEvent.latitude
+                "long: " + trackVoteEvent.longitude.toString() + " lat: " + trackVoteEvent.latitude.toString()
+
         }
     }
 }

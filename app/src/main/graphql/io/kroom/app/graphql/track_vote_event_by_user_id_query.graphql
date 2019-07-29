@@ -4,6 +4,7 @@ query TrackVoteEventByUserIdQuery($userId: Int!){
         trackVoteEvents{
             id
             userMaster {
+                id
                 userName
             }
             name

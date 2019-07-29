@@ -1,6 +1,7 @@
 package io.kroom.app.view.activitymain.trackvoteevent.event.eventadd
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,8 @@ class TrackVoteEventAddFragment: Fragment() {
                 Session.getToken(it.application)
             }
         }.client
+
+        Log.i("tokennnnnnnnnnnnnnnnn2", client.toString())
 
         val trackVoteRepo = TrackVoteEventRepo(client)
 

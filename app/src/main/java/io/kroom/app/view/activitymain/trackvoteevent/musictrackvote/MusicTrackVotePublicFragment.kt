@@ -5,17 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.R
 import io.kroom.app.view.activitymain.trackvoteevent.CustomLayoutManager
-import io.kroom.app.view.activitymain.trackvoteevent.event.RecyclerViewAdapterTrackEvent
-import io.kroom.app.view.activitymain.trackvoteevent.event.TrackVoteEventsViewModel
-import io.kroom.app.view.activitymain.trackvoteevent.model.EventModel
 import io.kroom.app.view.activitymain.trackvoteevent.model.Track
-import kotlinx.android.synthetic.main.fragment_list_public_events.*
-import kotlinx.android.synthetic.main.fragment_list_track_vote_event.*
 
 
 class MusicTrackVotePublicFragment : Fragment() {
@@ -29,7 +22,7 @@ class MusicTrackVotePublicFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Music tracks vote"
-        var view: View? = inflater.inflate(R.layout.fragment_track_vote_event, container, false)
+        val view: View? = inflater.inflate(R.layout.fragment_track_vote_event, container, false)
         recyclerViewTrackVote = view?.findViewById(R.id.list_track_vote)
 
         if (adapterTrackVote != null && trackVoteList != null) {
