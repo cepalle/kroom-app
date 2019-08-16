@@ -5,16 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.R
-import io.kroom.app.view.activitymain.trackvoteevent.model.Track
+import io.kroom.app.view.activitymain.trackvoteevent.model.TrackModel
 import kotlinx.android.synthetic.main.row_item_music_track_vote.view.*
 import kotlinx.android.synthetic.main.row_item_track_vote_event.view.*
 
-class RecyclerViewAdapterTrackVote (
-    private val trackVoteList: List<Track>,
-    val onTrackVoteListener: (Track) -> Unit
-) : RecyclerView.Adapter<RecyclerViewAdapterTrackVote.TrackVoteHolder>() {
+class RecyclerViewAdapterMusicTrackVote(
+    val trackVoteList: List<TrackModel>,
+    val onTrackVoteListener: (TrackModel) -> Unit
+) : RecyclerView.Adapter<RecyclerViewAdapterMusicTrackVote.TrackVoteHolder>() {
 
-    private var _trackVoteList: List<Track> = trackVoteList
+    private var _trackVoteList: List<TrackModel> = trackVoteList
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackVoteHolder {
@@ -23,25 +23,25 @@ class RecyclerViewAdapterTrackVote (
         return TrackVoteHolder(itemView)
     }
 
-    override fun getItemCount() = trackVoteList.size
+    override fun getItemCount(): Int {
+        return _trackVoteList.size
+    }
 
-    fun setTrackList(tracVotetList: List<Track>) {
+    fun setTrackList(tracVotetList: List<TrackModel>) {
         _trackVoteList = trackVoteList
         notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: TrackVoteHolder, position: Int) {
 
-        (holder as TrackVoteHolder).bind(trackVoteList[position], onTrackVoteListener)
+        holder.bind(_trackVoteList[position])
     }
 
     inner class TrackVoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(
-            track: Track,
-            onTrackVoteListener: (Track) -> Unit
-        ) {
+        // var clickableItem = itemView.
+        fun bind(track: TrackModel) {
             itemView.itemMusicTrackVoteCoverSmall.drawable
-            itemView.itemTrackVoteEventName.text = track.artist.name
+            itemView.itemTrackVoteEventName.text = track.artist
             itemView.itemMusicTrackVoteTitle.text = track.title
             itemView.itemMusicTrackVoteDuration.text = track.duration.toString()
 

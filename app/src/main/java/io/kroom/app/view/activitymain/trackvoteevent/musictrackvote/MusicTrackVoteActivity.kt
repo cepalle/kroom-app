@@ -13,11 +13,12 @@ import kotlinx.android.synthetic.main.activity_music_track_vote_event_editor.*
 
 class MusicTrackVoteActivity : AppCompatActivity() {
 
+    private var fragmentSelected: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_music_track_vote_event_editor)
-        lateinit var fragmentSelected: String
+
 
 
         var intentStartedThisActivity = getIntent()

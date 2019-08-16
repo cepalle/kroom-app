@@ -5,27 +5,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.R
 import io.kroom.app.view.activitymain.trackvoteevent.CustomLayoutManager
-import io.kroom.app.view.activitymain.trackvoteevent.model.Track
+import io.kroom.app.view.activitymain.trackvoteevent.TrackVoteEventsViewModel
+import io.kroom.app.view.activitymain.trackvoteevent.model.TrackModel
 
 
 class MusicTrackVotePublicFragment : Fragment() {
 
 
-    private var adapterTrackVote: RecyclerViewAdapterTrackVote? = null
+    private var adapterTrackVote: RecyclerViewAdapterMusicTrackVote? = null
     private var recyclerViewTrackVote: RecyclerView? = null
-    private var trackVoteList: List<Track> = listOf()
-    lateinit var trackItem: Track
-
+    private var trackVoteList: List<TrackModel> = listOf()
+    lateinit var trackItem: TrackModel
+    lateinit var trackVoteViewModel: TrackVoteEventsViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Music tracks vote"
-        val view: View? = inflater.inflate(R.layout.fragment_track_vote_event, container, false)
+        val view: View? = inflater.inflate(R.layout.fragment_music_track_vote_event_public, container, false)
         recyclerViewTrackVote = view?.findViewById(R.id.list_track_vote)
 
-        if (adapterTrackVote != null && trackVoteList != null) {
+        if (adapterTrackVote != null) {
             adapterTrackVote!!.setTrackList(trackVoteList)
 
         }
@@ -37,20 +40,24 @@ class MusicTrackVotePublicFragment : Fragment() {
          super.onActivityCreated(savedInstanceState)
         recyclerViewTrackVote?.setLayoutManager(context?.let { CustomLayoutManager(it) })
         recyclerViewTrackVote?.setHasFixedSize(true)
-        recyclerViewTrackVote?.adapter = RecyclerViewAdapterTrackVote(trackVoteList,
-             { trackItem: Track -> OnTrackVoteSelected(trackItem) })
-      /*   activity?.let {
-             val trackVoteViewModel = ViewModelProviders.of(it).get(MusicTrackVoteViewModel::class.java)
-             trackVoteViewModel.trackVoteEventPublicList().observe(viewLifecycleOwner, Observer {
-                 trackVoteList = it
+        adapterTrackVote = RecyclerViewAdapterMusicTrackVote(trackVoteList,
+             { trackItem: TrackModel -> OnTrackVoteSelected(trackItem) })
+        recyclerViewTrackVote?.setAdapter(adapterTrackVote)
+
+     /*  activity?.let {
+            trackVoteViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)
+             trackVoteViewModel.getMusicTrackVotePublic().observe(viewLifecycleOwner, Observer {
+                 it.let {
+                     trackVoteList = it
+                 }
                  //  eventsPublicViewModel.getSelectedTrackVoteEvent()?.postValue(eventItem)
                  adapterTrackVote?.setTrackList(trackVoteList)
              })
              //    Toast.makeText(this.context, "click", Toast.LENGTH_SHORT).show()
          }*/
      }
-     fun OnTrackVoteSelected(trackVoteItem: Track) {
-      //   trackItem = trackVoteItem
+     fun OnTrackVoteSelected(trackVoteItem: TrackModel) {
+        trackItem = trackVoteItem
      }
 }
 

@@ -65,6 +65,9 @@
     <string name="event_tab_public">public</string>
     <string name="event_tab_private">private</string>
     <string name="event_tab_add">add</string>
+    <string name="public_music_track_vote_editor">Public</string>
+    <string name="private_music_track_vote_editor">Private</string>
+    <string name="add_music_track_vote_editor">Add</string>
 
 
 </resources>

@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.R
 import io.kroom.app.view.activitymain.trackvoteevent.CustomLayoutManager
-import io.kroom.app.view.activitymain.trackvoteevent.event.TrackVoteEventsViewModel
+import io.kroom.app.view.activitymain.trackvoteevent.TrackVoteEventsViewModel
 import io.kroom.app.view.activitymain.trackvoteevent.model.EventModel
 import io.kroom.app.view.activitymain.trackvoteevent.musictrackvote.MusicTrackVoteActivity
 

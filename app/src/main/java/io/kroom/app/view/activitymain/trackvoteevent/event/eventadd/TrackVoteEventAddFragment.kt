@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import io.kroom.app.R
 import io.kroom.app.repo.TrackVoteEventRepo
 import io.kroom.app.util.Session
-import io.kroom.app.view.activitymain.trackvoteevent.event.TrackVoteEventsViewModel
+import io.kroom.app.view.activitymain.trackvoteevent.TrackVoteEventsViewModel
 import io.kroom.app.webservice.GraphClient
 import kotlinx.android.synthetic.main.fragment_event_add.*
 
@@ -31,9 +31,10 @@ class TrackVoteEventAddFragment: Fragment() {
             activity?.let {
                 Session.getToken(it.application)
             }
+
         }.client
 
-        Log.i("tokennnnnnnnnnnnnnnnn2", client.toString())
+
 
         val trackVoteRepo = TrackVoteEventRepo(client)
 

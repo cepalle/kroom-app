@@ -3,19 +3,19 @@ package io.kroom.app.view.activitymain.trackvoteevent.event.eventpublic
 import android.content.Intent
 import android.content.Intent.EXTRA_REFERRER_NAME
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.R
+import io.kroom.app.util.Session
 import io.kroom.app.view.activitymain.trackvoteevent.CustomLayoutManager
-import io.kroom.app.view.activitymain.trackvoteevent.event.TrackVoteEventsViewModel
+import io.kroom.app.view.activitymain.trackvoteevent.TrackVoteEventsViewModel
 import io.kroom.app.view.activitymain.trackvoteevent.model.EventModel
 import io.kroom.app.view.activitymain.trackvoteevent.musictrackvote.MusicTrackVoteActivity
 
@@ -43,7 +43,7 @@ class TrackVoteEventPublicFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        Log.i("tokennnnnnnnnnnnnnnnn2", Session.getToken(activity!!.application).toString())
 
         recyclerViewEventsPublic?.setLayoutManager(context?.let { CustomLayoutManager(it) })
         recyclerViewEventsPublic?.setHasFixedSize(true)
@@ -53,7 +53,7 @@ class TrackVoteEventPublicFragment : Fragment() {
         recyclerViewEventsPublic?.setAdapter(adapterTrackEventPublicPublic)
 
 
-        activity?.let {
+       activity?.let {
             eventsPublicViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)
             eventsPublicViewModel.getTrackVoteEventPublicList().observe(viewLifecycleOwner, Observer {
                 trackVoteEventList = it

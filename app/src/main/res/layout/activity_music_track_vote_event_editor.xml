@@ -19,19 +19,19 @@
         <com.google.android.material.tabs.TabItem
                 android:id="@+id/musicTrackVoteEditorPublic"
                 android:icon="@drawable/ic_home_black_24dp"
-                android:text="Public"
+                android:text="@string/public_music_track_vote_editor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <com.google.android.material.tabs.TabItem
                 android:id="@+id/musicTrackVoteEditorPrivate"
                 android:icon="@drawable/ic_launcher_background"
-                android:text="Private"
+                android:text="@string/private_music_track_vote_editor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <com.google.android.material.tabs.TabItem
                 android:id="@+id/musicTrackVoteEditorAdd"
                 android:icon="@drawable/ic_music_note_black_24dp"
-                android:text="Add"
+                android:text="@string/add_music_track_vote_editor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
