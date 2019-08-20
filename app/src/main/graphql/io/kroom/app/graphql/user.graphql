@@ -10,6 +10,12 @@ query UserByIdQuery($id: Int!) {
             userName
             latitude
             longitude
+            privacy {
+                email
+                location
+                friends
+                musicalPreferencesGenre
+            }
             musicalPreferences {
                 pictureBig
                 id

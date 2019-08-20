@@ -27,7 +27,7 @@ class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         userId?.let {
-            friendsList.addSource(userRepo.user(it)) { r ->
+            friendsList.addSource(userRepo.byId(it)) { r ->
                 r.onFailure {
                     errorMessage.postValue(it.message)
                     friendsList.postValue(null)

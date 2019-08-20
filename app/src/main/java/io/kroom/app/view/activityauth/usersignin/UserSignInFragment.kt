@@ -123,7 +123,7 @@ class UserSignInFragment : Fragment() {
     }
 
     private fun onSuccess(user: UserSignInMutation.User) {
-        Log.i("success-sign-in", "user sign up: $user")
+        Log.i("success-sign-in", "byId sign up: $user")
 
         Session.setUser(
             this.activity?.application!!,

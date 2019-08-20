@@ -61,5 +61,10 @@
     <string name="video_container">videoContainer</string>
     <string name="playlist_name">Name</string>
 
+    <string-array name="array_privacy">
+        <item>Private</item>
+        <item>Friends</item>
+        <item>Public</item>
+    </string-array>
 
 </resources>

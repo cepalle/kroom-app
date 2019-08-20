@@ -36,7 +36,7 @@ class SignWithGoogle_TODO(var activity: AppCompatActivity)  {
                 this.onGoogleSignIn()
             } else {
                 Dialogs.errorDialog(activity, "Can't sign with google")
-                Log.println(Log.ERROR, "error-login-callback", "user sign up: ${it.errorCode} ${it.errorMessaage}")
+                Log.println(Log.ERROR, "error-login-callback", "byId sign up: ${it.errorCode} ${it.errorMessaage}")
             }
         }
     }
@@ -63,9 +63,9 @@ class SignWithGoogle_TODO(var activity: AppCompatActivity)  {
             Dialogs.errorDialog(MainActivity.app, "Can't sign up in with google")
             return
         }
-        s.user()?.let { user ->
-            Toast.makeText(activity, "" + user.token(), Toast.LENGTH_LONG).show()
-            Session.setUser(user.id()!!, user.email()!!, user.userName(), user.token()!!)
+        s.byId()?.let { byId ->
+            Toast.makeText(activity, "" + byId.token(), Toast.LENGTH_LONG).show()
+            Session.setUser(byId.id()!!, byId.email()!!, byId.userName(), byId.token()!!)
             MainActivity.app.goToRoute(Routes.TRACK_VOTE_EVENT)
         }
     }

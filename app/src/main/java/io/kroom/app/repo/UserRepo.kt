@@ -5,11 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.ApolloClient
 import io.kroom.app.graphql.*
+import io.kroom.app.graphql.type.PrivacyEnum
 
 
 class UserRepo(private val client: ApolloClient) {
 
-    fun user(
+    fun byId(
         id: Int
     ): LiveData<Result<UserByIdQuery.Data>> {
         val data: MutableLiveData<Result<UserByIdQuery.Data>> =
@@ -116,15 +117,37 @@ class UserRepo(private val client: ApolloClient) {
     ): LiveData<Result<UserNameAutocompletionQuery.Data>> {
         val data: MutableLiveData<Result<UserNameAutocompletionQuery.Data>> =
             MutableLiveData()
-        Log.i("TEST", "userNameAutocompletion")
 
         client.query(
             UserNameAutocompletionQuery.builder()
                 .prefix(prefix)
                 .build()
         ).enqueue(CallBackHandler {
-            Log.i("TEST", "CallBackHandler")
+            data.postValue(it)
+        })
 
+        return data
+    }
+
+    fun updatePrivacy(
+        userId: Int,
+        email: PrivacyEnum,
+        friends: PrivacyEnum,
+        location: PrivacyEnum,
+        musicalPreferencesGenre: PrivacyEnum
+    ): LiveData<Result<UserUpdatePrivacyMutation.Data>> {
+        val data: MutableLiveData<Result<UserUpdatePrivacyMutation.Data>> =
+            MutableLiveData()
+
+        client.mutate(
+            UserUpdatePrivacyMutation.builder()
+                .userId(userId)
+                .email(email)
+                .friends(friends)
+                .location(location)
+                .musicalPreferencesGenre(musicalPreferencesGenre)
+                .build()
+        ).enqueue(CallBackHandler {
             data.postValue(it)
         })
 

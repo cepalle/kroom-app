@@ -114,7 +114,7 @@ class UserSignUpFragment : Fragment() {
 
     fun onSuccess(user: UserSignUpMutation.User) {
 
-        Log.i("success-sign-up", "user sign up: $user")
+        Log.i("success-sign-up", "byId sign up: $user")
         Session.setUser(
             this.activity?.application!!,
             user.id()!!, user.email()!!, user.userName(), user.token()!!

@@ -5,7 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import io.kroom.app.R
 import io.kroom.app.view.activitymain.user.activitydeezersignin.DeezerSigninActivity
 import io.kroom.app.view.activitymain.user.activityuserfriends.UserFriendsActivity
@@ -35,6 +40,74 @@ class UserFragement : Fragment() {
         userFriendsButton.setOnClickListener {
             val intent = Intent(context, UserFriendsActivity::class.java)
             startActivity(intent)
+        }
+
+        val adapter = ArrayAdapter.createFromResource(
+            this.context!!,
+            R.array.array_privacy, android.R.layout.simple_spinner_item
+        )
+
+        spinnerEmail.adapter = adapter
+        spinnerFriends.adapter = adapter
+        spinnerLocation.adapter = adapter
+        spinnerMusicalPreferencesGenre.adapter = adapter
+
+        val model = ViewModelProviders.of(this).get(UserViewModel::class.java)
+        val errorMsg = model.getErrorMessage()
+
+        errorMsg.observe(this, Observer {
+            it ?: return@Observer
+            Toast.makeText(this.context, it, Toast.LENGTH_SHORT).show()
+        })
+
+        val spinnerModel = model.getSpinnerModel()
+
+        spinnerModel.observe(this, Observer {
+            it ?: return@Observer
+            spinnerEmail.setSelection(it.email)
+            spinnerFriends.setSelection(it.friends)
+            spinnerLocation.setSelection(it.location)
+            spinnerMusicalPreferencesGenre.setSelection(it.musicPreference)
+        })
+
+        spinnerEmail.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if (p2 != spinnerModel.value?.email) {
+                    model.updateSpinnerEmail(p2)
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
+
+        spinnerFriends.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if (p2 != spinnerModel.value?.friends) {
+                    model.updateSpinnerFreinds(p2)
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
+
+        spinnerLocation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if (p2 != spinnerModel.value?.location) {
+                    model.updateSpinnerLocation(p2)
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
+
+        spinnerMusicalPreferencesGenre.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if (p2 != spinnerModel.value?.musicPreference) {
+                    model.updateSpinnerMusicalPreference(p2)
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
 
     }
