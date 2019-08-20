@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import io.kroom.app.R
 import io.kroom.app.util.Session
 import io.kroom.app.view.activitymain.playlist.PlaylistFragment
-import io.kroom.app.view.activitymain.user.UserFriendsFragment
+import io.kroom.app.view.activitymain.user.activityuserfriends.UserFriendsActivity
 import android.content.Intent
 import android.util.Log
 import android.view.Menu
@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import io.kroom.app.view.activityauth.AuthActivity
 import io.kroom.app.view.activitymain.trackvoteevent.event.TrackVoteEventFragment
+import io.kroom.app.view.activitymain.user.UserFragement
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -65,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         when (route) {
             Routes.TRACK_VOTE_EVENT -> changeFragment(TrackVoteEventFragment())
             Routes.PLAYLIST_EDITOR -> changeFragment(PlaylistFragment())
-            Routes.USER -> changeFragment(UserFriendsFragment())
+            Routes.USER -> changeFragment(UserFragement())
         }
     }
 

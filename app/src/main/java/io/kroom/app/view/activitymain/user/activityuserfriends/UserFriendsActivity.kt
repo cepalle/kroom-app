@@ -1,36 +1,29 @@
-package io.kroom.app.view.activitymain.user
+package io.kroom.app.view.activitymain.user.activityuserfriends
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import io.kroom.app.R
-import kotlinx.android.synthetic.main.fragment_user_friends.*
+import kotlinx.android.synthetic.main.activity_user_friends.*
 
 
-class UserFriendsFragment : Fragment() {
+class UserFriendsActivity : AppCompatActivity() {
 
     private lateinit var adapterAutocompletion: ArrayAdapter<String>
     private lateinit var adapterFriendsList: ArrayAdapter<String>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        requireActivity().title = "Friends management"
-        return inflater.inflate(R.layout.fragment_user_friends, container, false)
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        title = "Friends management"
+        setContentView(R.layout.activity_user_friends)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        adapterAutocompletion = ArrayAdapter(activity!!, R.layout.select_dialog_item_material, java.util.ArrayList())
-        adapterFriendsList = ArrayAdapter(activity!!, R.layout.select_dialog_item_material, java.util.ArrayList())
+        adapterAutocompletion = ArrayAdapter(this, R.layout.select_dialog_item_material, java.util.ArrayList())
+        adapterFriendsList = ArrayAdapter(this, R.layout.select_dialog_item_material, java.util.ArrayList())
 
         userFriendsAddInput.setAdapter(adapterAutocompletion)
         userFriendsList.adapter = adapterFriendsList

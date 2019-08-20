@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.user
+package io.kroom.app.view.activitymain.user.activityuserfriends
 
 import android.app.Application
 import android.util.Log
