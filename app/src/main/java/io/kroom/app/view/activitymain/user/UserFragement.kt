@@ -2,6 +2,7 @@ package io.kroom.app.view.activitymain.user
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,26 +12,36 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import io.kroom.app.R
+import com.deezer.sdk.network.connect.SessionStore
+import io.kroom.app.view.activitymain.MainActivity
 import io.kroom.app.view.activitymain.user.activitydeezersignin.DeezerSigninActivity
 import io.kroom.app.view.activitymain.user.activityuserfriends.UserFriendsActivity
 import io.kroom.app.view.activitymain.user.activityusermusicpreference.MusicPreferenceActivity
 import kotlinx.android.synthetic.main.fragment_user.*
 
+
 class UserFragement : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "User"
-        return inflater.inflate(R.layout.fragment_user, container, false)
+        return inflater.inflate(io.kroom.app.R.layout.fragment_user, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userDeezerSignIn.setOnClickListener {
-            val intent = Intent(context, DeezerSigninActivity::class.java)
-            startActivity(intent)
+        val sessionStore = SessionStore()
+        if (sessionStore.restore(MainActivity.deezerConnect, context)) {
+            Log.i("connected", "deezer connected ok")
+            userDeezerSignIn.visibility = View.INVISIBLE
+        } else {
+            userDeezerSignIn.setOnClickListener {
+                val intent = Intent(context, DeezerSigninActivity::class.java)
+                startActivity(intent)
+            }
         }
+
+
 
         userPreferenceMusical.setOnClickListener {
             val intent = Intent(context, MusicPreferenceActivity::class.java)
@@ -44,7 +55,7 @@ class UserFragement : Fragment() {
 
         val adapter = ArrayAdapter.createFromResource(
             this.context!!,
-            R.array.array_privacy, android.R.layout.simple_spinner_item
+            io.kroom.app.R.array.array_privacy, android.R.layout.simple_spinner_item
         )
 
         spinnerEmail.adapter = adapter

@@ -13,11 +13,12 @@ import com.deezer.sdk.player.TrackPlayer
 import com.deezer.sdk.player.event.PlayerWrapperListener
 import io.kroom.app.repo.PlaylistEditorRepo
 import io.kroom.app.util.Session
+import io.kroom.app.view.activitymain.MainActivity
 import io.kroom.app.webservice.GraphClient
 import kotlinx.android.synthetic.main.activity_playlist_reading.*
 import java.lang.Exception
 
-private const val appId = "359344"
+
 
 class PlaylistReadingActivity : AppCompatActivity() {
 
@@ -39,8 +40,7 @@ class PlaylistReadingActivity : AppCompatActivity() {
 
         val playRepo = PlaylistEditorRepo(client)
 
-        val deezerConnect = DeezerConnect(this, appId)
-        trackPlayer = TrackPlayer(application, deezerConnect, WifiAndMobileNetworkStateChecker())
+        trackPlayer = TrackPlayer(application, MainActivity.deezerConnect, WifiAndMobileNetworkStateChecker())
 
         adapterTracks = PlaylistAdapterReading(arrayListOf(), this)
         playlistReadingAddListTrack.adapter = adapterTracks
