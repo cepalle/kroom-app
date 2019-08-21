@@ -48,7 +48,7 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
         }
 
 
-    fun getMusicTrackVotePublic(): LiveData<TrackVoteEvent> {
+  /*  fun getMusicTrackVotePublic(): LiveData<TrackVoteEvent> {
         return map(musicTrackVote, {
             it.onSuccess {
                 return@map it.TrackVoteEventById().trackVoteEvent(){
@@ -73,7 +73,7 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
             }
             return@map LiveData<TrackVoteEvent>
         })
-    }
+    }*/
 
 
     fun getTrackVoteEventPublicList(): LiveData<List<EventModel>> {
