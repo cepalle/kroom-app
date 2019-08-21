@@ -75,7 +75,6 @@ class UserFriendsActivity : AppCompatActivity() {
                     }
                     startActivity(intent)
                 }
-
             }
         }
 

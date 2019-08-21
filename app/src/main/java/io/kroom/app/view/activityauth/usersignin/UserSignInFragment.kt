@@ -39,7 +39,10 @@ class UserSignInFragment : Fragment() {
 
         signInAction.setOnClickListener { onSignIn() }
 
-        signInForgotPassword.setOnClickListener { Log.e("TODO", "blsblsblalvlal") }
+        signInForgotPassword.setOnClickListener {
+            val intent = Intent(context, UserForgotPassword::class.java)
+            startActivity(intent)
+        }
 
         userSignInGoogle.setOnClickListener {
             onGoogleSignIn()
