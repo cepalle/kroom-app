@@ -1,4 +1,4 @@
-package io.kroom.app.view.activitymain.user.activityuserfriends
+package io.kroom.app.view.activitymain.user.activityuserfriends.activityfriendsmanagement
 
 import android.app.Application
 import android.util.Log
@@ -9,7 +9,7 @@ import io.kroom.app.repo.UserRepo
 import io.kroom.app.webservice.GraphClient
 import io.kroom.app.util.Session
 
-class UserFriendsViewModel(app: Application) : AndroidViewModel(app) {
+class UserFriendsManagementViewModel(app: Application) : AndroidViewModel(app) {
     private val client = GraphClient {
         Session.getToken(getApplication())
     }.client

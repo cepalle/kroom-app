@@ -16,6 +16,7 @@ import com.deezer.sdk.network.connect.SessionStore
 import io.kroom.app.view.activitymain.MainActivity
 import io.kroom.app.view.activitymain.user.activitydeezersignin.DeezerSigninActivity
 import io.kroom.app.view.activitymain.user.activityuserfriends.UserFriendsActivity
+import io.kroom.app.view.activitymain.user.activityuserfriends.activityfriendsmanagement.UserFriendsManagementActivity
 import io.kroom.app.view.activitymain.user.activityusermusicpreference.MusicPreferenceActivity
 import kotlinx.android.synthetic.main.fragment_user.*
 
