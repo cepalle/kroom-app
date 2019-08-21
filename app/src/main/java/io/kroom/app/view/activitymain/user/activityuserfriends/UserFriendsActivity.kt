@@ -3,6 +3,7 @@ package io.kroom.app.view.activitymain.user.activityuserfriends
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import io.kroom.app.R
@@ -12,6 +13,8 @@ import io.kroom.app.view.activitymain.user.activityuserfriends.activityfriendsin
 import io.kroom.app.view.activitymain.user.activityuserfriends.activityfriendsmanagement.UserFriendsManagementActivity
 import io.kroom.app.webservice.GraphClient
 import kotlinx.android.synthetic.main.activity_user_friends.*
+
+const val EXTRA_NAME_USER_ID = "EXTRA_NAME_USER_ID"
 
 class UserFriendsActivity : AppCompatActivity() {
 
@@ -44,7 +47,7 @@ class UserFriendsActivity : AppCompatActivity() {
         userId?.let {
             userRepo.byId(it).observe(this, Observer { r ->
                 r.onFailure {
-                    // TODO
+                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                 }
                 r.onSuccess {
                     val lName = it.UserGetById().user()?.friends()?.mapNotNull {
@@ -67,7 +70,9 @@ class UserFriendsActivity : AppCompatActivity() {
                 cacheUser.find {
                     it.first == username
                 }?.second?.let {
-                    val intent = Intent(this, UserFriendsInfoActivity::class.java)
+                    val intent = Intent(this, UserFriendsInfoActivity::class.java).apply {
+                        putExtra(EXTRA_NAME_USER_ID, it)
+                    }
                     startActivity(intent)
                 }
 
