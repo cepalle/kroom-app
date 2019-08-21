@@ -154,4 +154,23 @@ class UserRepo(private val client: ApolloClient) {
         return data
     }
 
+    fun updatePassword(
+        email: String,
+        pass: String
+    ): LiveData<Result<UserUpdatePasswordMutation.Data>> {
+        val data: MutableLiveData<Result<UserUpdatePasswordMutation.Data>> =
+            MutableLiveData()
+
+        client.mutate(
+            UserUpdatePasswordMutation.builder()
+                .email(email)
+                .newPassword(pass)
+                .build()
+        ).enqueue(CallBackHandler {
+            data.postValue(it)
+        })
+
+        return data
+    }
+
 }
