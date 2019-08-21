@@ -25,7 +25,7 @@ class UserFriendsManagementActivity : AppCompatActivity() {
         adapterFriendsList = ArrayAdapter(this, R.layout.select_dialog_item_material, java.util.ArrayList())
 
         userFriendsAddInput.setAdapter(adapterAutocompletion)
-        userFriendsList.adapter = adapterFriendsList
+        userFriendsManagementList.adapter = adapterFriendsList
 
         val model = ViewModelProviders.of(this).get(UserFriendsManagementViewModel::class.java)
         val autoCompletion = model.getAutoCompletion()
@@ -68,7 +68,7 @@ class UserFriendsManagementActivity : AppCompatActivity() {
             }
         }
 
-        userFriendsList.setOnItemClickListener { _, _, position, _ ->
+        userFriendsManagementList.setOnItemClickListener { _, _, position, _ ->
             adapterFriendsList.getItem(position)?.let { username ->
                 model.getCacheUSer().find {
                     it.first == username
