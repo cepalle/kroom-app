@@ -40,7 +40,7 @@ class UserSignInFragment : Fragment() {
         signInAction.setOnClickListener { onSignIn() }
 
         signInForgotPassword.setOnClickListener {
-            val intent = Intent(context, UserForgotPassword::class.java)
+            val intent = Intent(context, UserForgotPasswordActivity::class.java)
             startActivity(intent)
         }
 

@@ -80,7 +80,7 @@
             </intent-filter>
         </activity>
         <activity android:screenOrientation="portrait"
-                  android:name=".view.activityauth.usersignin.UserForgotPassword">
+                  android:name=".view.activityauth.usersignin.UserForgotPasswordActivity">
             <!--Default Intent Filter-->
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT"/>

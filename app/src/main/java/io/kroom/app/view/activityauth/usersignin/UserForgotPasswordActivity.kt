@@ -9,7 +9,7 @@ import io.kroom.app.util.Session
 import io.kroom.app.webservice.GraphClient
 import kotlinx.android.synthetic.main.activity_forgot_password.*
 
-class UserForgotPassword : AppCompatActivity() {
+class UserForgotPasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         title = "Forgot password"
@@ -25,8 +25,8 @@ class UserForgotPassword : AppCompatActivity() {
 
             if (forgotPasswordPassword.text.isNotBlank() && forgotPasswordEmail.text.isNotBlank()) {
                 userRepo.updatePassword(
-                    forgotPasswordPassword.text.toString(),
-                    forgotPasswordEmail.text.toString()
+                    forgotPasswordEmail.text.toString(),
+                    forgotPasswordPassword.text.toString()
                 ).observe(this, Observer {
                     it.onFailure {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
