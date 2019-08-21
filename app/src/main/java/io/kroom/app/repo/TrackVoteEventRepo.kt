@@ -1,9 +1,17 @@
 package io.kroom.app.repo
 
+import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.ApolloSubscriptionCall
+import com.apollographql.apollo.api.Response
+import com.apollographql.apollo.exception.ApolloException
 import io.kroom.app.graphql.*
+import kotlin.Result.Companion.failure
+import kotlin.coroutines.coroutineContext
 
 class TrackVoteEventRepo(private val client: ApolloClient) {
 
@@ -33,7 +41,6 @@ class TrackVoteEventRepo(private val client: ApolloClient) {
     ): LiveData<Result<TrackVoteEventByIdQuery.Data>> {
         val data: MutableLiveData<Result<TrackVoteEventByIdQuery.Data>> =
             MutableLiveData()
-
         val queryCall = TrackVoteEventByIdQuery
             .builder()
             .id(id)
@@ -43,12 +50,49 @@ class TrackVoteEventRepo(private val client: ApolloClient) {
         return data
     }
 
+    /*  data class getTracVoteEventById(
+          val trackVoteEventById: LiveData<Result<TrackVoteEventByIdQuery.Data>>,
+          val subTrackVote: ApolloSubscriptionCall<TrackVoteEventByIdQuery.Data>
+      )
+      fun subById(
+          trackwithVoteId : Int
+      ): getTracVoteEventById{
+          val data: MutableLiveData<Result<TrackVoteEventByIdQuery.Data>> = MutableLiveData()
+          val subTrackVote: ApolloSubscriptionCall<TrackVoteEventByIdQuery.Data> = client.subscribe(
+              TrackVoteEventByIdQuery.builder()
+                  .id(trackwithVoteId)
+                  .build()
+          )
+          subTrackVote.execute(object : ApolloSubscriptionCall.Callback<TrackVoteEventByIdQuery.Data>{
+              override fun onResponse(response: Response<TrackVoteEventByIdQuery.Data>){
+                  data.postValue(
+                      if (response.errors().isEmpty()){
+                          val dataResponse = response.data()
+                          if (dataResponse != null) Result.success(dataResponse)
+                          else failure(Throwable("Empty Response"))
+                      } else failure(Throwable(response.errors()[0].message()))
+                  )
+              }
+              override fun onConnected() {}
+              override fun onTerminated() {}
+              override fun onCompleted() {}
+
+              override fun onFailure(e: ApolloException) {
+                  Log.e("ERROR", e.toString())
+                  data.postValue(failure(e))
+              }
+
+          })
+
+          return getTracVoteEventById(data,subTrackVote)
+      }*/
+
+
     fun getTrackVoteEventByUserId(
         userId: Int
     ): LiveData<Result<TrackVoteEventByUserIdQuery.Data>> {
         val data: MutableLiveData<Result<TrackVoteEventByUserIdQuery.Data>> =
             MutableLiveData()
-
         val queryCall = TrackVoteEventByUserIdQuery
             .builder()
             .userId(userId)
@@ -58,12 +102,12 @@ class TrackVoteEventRepo(private val client: ApolloClient) {
         return data
     }
 
+
     fun getTrackVoteEventsPublic(
 
     ): LiveData<Result<TrackVoteEventsPublicQuery.Data>> {
         val data: MutableLiveData<Result<TrackVoteEventsPublicQuery.Data>> =
             MutableLiveData()
-
         val queryCall = TrackVoteEventsPublicQuery
             .builder()
             .build()
@@ -72,10 +116,25 @@ class TrackVoteEventRepo(private val client: ApolloClient) {
         return data
     }
 
+    /*
+    $userIdMaster: Int!
+    $name: String!
+    $open: Boolean!
+    $locAndSchRestriction: Boolean!
+    $scheduleBegin: Long!
+    $scheduleEnd: Long!
+    $latitude: Float!
+    $longitude: Float!
+    */
     fun setTrackVoteEventNew(
         userIdMaster: Int,
         name: String,
-        public: Boolean
+        open: Boolean,
+        locAndSchRestriction: Boolean,
+        scheduleBegin: Long,
+        scheduleEnd: Long,
+        latitude: Double,
+        longitude: Double
     ): LiveData<Result<TrackVoteEventNewMutation.Data>> {
         val data: MutableLiveData<Result<TrackVoteEventNewMutation.Data>> =
             MutableLiveData()
@@ -84,7 +143,12 @@ class TrackVoteEventRepo(private val client: ApolloClient) {
             TrackVoteEventNewMutation.builder()
                 .userIdMaster(userIdMaster)
                 .name(name)
-                .open(public)
+                .open(open)
+                .locAndSchRestriction(locAndSchRestriction)
+                .scheduleBegin(scheduleBegin.toString())
+                .scheduleEnd(scheduleEnd.toString())
+                .latitude(latitude)
+                .longitude(longitude)
                 .build()
         ).enqueue(CallBackHandler { data.postValue(it) })
 

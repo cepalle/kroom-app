@@ -9,10 +9,11 @@ import okhttp3.OkHttpClient
 import okhttp3.Response
 import java.util.concurrent.TimeUnit
 
+
 // private const val baseUrl = "https://d932c9a7.ngrok.io/graphql"
 // private const val subscriptionBaseUrl = "ws://d932c9a7.ngrok.io/graphql"
-private const val baseUrl = "http://192.168.43.37:8080/graphql"
-private const val subscriptionBaseUrl = "ws://192.168.43.37/graphql"
+private const val baseUrl = "http://192.168.43.73:8080/graphql"
+private const val subscriptionBaseUrl = "ws://192.168.43.73/graphql"
 
 class GraphClient(private val getToken: () -> String?) {
 
@@ -32,8 +33,8 @@ class GraphClient(private val getToken: () -> String?) {
     }
 
     private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
-        .writeTimeout(15, TimeUnit.SECONDS)
-        .readTimeout(15, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
         .addInterceptor(::interceptor)
         .addNetworkInterceptor(::interceptor)
         .build()

@@ -2,7 +2,37 @@ query TrackVoteEventByIdQuery($id: Int!){
     TrackVoteEventById(id: $id){
         trackVoteEvent{
             id
+            userMaster{
+                userName
+            }
             name
+            public
+            currentTrack{
+                id
+                title
+                album{coverSmall
+                }
+            }
+            trackWithVote{
+                track{
+                    id
+                    album{coverSmall
+                    }
+                    title
+                    artist{id
+                        name}
+                }
+                score
+                nb_vote_up
+                nb_vote_down
+            }
+            scheduleBegin
+            scheduleEnd
+            latitude
+            longitude
+            userInvited{id
+                userName
+                email}
         }
         errors {
             field
@@ -10,3 +40,4 @@ query TrackVoteEventByIdQuery($id: Int!){
         }
     }
 }
+

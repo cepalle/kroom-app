@@ -1,9 +1,8 @@
-package io.kroom.app.view.activitymain.trackvoteevent.event.add
+package io.kroom.app.view.activitymain.trackvoteevent.event.eventadd
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import io.kroom.app.graphql.TrackVoteEventNewMutation
 import io.kroom.app.repo.TrackVoteEventRepo
 import io.kroom.app.util.Session
@@ -16,9 +15,9 @@ class TrackVoteEventListAddViewModel(app: Application) : AndroidViewModel(app) {
 
     private val eventRepo = TrackVoteEventRepo(client)
 
-    fun newPlaylist(name: String, public: Boolean): LiveData<Result<TrackVoteEventNewMutation.Data>>? {
+    fun newEventlist(name: String, public: Boolean): LiveData<Result<TrackVoteEventNewMutation.Data>>? {
         return Session.getId(getApplication())?.let {
-            eventRepo.setTrackVoteEventNew(it, name, public)
+            eventRepo.setTrackVoteEventNew(it, name, public, false, 0, 0, 1.0, 1.0)
         }
     }
 }

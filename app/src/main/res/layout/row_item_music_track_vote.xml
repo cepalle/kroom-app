@@ -1,94 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_marginStart="8dp"
-android:layout_marginTop="8dp"
-android:layout_marginEnd="8dp"
-android:orientation="horizontal"
-android:baselineAligned="false">
-
-
-<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
-        android:id="@+id/linearlayout1"
-        android:layout_marginTop="2dp">
-
-    <ImageView
-            android:id="@+id/musicTrackVoteCoverSmall"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/track_vote_cover_small"
-            android:foregroundGravity="center"
-            tools:srcCompat="@tools:sample/backgrounds/scenic"/>
-
-    <TextView
-            android:id="@+id/musicTrackVoteArtist"
-            android:layout_width="250dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="1dp"
-            android:layout_weight="1"
-            android:gravity="center|center_horizontal|center_vertical"
-            android:maxLines="1"
-            android:text="@string/track_vote_artist"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textSize="23sp"
-            tools:ignore="RtlCompat" />
-    <TextView
-            android:id="@+id/musicTrackVoteUp"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/music_track_vote_up"
-            android:gravity="center|center_horizontal|center_vertical"
-            android:scaleType="centerInside"/>
-    <TextView
-            android:id="@+id/musicTrackVoteDown"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/music_track_vote_down"
-            android:gravity="center|center_horizontal|center_vertical"
-            android:scaleType="centerInside"/>
-
-</LinearLayout>
-
-<LinearLayout
-        android:id="@+id/linearlayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linearlayout1"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="2dp">
-
-    <TextView
-            android:id="@+id/musicTrackVoteTitle"
-            android:layout_width="250dp"
-            android:layout_height="47dp"
-            android:layout_weight="1"
-            android:text="@string/track_vote_title"
-            android:gravity="center|center_horizontal|center_vertical"
-            android:scaleType="centerInside"
-            android:textSize="20sp"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        android:baselineAligned="false" android:clickable="true" android:focusable="true">
 
 
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:id="@+id/linearlayout1"
+            android:layout_marginTop="2dp" android:clickable="false">
 
-    <TextView
-            android:id="@+id/musicTrackVoteDuration"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/music_track_vote_duration"
-            android:gravity="center|center_horizontal|center_vertical"
-            android:scaleType="centerInside"/>
+        <ImageView
+                android:id="@+id/itemMusicTrackVoteCoverSmall"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/track_vote_cover_small"
+                android:foregroundGravity="center"
+                tools:srcCompat="@tools:sample/backgrounds/scenic"/>
 
-</LinearLayout>
+        <TextView
+                android:id="@+id/itemMusicTrackVoteArtist"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="1dp"
+                android:layout_weight="1"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:maxLines="1"
+                android:text="@string/track_vote_artist"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="23sp"
+                tools:ignore="RtlCompat"/>
+        <TextView
+                android:id="@+id/itemMusicTrackVoteUp"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/music_track_vote_up"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:scaleType="centerInside" android:clickable="true" android:focusable="true"/>
+        <TextView
+                android:id="@+id/itemMusicTrackVoteDown"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/music_track_vote_down"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:scaleType="centerInside" android:clickable="true" android:focusable="true"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/linearlayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearlayout1"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="2dp">
+
+        <TextView
+                android:id="@+id/itemMusicTrackVoteTitle"
+                android:layout_width="250dp"
+                android:layout_height="47dp"
+                android:layout_weight="1"
+                android:text="@string/track_vote_title"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:scaleType="centerInside"
+                android:textSize="20sp"/>
+
+
+        <TextView
+                android:id="@+id/itemMusicTrackVoteDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/music_track_vote_duration"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:scaleType="centerInside"/>
+
+    </LinearLayout>
 
 
 </RelativeLayout>

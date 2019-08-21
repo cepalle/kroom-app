@@ -3,8 +3,8 @@ mutation TrackVoteEventNewMutation(
     $name: String!
     $open: Boolean!
     $locAndSchRestriction: Boolean!
-    $scheduleBegin: Long!
-    $scheduleEnd: Long!
+    $scheduleBegin: String!
+    $scheduleEnd: String!
     $latitude: Float!
     $longitude: Float!
 ) {

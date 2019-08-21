@@ -3,13 +3,23 @@ query TrackVoteEventByUserIdQuery($userId: Int!){
     {
         trackVoteEvents{
             id
+            userMaster {
+                id
+                userName
+            }
             name
+            public
+            scheduleBegin
+            scheduleEnd
+            latitude
+            longitude
         }
         errors {
             field
             messages
         }
     }
-
 }
+
+
 
