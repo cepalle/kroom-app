@@ -4,8 +4,6 @@ package io.kroom.app.view.activitymain.trackvoteevent
 import android.app.Application
 import androidx.lifecycle.*
 import androidx.lifecycle.Transformations.map
-import com.google.android.gms.common.api.Api
-import io.kroom.app.graphql.TrackVoteEventByIdQuery
 import io.kroom.app.graphql.TrackVoteEventByUserIdQuery
 import io.kroom.app.graphql.TrackVoteEventsPublicQuery
 import io.kroom.app.repo.TrackVoteEventRepo
@@ -15,9 +13,7 @@ import io.kroom.app.view.activitymain.trackvoteevent.model.EventModel
 import io.kroom.app.view.activitymain.trackvoteevent.model.TrackModel
 import io.kroom.app.view.activitymain.trackvoteevent.model.TrackVoteEvent
 import io.kroom.app.webservice.GraphClient
-import java.lang.reflect.Array
-import java.util.*
-import kotlin.collections.AbstractMap
+
 
 
 class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {

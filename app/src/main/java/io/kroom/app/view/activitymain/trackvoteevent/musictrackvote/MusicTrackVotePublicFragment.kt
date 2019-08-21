@@ -12,6 +12,7 @@ import io.kroom.app.R
 import io.kroom.app.view.activitymain.trackvoteevent.CustomLayoutManager
 import io.kroom.app.view.activitymain.trackvoteevent.TrackVoteEventsViewModel
 import io.kroom.app.view.activitymain.trackvoteevent.model.TrackModel
+import io.kroom.app.view.activitymain.trackvoteevent.model.TrackVoteEvent
 
 
 class MusicTrackVotePublicFragment : Fragment() {
@@ -21,6 +22,7 @@ class MusicTrackVotePublicFragment : Fragment() {
     private var recyclerViewTrackVote: RecyclerView? = null
     private var trackVoteList: List<TrackModel> = listOf()
     lateinit var trackItem: TrackModel
+    private var trackVoteEvent: TrackVoteEvent? = null
     lateinit var trackVoteViewModel: TrackVoteEventsViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -43,17 +45,19 @@ class MusicTrackVotePublicFragment : Fragment() {
              { trackItem: TrackModel -> OnTrackVoteSelected(trackItem) })
         recyclerViewTrackVote?.setAdapter(adapterTrackVote)
 
-     /*  activity?.let {
+       activity?.let {
             trackVoteViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)
              trackVoteViewModel.getMusicTrackVotePublic().observe(viewLifecycleOwner, Observer {
                  it.let {
-                     trackVoteList = it
+                     trackVoteEvent = it
+                //     trackVoteList = trackVoteEvent?.trackWithVote.let { }
+
                  }
                  //  eventsPublicViewModel.getSelectedTrackVoteEvent()?.postValue(eventItem)
                  adapterTrackVote?.setTrackList(trackVoteList)
              })
              //    Toast.makeText(this.context, "click", Toast.LENGTH_SHORT).show()
-         }*/
+         }
      }
      fun OnTrackVoteSelected(trackVoteItem: TrackModel) {
         trackItem = trackVoteItem
