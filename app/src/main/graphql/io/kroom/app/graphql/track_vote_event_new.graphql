@@ -2,9 +2,23 @@ mutation TrackVoteEventNewMutation(
     $userIdMaster: Int!
     $name: String!
     $open: Boolean!
+    $locAndSchRestriction: Boolean!
+    $scheduleBegin: Long!
+    $scheduleEnd: Long!
+    $latitude: Float!
+    $longitude: Float!
 ) {
-    TrackVoteEventNew(userIdMaster: $userIdMaster, name: $name, public: $open) {
-        trackVoteEvent{
+    TrackVoteEventNew(
+        userIdMaster: $userIdMaster
+        name: $name
+        public: $open
+        locAndSchRestriction: $locAndSchRestriction
+        scheduleBegin: $scheduleBegin
+        scheduleEnd: $scheduleEnd
+        latitude: $latitude
+        longitude: $longitude
+    ) {
+        trackVoteEvent {
             id
             name
         }
