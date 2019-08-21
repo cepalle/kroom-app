@@ -19,7 +19,8 @@ data class TrackVoteEvent(
     val scheduleBegin: Long,
     val scheduleEnd: Long,
     val latitude: Float,
-    val longitude: Float
+    val longitude: Float,
+    val  userInvited : List<TrackVoteEventByIdQuery.UserInvited>
  //   val userInvitedId: Int,
  //   val userInvitedUserName: String,
   //  val userInvitedEmail: String

@@ -30,7 +30,6 @@ class MusicTrackVotePublicFragment : Fragment() {
 
         if (adapterTrackVote != null) {
             adapterTrackVote!!.setTrackList(trackVoteList)
-
         }
 
         return view

@@ -29,14 +29,12 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
 
     private val selectedTrackVoteEventPublic: MutableLiveData<EventModel> = MutableLiveData()
     private val selectedTrackVoteEventPrivate: MutableLiveData<EventModel> = MutableLiveData()
-    private val selectedEventPublic : MutableLiveData<TrackVoteEvent> = MutableLiveData()
+    private val selectedEventPublic: MutableLiveData<TrackVoteEvent> = MutableLiveData()
     private val selectedMusicTrackVote: MutableLiveData<TrackModel> = MutableLiveData()
     private val selectedMusicTrackVotePrivate: MutableLiveData<TrackModel> = MutableLiveData()
 
     private val musicTrackVote: LiveData<Result<TrackVoteEventByIdQuery.Data>> =
         trackVoteEventRepo.getTrackVoteEventById(selectedTrackVoteEventPublic.value!!.id)
-
-
 
 
     private val eventPublicResult: LiveData<Result<TrackVoteEventsPublicQuery.Data>> =
@@ -50,93 +48,93 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
         }
 
 
-    fun getMusicTrackVotePublic(): LiveData<Any>{
-        return map (musicTrackVote) {
+    fun getMusicTrackVotePublic(): LiveData<TrackVoteEvent> {
+        return map(musicTrackVote, {
             it.onSuccess {
-                return@map it.TrackVoteEventById().let{
+                return@map it.TrackVoteEventById().trackVoteEvent(){
                     TrackVoteEvent(
-                        it.trackVoteEvent()!!.id(),
-                        it.trackVoteEvent()!!.userMaster()!!.userName(),
-                        it.trackVoteEvent()!!.name(),
-                        it.trackVoteEvent()!!.public_(),
+                        it.TrackVoteEventById().trackVoteEvent()!!.id(),
+                        it.TrackVoteEventById().trackVoteEvent()!!.userMaster()!!.userName(),
+                        it.TrackVoteEventById().trackVoteEvent()!!.name(),
+                        it.TrackVoteEventById().trackVoteEvent()!!.public_(),
                         null,
-                        it.trackVoteEvent()!!.trackWithVote()?: return@map null,
+                        it.TrackVoteEventById().trackVoteEvent()!!.trackWithVote() ?: return@map null,
+                        0,
+                        0,
+                        0F,
+                        0F,
+                        it.TrackVoteEventById().trackVoteEvent()!!.userInvited() ?: return@map null
+                    )
+                }
+            }
+            it.onFailure {
+                //TODO
+                return@map it.message
+            }
+            return@map LiveData<TrackVoteEvent>
+        })
+    }
+
+
+    fun getTrackVoteEventPublicList(): LiveData<List<EventModel>> {
+        return map(eventPublicResult, {
+            it.onSuccess {
+                return@map it.TrackVoteEventsPublic().map {
+                    EventModel(
+                        it.id(),
+                        it.userMaster()?.id() ?: return@map null,
+                        it.userMaster()?.userName() ?: return@map null,
+                        it.name(),
+                        it.public_(),
+                        0,
+                        0,
+                        8888888F,
+                        99999999F
+                    )
+                }.filterNotNull()
+            }
+            it.onFailure {
+                // TODO
+                return@map listOf<EventModel>()
+            }
+            return@map listOf<EventModel>()
+        })
+    }
+
+    fun getTrackVoteEventPrivateList(): LiveData<List<EventModel>> {
+        return map(eventPrivateResult) {
+            it.onSuccess {
+                return@map it.TrackVoteEventByUserId().trackVoteEvents()?.map {
+                    EventModel(
+                        it.id(),
+                        it.userMaster()?.id() ?: return@map null,
+                        it.userMaster()?.userName() ?: return@map null,
+                        it.name(),
+                        it.public_(),
                         0,
                         0,
                         0F,
                         0F
+
                     )
-                    it.trackVoteEvent()!!.userInvited()?: return@map null
-                }.filterNotNull()
+                }?.filterNotNull()
             }
-            it.onFailure { //TODO
-                return@map it.message
+            it.onFailure {
+                // TODO
+                return@map listOf<EventModel>()
             }
-            return@map musicTrackVote
+            return@map listOf<EventModel>()
         }
     }
 
 
-
-fun getTrackVoteEventPublicList(): LiveData<List<EventModel>> {
-    return map(eventPublicResult, {
-        it.onSuccess {
-            return@map it.TrackVoteEventsPublic().map {
-                EventModel(
-                    it.id(),
-                    it.userMaster()?.id() ?: return@map null,
-                    it.userMaster()?.userName() ?: return@map null,
-                    it.name(),
-                    it.public_(),
-                    0,
-                    0,
-                    8888888F,
-                    99999999F
-                )
-            }.filterNotNull()
-        }
-        it.onFailure {
-            // TODO
-            return@map listOf<EventModel>()
-        }
-        return@map listOf<EventModel>()
-    })
-}
-
-fun getTrackVoteEventPrivateList(): LiveData<List<EventModel>> {
-    return map(eventPrivateResult) {
-        it.onSuccess {
-            return@map it.TrackVoteEventByUserId().trackVoteEvents()?.map {
-                EventModel(
-                    it.id(),
-                    it.userMaster()?.id() ?: return@map null,
-                    it.userMaster()?.userName() ?: return@map null,
-                    it.name(),
-                    it.public_(),
-                    0,
-                    0,
-                    0F,
-                    0F
-
-                )
-            }?.filterNotNull()
-        }
-        it.onFailure {
-            // TODO
-            return@map listOf<EventModel>()
-        }
-        return@map listOf<EventModel>()
+    fun getSelectedTrackVoteEventPublic(): MutableLiveData<EventModel>? {
+        return selectedTrackVoteEventPublic
     }
-}
 
-
-fun getSelectedTrackVoteEventPublic(): MutableLiveData<EventModel>? {
-    return selectedTrackVoteEventPublic
-}
-
-fun getSelectedTrackVoteEventPrivate(): MutableLiveData<EventModel>? {
-    return selectedTrackVoteEventPrivate
-}
+    fun getSelectedTrackVoteEventPrivate(): MutableLiveData<EventModel>? {
+        return selectedTrackVoteEventPrivate
+    }
 }
 
 
