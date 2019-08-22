@@ -30,7 +30,7 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
                             CurrentTrack(
                                 it?.id() ?: return@map null,
                                 it?.title(),
-                                it.album()!!.coverSmall() // TODO change coverMedium
+                                it.album()!!.coverMedium()// TODO change coverMedium
                             )
                         },
                         it.trackWithVote()!!.map {

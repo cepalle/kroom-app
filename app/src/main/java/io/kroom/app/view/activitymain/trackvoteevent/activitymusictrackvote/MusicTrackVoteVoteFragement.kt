@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.view.activitymain.trackvoteevent.CustomLayoutManager
 import io.kroom.app.view.activitymain.trackvoteevent.TrackVoteEventsViewModel
 import io.kroom.app.view.activitymain.trackvoteevent.model.TrackModel
-
+import io.kroom.app.view.activitymain.trackvoteevent.model.TrackVoteEvent
+import io.kroom.app.view.activitymain.trackvoteevent.model.TrackWithVote
 
 
 class MusicTrackVoteVoteFragement(val eventId:Int) : Fragment() {
@@ -21,14 +22,15 @@ class MusicTrackVoteVoteFragement(val eventId:Int) : Fragment() {
     }*/
   private var adapterTrackVote: RecyclerViewAdapterMusicTrackVote? = null
     private var recyclerViewTrackVote: RecyclerView? = null
-    private var trackVoteList: List<TrackModel> = listOf()
+    private var trackVoteList: List<TrackWithVote> = listOf()
     lateinit var trackItem: TrackModel
+    private var trackVoteEvent: TrackVoteEvent? = null
     lateinit var trackVoteViewModel: TrackVoteEventsViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Music tracks vote"
         val view: View? = inflater.inflate(R.layout.fragment_music_track_vote_event_public, container, false)
-        recyclerViewTrackVote = view?.findViewById(R.id.list_track_vote)
+        recyclerViewTrackVote = view?.findViewById(R.id.musicTrackVoteList)
 
         if (adapterTrackVote != null) {
             adapterTrackVote!!.setTrackList(trackVoteList)
@@ -49,7 +51,11 @@ class MusicTrackVoteVoteFragement(val eventId:Int) : Fragment() {
                trackVoteViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)
                 trackVoteViewModel.getTrackVoteEventById(eventId).observe(viewLifecycleOwner, Observer {
                     it.let {
-                       /* trackVoteList = it.let { TrackModel(
+                        trackVoteEvent  = it
+
+                        trackVoteList = trackVoteEvent?.trackWithVote as List<TrackWithVote>
+
+                           /* .let { TrackModel(
                             it.id()
                         ) }*/
                     }

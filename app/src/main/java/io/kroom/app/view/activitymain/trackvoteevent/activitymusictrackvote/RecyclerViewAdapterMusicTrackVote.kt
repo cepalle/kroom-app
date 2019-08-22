@@ -6,15 +6,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.R
 import io.kroom.app.view.activitymain.trackvoteevent.model.TrackModel
+import io.kroom.app.view.activitymain.trackvoteevent.model.TrackWithVote
 import kotlinx.android.synthetic.main.row_item_music_track_vote.view.*
 import kotlinx.android.synthetic.main.row_item_track_vote_event.view.*
 
 class RecyclerViewAdapterMusicTrackVote(
-    val trackVoteList: List<TrackModel>,
+    val trackVoteList: List<TrackWithVote>,
     val onTrackVoteListener: (TrackModel) -> Unit
 ) : RecyclerView.Adapter<RecyclerViewAdapterMusicTrackVote.TrackVoteHolder>() {
 
-    private var _trackVoteList: List<TrackModel> = trackVoteList
+    private var _trackVoteList: List<TrackWithVote> = trackVoteList
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackVoteHolder {
@@ -27,7 +28,7 @@ class RecyclerViewAdapterMusicTrackVote(
         return _trackVoteList.size
     }
 
-    fun setTrackList(tracVotetList: List<TrackModel>) {
+    fun setTrackList(tracVotetList: List<TrackWithVote>) {
         _trackVoteList = trackVoteList
         notifyDataSetChanged()
     }
@@ -39,11 +40,13 @@ class RecyclerViewAdapterMusicTrackVote(
 
     inner class TrackVoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         // var clickableItem = itemView.
-        fun bind(track: TrackModel) {
+        fun bind(track: TrackWithVote) {
             itemView.itemMusicTrackVoteCoverSmall.drawable
-            itemView.itemTrackVoteEventName.text = track.artist
-            itemView.itemMusicTrackVoteTitle.text = track.title
-            itemView.itemMusicTrackVoteDuration.text = track.duration.toString()
+            itemView.itemMusicTrackVoteArtist.text = track.track.artist
+            itemView.itemMusicTrackVoteUp.text = track.nb_vote_up.toString()
+            itemView.itemMusicTrackVoteDown.text = track.nb_vote_down.toString()
+            itemView.itemMusicTrackVoteTitle.text = track.track.title
+            itemView.itemMusicTrackVoteDuration.text = track.track.duration.toString()
 
         }
     }

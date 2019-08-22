@@ -10,16 +10,18 @@ query TrackVoteEventByIdQuery($id: Int!){
             currentTrack{
                 id
                 title
-                album{coverSmall
+                album{coverMedium
                 }
             }
             trackWithVote{
                 track{
                     id
-                    album{coverSmall
-                    }
                     title
-                    artist{id
+                    album{
+                        coverSmall
+                    }
+                    duration
+                    artist{
                         name}
                 }
                 score
