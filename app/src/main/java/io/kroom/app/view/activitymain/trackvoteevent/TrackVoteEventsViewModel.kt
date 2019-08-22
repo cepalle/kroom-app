@@ -6,9 +6,8 @@ import androidx.lifecycle.*
 import androidx.lifecycle.Transformations.map
 import io.kroom.app.repo.TrackVoteEventRepo
 import io.kroom.app.util.Session
+import io.kroom.app.view.activitymain.trackvoteevent.model.*
 
-import io.kroom.app.view.activitymain.trackvoteevent.model.EventModel
-import io.kroom.app.view.activitymain.trackvoteevent.model.TrackVoteEvent
 import io.kroom.app.webservice.GraphClient
 
 
@@ -27,13 +26,40 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
                         it.userMaster()?.userName() ?: return@map null,
                         it.name(),
                         it.public_(),
-                        null,
-                        it.trackWithVote() ?: return@map null,
+                        it.currentTrack().let {
+                            CurrentTrack(
+                                it?.id() ?: return@map null,
+                                it?.title(),
+                                it.album()!!.coverSmall() // TODO change coverMedium
+                            )
+                        },
+                        it.trackWithVote()!!.map {
+                            TrackWithVote(
+                                it.track().let {
+                                    TrackModel(
+                                        it.id(),
+                                        it.title(),
+                                        it.album()?.coverSmall()?: return@map null,
+                                        2,
+                                    ""
+                                    )
+                                },
+                                it.score(),
+                                it.nb_vote_up(),
+                                it.nb_vote_down()
+                            )
+                        },
                         0,
                         0,
                         0F,
                         0F,
-                        it.userInvited() ?: return@map null
+                        it.userInvited()!!.map {
+                            User(
+                                it.id()!!,
+                                it.userName(),
+                                it.email()!!
+                            )
+                        }
                     )
                 }
             }
@@ -44,6 +70,7 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
             return@map null
         }
     }
+
 
     fun getTrackVoteEventPublicList(): LiveData<List<EventModel>> {
         return map(trackVoteEventRepo.getTrackVoteEventsPublic()) {
