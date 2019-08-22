@@ -13,8 +13,8 @@ import io.kroom.app.R
 import io.kroom.app.view.activitymain.trackvoteevent.CustomLayoutManager
 import io.kroom.app.view.activitymain.trackvoteevent.TrackVoteEventsViewModel
 import io.kroom.app.view.activitymain.trackvoteevent.model.EventModel
-import io.kroom.app.view.activitymain.trackvoteevent.musictrackvote.EXTRA_EVENT_ID
-import io.kroom.app.view.activitymain.trackvoteevent.musictrackvote.MusicTrackVoteActivity
+import io.kroom.app.view.activitymain.trackvoteevent.activitymusictrackvote.EXTRA_EVENT_ID
+import io.kroom.app.view.activitymain.trackvoteevent.activitymusictrackvote.MusicTrackVoteActivity
 
 class TrackVoteEventPublicFragment : Fragment() {
     private var adapterTrackEventPublicPublic: RecyclerViewAdapterTrackEventPublic? = null

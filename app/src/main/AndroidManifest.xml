@@ -24,7 +24,7 @@
 
         </activity>
         <activity android:screenOrientation="portrait"
-                  android:name="io.kroom.app.view.activitymain.trackvoteevent.musictrackvote.MusicTrackVoteActivity">
+                  android:name="io.kroom.app.view.activitymain.trackvoteevent.activitymusictrackvote.MusicTrackVoteActivity">
             <!--Default Intent Filter-->
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT"/>
