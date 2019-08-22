@@ -21,7 +21,7 @@ class MusicTrackVoteActivity : AppCompatActivity() {
         eventId = intent.getIntExtra(EXTRA_EVENT_ID, 0)
 
         if (savedInstanceState == null) {
-            changeFragment(MusicTrackVoteReadingFragement(eventId))
+            changeFragment(MusicTrackVoteVoteFragement(eventId))
         }
 
     }
@@ -37,7 +37,6 @@ class MusicTrackVoteActivity : AppCompatActivity() {
         item ?: return true
         when (item.itemId) {
             R.id.musicTrackVoteEditor -> changeFragment(MusicTrackVoteEditorFragement(eventId))
-            R.id.musicTrackVoteReading -> changeFragment(MusicTrackVoteReadingFragement(eventId))
             R.id.musicTrackVoteVote -> changeFragment(MusicTrackVoteVoteFragement(eventId))
         }
         return true
