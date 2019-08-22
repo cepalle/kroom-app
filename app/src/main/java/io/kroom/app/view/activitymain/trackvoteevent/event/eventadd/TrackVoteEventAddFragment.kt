@@ -16,13 +16,12 @@ import io.kroom.app.webservice.GraphClient
 import kotlinx.android.synthetic.main.fragment_event_add.*
 
 
-class TrackVoteEventAddFragment: Fragment() {
+class TrackVoteEventAddFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_event_add, container, false)
-        lateinit var eventsAddViewModel: TrackVoteEventsViewModel
+        // lateinit var eventsAddViewModel: TrackVoteEventsViewModel
     }
-
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -34,8 +33,6 @@ class TrackVoteEventAddFragment: Fragment() {
 
         }.client
 
-
-
         val trackVoteRepo = TrackVoteEventRepo(client)
 
         eventAddBtnNew.setOnClickListener {
@@ -44,7 +41,16 @@ class TrackVoteEventAddFragment: Fragment() {
             val public = eventAddSwitchPublic.isChecked
 
             Session.getId(activity!!.application)?.let {
-                trackVoteRepo.setTrackVoteEventNew(it, inputName, public, false, 0, 0, 1.0, 1.0).observe(this, Observer {
+                trackVoteRepo.setTrackVoteEventNew(
+                    it,
+                    inputName,
+                    public,
+                    false,
+                    0,
+                    0,
+                    1.0,
+                    1.0
+                ).observe(this, Observer {
                     it.onSuccess {
                         if (it.TrackVoteEventNew().errors().isEmpty()) {
                             Toast.makeText(context, "Event created", Toast.LENGTH_SHORT).show()

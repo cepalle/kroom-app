@@ -35,36 +35,32 @@ class TrackVoteEventPrivateFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        if (adapterTrackEventPrivate != null && trackVoteEventListPrivate != null) {
-            adapterTrackEventPrivate!!.setEventList(trackVoteEventListPrivate)
-        }
+        adapterTrackEventPrivate?.setEventList(trackVoteEventListPrivate)
 
-        recyclerViewEventsPrivate?.setLayoutManager(context?.let { CustomLayoutManager(it) })
+        recyclerViewEventsPrivate?.layoutManager = context?.let { CustomLayoutManager(it) }
         recyclerViewEventsPrivate?.setHasFixedSize(true)
-        adapterTrackEventPrivate =
-            RecyclerViewAdapterTrackEventPrivate(
-                trackVoteEventListPrivate,
-                { eventItem: EventModel -> OnsTrackVoteEventSelected(eventItem) })
-        recyclerViewEventsPrivate?.setAdapter(adapterTrackEventPrivate)
+        adapterTrackEventPrivate = RecyclerViewAdapterTrackEventPrivate(trackVoteEventListPrivate) {
+            onsTrackVoteEventSelected(it)
+        }
+        recyclerViewEventsPrivate?.adapter = adapterTrackEventPrivate
 
         activity?.let {
             eventsPrivateViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)
-            eventsPrivateViewModel.getTrackVoteEventPrivateList().observe(viewLifecycleOwner, Observer {
+            eventsPrivateViewModel.getTrackVoteEventPrivateList().observe(this, Observer {
                 trackVoteEventListPrivate = it
                 adapterTrackEventPrivate?.setEventList(trackVoteEventListPrivate)
                 adapterTrackEventPrivate?.notifyDataSetChanged()
-                Toast.makeText(this.context, it.size.toString(), Toast.LENGTH_LONG).show()
+                // Toast.makeText(this.context, it.size.toString(), Toast.LENGTH_LONG).show()
             })
         }
     }
 
-    fun OnsTrackVoteEventSelected(eventItem: EventModel) {
+    fun onsTrackVoteEventSelected(eventItem: EventModel) {
 
         eventsPrivateViewModel.getSelectedTrackVoteEventPrivate()?.postValue(eventItem)
-        val musicTrackVoteActivityIntent = Intent(activity, MusicTrackVoteActivity::class.java)
-        musicTrackVoteActivityIntent.putExtra(Intent.EXTRA_REFERRER_NAME, "MusicTrackVoteFragmentPrivate()")
+        val musicTrackVoteActivityIntent = Intent(activity, MusicTrackVoteActivity::class.java).apply {
+            putExtra(Intent.EXTRA_REFERRER_NAME, "MusicTrackVoteFragmentPrivate()")
+        }
         startActivity(musicTrackVoteActivityIntent)
-
     }
 }
-
