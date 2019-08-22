@@ -1,22 +1,19 @@
 package io.kroom.app.view.activitymain.trackvoteevent.event.eventpublic
 
 import android.content.Intent
-import android.content.Intent.EXTRA_REFERRER_NAME
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import io.kroom.app.R
-import io.kroom.app.util.Session
 import io.kroom.app.view.activitymain.trackvoteevent.CustomLayoutManager
 import io.kroom.app.view.activitymain.trackvoteevent.TrackVoteEventsViewModel
 import io.kroom.app.view.activitymain.trackvoteevent.model.EventModel
+import io.kroom.app.view.activitymain.trackvoteevent.musictrackvote.EXTRA_EVENT_ID
 import io.kroom.app.view.activitymain.trackvoteevent.musictrackvote.MusicTrackVoteActivity
 
 class TrackVoteEventPublicFragment : Fragment() {
@@ -57,10 +54,8 @@ class TrackVoteEventPublicFragment : Fragment() {
     }
 
     fun onsTrackVoteEventSelected(eventItem: EventModel) {
-        eventsPublicViewModel.getSelectedTrackVoteEventPublic()?.postValue(eventItem)
-
         val musicTrackVoteActivityIntent = Intent(activity, MusicTrackVoteActivity::class.java).apply {
-            putExtra(EXTRA_REFERRER_NAME, "MusicTrackVotePublicFragment()")
+            putExtra(EXTRA_EVENT_ID, eventItem.id)
         }
         startActivity(musicTrackVoteActivityIntent)
     }

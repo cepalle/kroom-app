@@ -18,12 +18,8 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
     }.client
     private val trackVoteEventRepo = TrackVoteEventRepo(client)
 
-
-    private val selectedTrackVoteEventPublic: MutableLiveData<EventModel> = MutableLiveData()
-    private val selectedTrackVoteEventPrivate: MutableLiveData<EventModel> = MutableLiveData()
-
-    fun getMusicTrackVotePublic(): LiveData<TrackVoteEvent?> {
-        return map(trackVoteEventRepo.getTrackVoteEventById(selectedTrackVoteEventPublic.value!!.id)) {
+    fun getTrackVoteEventById(id: Int): LiveData<TrackVoteEvent?> {
+        return map(trackVoteEventRepo.getTrackVoteEventById(id)) {
             it.onSuccess {
                 return@map it.TrackVoteEventById().trackVoteEvent().let {
                     TrackVoteEvent(
@@ -76,7 +72,7 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun getTrackVoteEventPrivateList(): LiveData<List<EventModel>> {
         return map(
-            Session.getId(this.getApplication())!!.let {
+            Session.getId(getApplication())!!.let {
                 trackVoteEventRepo.getTrackVoteEventByUserId(it)
             }
         ) {
@@ -104,12 +100,4 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-
-    fun getSelectedTrackVoteEventPublic(): MutableLiveData<EventModel>? {
-        return selectedTrackVoteEventPublic
-    }
-
-    fun getSelectedTrackVoteEventPrivate(): MutableLiveData<EventModel>? {
-        return selectedTrackVoteEventPrivate
-    }
 }

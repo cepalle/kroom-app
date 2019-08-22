@@ -14,6 +14,7 @@ import io.kroom.app.R
 import io.kroom.app.view.activitymain.trackvoteevent.CustomLayoutManager
 import io.kroom.app.view.activitymain.trackvoteevent.TrackVoteEventsViewModel
 import io.kroom.app.view.activitymain.trackvoteevent.model.EventModel
+import io.kroom.app.view.activitymain.trackvoteevent.musictrackvote.EXTRA_EVENT_ID
 import io.kroom.app.view.activitymain.trackvoteevent.musictrackvote.MusicTrackVoteActivity
 
 
@@ -56,10 +57,8 @@ class TrackVoteEventPrivateFragment : Fragment() {
     }
 
     fun onsTrackVoteEventSelected(eventItem: EventModel) {
-
-        eventsPrivateViewModel.getSelectedTrackVoteEventPrivate()?.postValue(eventItem)
         val musicTrackVoteActivityIntent = Intent(activity, MusicTrackVoteActivity::class.java).apply {
-            putExtra(Intent.EXTRA_REFERRER_NAME, "MusicTrackVoteFragmentPrivate()")
+            putExtra(EXTRA_EVENT_ID, eventItem.id)
         }
         startActivity(musicTrackVoteActivityIntent)
     }
