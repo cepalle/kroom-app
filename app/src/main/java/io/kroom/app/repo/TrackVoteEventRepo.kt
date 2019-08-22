@@ -116,16 +116,6 @@ class TrackVoteEventRepo(private val client: ApolloClient) {
         return data
     }
 
-    /*
-    $userIdMaster: Int!
-    $name: String!
-    $open: Boolean!
-    $locAndSchRestriction: Boolean!
-    $scheduleBegin: Long!
-    $scheduleEnd: Long!
-    $latitude: Float!
-    $longitude: Float!
-    */
     fun setTrackVoteEventNew(
         userIdMaster: Int,
         name: String,
@@ -154,4 +144,20 @@ class TrackVoteEventRepo(private val client: ApolloClient) {
 
         return data
     }
+
+    fun del(
+        eventId: Int
+    ): LiveData<Result<TrackVoteEventDelMutation.Data>> {
+        val data: MutableLiveData<Result<TrackVoteEventDelMutation.Data>> =
+            MutableLiveData()
+
+        client.mutate(
+            TrackVoteEventDelMutation.builder()
+                .id(eventId)
+                .build()
+        ).enqueue(CallBackHandler { data.postValue(it) })
+
+        return data
+    }
+
 }

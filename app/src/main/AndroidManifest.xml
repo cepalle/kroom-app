@@ -93,6 +93,13 @@
                 <action android:name="android.intent.action.DEFAULT"/>
             </intent-filter>
         </activity>
+        <activity android:screenOrientation="portrait"
+                  android:name=".view.activitymain.trackvoteevent.activitymusictrackvote.activitymusictrackvoteuser.MusicTrackVoteUserActivity">
+            <!--Default Intent Filter-->
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
