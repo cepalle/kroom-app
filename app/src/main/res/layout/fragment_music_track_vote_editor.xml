@@ -4,13 +4,152 @@
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent">
 
-    <TextView
-            android:text="editor"
+
+    <EditText
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/signInUsername"
+            android:hint="Name"
+            android:autofillHints=""
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:targetApi="o" app:layout_constraintHorizontal_bias="1.0" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"/>
+
+    <EditText
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/signInUsername2"
+            android:hint="Begin"
+            android:autofillHints=""
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:targetApi="o" app:layout_constraintHorizontal_bias="1.0"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/signInUsername" app:layout_constraintVertical_bias="0.0"
+            android:layout_marginEnd="8dp"/>
+    <EditText
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/signInUsername3"
+            android:hint="Longitude:"
+            android:autofillHints=""
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:targetApi="o" app:layout_constraintHorizontal_bias="1.0" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/signInUsername5" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintVertical_bias="0.0"/>
+    <EditText
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/signInUsername4"
+            android:hint="End:"
+            android:autofillHints=""
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:targetApi="o" app:layout_constraintHorizontal_bias="1.0"
+            android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/signInUsername2" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.0"/>
+    <EditText
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/signInUsername5"
+            android:hint="Latitude"
+            android:autofillHints=""
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:targetApi="o" app:layout_constraintHorizontal_bias="1.0" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/signInUsername4" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintVertical_bias="0.0"/>
+
+    <Switch
+            android:text="public"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView5" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            android:checked="true"
+            android:id="@+id/playlistAddSwitchPublic"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="32dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintHorizontal_bias="1.0" android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/signInUsername3"
+            app:layout_constraintVertical_bias="0.0"/>
+    <Button
+            android:text="Del"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/button2"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.0"/>
+    <Button
+            android:text="Update User"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button2" android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/playlistAddSwitchPublic" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginStart="8dp" app:layout_constraintVertical_bias="0.0"/>
+    <TextView
+            android:text="Name:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView5" app:layout_constraintEnd_toStartOf="@+id/signInUsername"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@+id/signInUsername"
+            app:layout_constraintBottom_toBottomOf="@+id/signInUsername" app:layout_constraintHorizontal_bias="1.0"/>
+    <TextView
+            android:text="begin:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView7" app:layout_constraintEnd_toStartOf="@+id/signInUsername2"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toTopOf="@+id/signInUsername2"
+            app:layout_constraintBottom_toBottomOf="@+id/signInUsername2" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="1.0"/>
+    <TextView
+            android:text="end:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView10" app:layout_constraintEnd_toStartOf="@+id/signInUsername4"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toTopOf="@+id/signInUsername4"
+            app:layout_constraintBottom_toBottomOf="@+id/signInUsername4" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="1.0"/>
+    <TextView
+            android:text="latitude:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView11" app:layout_constraintEnd_toStartOf="@+id/signInUsername5"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toTopOf="@+id/signInUsername5"
+            app:layout_constraintBottom_toBottomOf="@+id/signInUsername5" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="1.0"/>
+    <TextView
+            android:text="longitude:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView12" app:layout_constraintEnd_toStartOf="@+id/signInUsername3"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toTopOf="@+id/signInUsername3"
+            app:layout_constraintBottom_toBottomOf="@+id/signInUsername3" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="1.0"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
