@@ -33,7 +33,7 @@ class PlaylistAddFragment : Fragment() {
         playlistAddBtnNew.setOnClickListener {
 
             val inputName = playlistAddNameEdit.text.toString()
-            val public = playlistAddSwitchPublic.isChecked
+            val public = musicTrackVoteEditorPublicSwitch.isChecked
 
             Session.getId(activity!!.application)?.let {
                 playRepo.new(it, inputName, public).observe(this, Observer {

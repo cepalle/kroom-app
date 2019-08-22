@@ -101,7 +101,7 @@ class UserSignInFragment : Fragment() {
             .makeText(context, "Login your account...", Toast.LENGTH_SHORT)
             .show()
 
-        model.signIn(signInUsername.text.toString(), signInPassword.text.toString())
+        model.signIn(musicTrackVoteEventEditorInputName.text.toString(), signInPassword.text.toString())
             .observe(this, Observer { observe(it) })
     }
 
@@ -146,7 +146,7 @@ class UserSignInFragment : Fragment() {
 
     private fun getFieldByName(name: String): EditText? {
         when (name) {
-            "pass" -> return signInUsername
+            "pass" -> return musicTrackVoteEventEditorInputName
             "userName" -> return signInPassword
         }
         return null
@@ -154,7 +154,7 @@ class UserSignInFragment : Fragment() {
 
     private fun clearFields() {
         signInPassword.error = null
-        signInUsername.error = null
+        musicTrackVoteEventEditorInputName.error = null
     }
 
     companion object {
