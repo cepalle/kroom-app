@@ -23,6 +23,12 @@ mutation TrackVoteEventUpdateMutation(
     trackVoteEvent {
       name
       id
+      latitude
+      longitude
+      scheduleEnd
+      scheduleBegin
+      locAndSchRestriction
+      public
     }
     errors {
       field

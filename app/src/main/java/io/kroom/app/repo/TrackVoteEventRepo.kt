@@ -36,7 +36,7 @@ class TrackVoteEventRepo(private val client: ApolloClient) {
         return data
     }
 
-    fun getTrackVoteEventById(
+    fun byId(
         id: Int
     ): LiveData<Result<TrackVoteEventByIdQuery.Data>> {
         val data: MutableLiveData<Result<TrackVoteEventByIdQuery.Data>> =
@@ -154,6 +154,37 @@ class TrackVoteEventRepo(private val client: ApolloClient) {
         client.mutate(
             TrackVoteEventDelMutation.builder()
                 .id(eventId)
+                .build()
+        ).enqueue(CallBackHandler { data.postValue(it) })
+
+        return data
+    }
+
+    fun update(
+        eventId: Int,
+        userIdMaster: Int,
+        name: String,
+        publc: Boolean,
+        locAndSchRestriction: Boolean,
+        scheduleBegin: String,
+        scheduleEnd: String,
+        latitude: Double,
+        longitude: Double
+    ): LiveData<Result<TrackVoteEventUpdateMutation.Data>> {
+        val data: MutableLiveData<Result<TrackVoteEventUpdateMutation.Data>> =
+            MutableLiveData()
+
+        client.mutate(
+            TrackVoteEventUpdateMutation.builder()
+                .eventId(eventId)
+                .userIdMaster(userIdMaster)
+                .name(name)
+                .publc(publc)
+                .locAndSchRestriction(locAndSchRestriction)
+                .scheduleBegin(scheduleBegin)
+                .scheduleEnd(scheduleEnd)
+                .latitude(latitude)
+                .longitude(longitude)
                 .build()
         ).enqueue(CallBackHandler { data.postValue(it) })
 

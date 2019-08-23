@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import io.kroom.app.R
+import io.kroom.app.view.activitymain.trackvoteevent.activitymusictrackvote.activitymusictrackvoteuser.MusicTrackVoteUserActivity
 import kotlinx.android.synthetic.main.fragment_music_track_vote_editor.*
 
 class MusicTrackVoteEditorFragement(private val eventId: Int) : Fragment() {
@@ -48,14 +49,24 @@ class MusicTrackVoteEditorFragement(private val eventId: Int) : Fragment() {
         }
 
         musicTrackVoteEventEditorButtonUser.setOnClickListener {
-            val intent = Intent(activity, MusicTrackVoteActivity::class.java).apply {
+            val intent = Intent(activity, MusicTrackVoteUserActivity::class.java).apply {
                 putExtra(EXTRA_EVENT_ID, eventId)
             }
             startActivity(intent)
         }
 
         musicTrackVoteEventEditorButtonUpdate.setOnClickListener {
-            // TODO
+            model.update(
+                eventId,
+                1,
+                musicTrackVoteEventEditorInputName.text.toString(),
+                musicTrackVoteEditorPublicSwitch.isChecked,
+                musicTrackVoteEditorLocAndSchRestrictionSwitch.isChecked,
+                musicTrackVoteEditorInputBegin.text.toString(),
+                musicTrackVoteEditorInputEnd.text.toString(),
+                musicTrackvoteEditorInputLatitude.text.toString().toDoubleOrNull() ?: 0.0,
+                musicTrackVoteEditorInputLongitude.text.toString().toDoubleOrNull() ?: 0.0
+            )
         }
 
     }

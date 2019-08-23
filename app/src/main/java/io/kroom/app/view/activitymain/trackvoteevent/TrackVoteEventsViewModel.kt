@@ -19,7 +19,7 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
     private val trackVoteEventRepo = TrackVoteEventRepo(client)
 
     fun getTrackVoteEventById(id: Int): LiveData<TrackVoteEvent?> {
-        return map(trackVoteEventRepo.getTrackVoteEventById(id)) {
+        return map(trackVoteEventRepo.byId(id)) {
             it.onSuccess {
                 return@map it.TrackVoteEventById().trackVoteEvent().let {
                     TrackVoteEvent(
