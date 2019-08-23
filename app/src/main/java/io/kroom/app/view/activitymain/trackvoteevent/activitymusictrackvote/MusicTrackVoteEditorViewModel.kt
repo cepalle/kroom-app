@@ -1,25 +1,83 @@
 package io.kroom.app.view.activitymain.trackvoteevent.activitymusictrackvote
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.*
 import io.kroom.app.graphql.TrackVoteEventDelMutation
 import io.kroom.app.repo.TrackVoteEventRepo
 import io.kroom.app.util.Session
 import io.kroom.app.webservice.GraphClient
 
-class MusicTrackVoteEditorViewModel(app: Application) : AndroidViewModel(app) {
+class MusicTrackVoteEditorViewModelFactory(
+    private val mApplication: Application,
+    private val mParam: Int
+) :
+    ViewModelProvider.Factory {
+
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return MusicTrackVoteEditorViewModel(mApplication, mParam) as T
+    }
+}
+
+data class InputMusicEditor(
+    val name: String,
+    val begin: String,
+    val end: String,
+    val latitude: Double,
+    val longitude: Double,
+    val public: Boolean,
+    val locAndSchRestriction: Boolean
+)
+
+class MusicTrackVoteEditorViewModel(app: Application, private val eventId: Int) :
+    AndroidViewModel(app) {
     private val client = GraphClient {
         Session.getToken(getApplication())
     }.client
 
     private val repoTrack = TrackVoteEventRepo(client)
 
-    // fetch on init
-    // create model
+    private val inputMusicEditor: MediatorLiveData<InputMusicEditor> = MediatorLiveData()
+    private val errorMessage: MediatorLiveData<String> = MediatorLiveData()
+
+    init {
+        inputMusicEditor.addSource(repoTrack.getTrackVoteEventById(eventId)) {
+            it.onFailure {
+                errorMessage.postValue(it.message)
+                inputMusicEditor.postValue(null)
+            }
+            it.onSuccess {
+
+                if (it.TrackVoteEventById().errors().isNotEmpty()) {
+                    errorMessage.postValue(it.TrackVoteEventById().errors()[0].messages()[0])
+                } else {
+                    val info = it.TrackVoteEventById().trackVoteEvent()
+                    info ?: return@addSource
+                    inputMusicEditor.postValue(
+                        InputMusicEditor(
+                            info.name(),
+                            info.scheduleBegin() ?: return@addSource,
+                            info.scheduleEnd() ?: return@addSource,
+                            info.latitude() ?: return@addSource,
+                            info.longitude() ?: return@addSource,
+                            info.public_(),
+                            info.locAndSchRestriction()
+                        )
+                    )
+                }
+            }
+        }
+    }
 
     fun delTrackVote(eventId: Int): LiveData<Result<TrackVoteEventDelMutation.Data>> {
         return repoTrack.del(eventId)
+    }
+
+    fun getErrorMsg(): LiveData<String> {
+        return errorMessage
+    }
+
+    fun getInputMusicEditor(): LiveData<InputMusicEditor> {
+        return inputMusicEditor
     }
 
 }

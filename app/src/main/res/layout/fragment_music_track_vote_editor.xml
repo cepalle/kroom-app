@@ -46,7 +46,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:targetApi="o" app:layout_constraintHorizontal_bias="1.0" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/musicTrackvoteEditorLatitude" android:layout_marginBottom="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/musicTrackvoteEditorInputLatitude" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintVertical_bias="0.0"/>
     <EditText
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
-            android:id="@+id/musicTrackvoteEditorLatitude"
+            android:id="@+id/musicTrackvoteEditorInputLatitude"
             android:hint="Latitude"
             android:autofillHints=""
             app:layout_constraintStart_toStartOf="parent"
@@ -79,17 +79,39 @@
             app:layout_constraintVertical_bias="0.0"/>
 
     <Switch
-            android:text="public"
+            android:id="@+id/musicTrackVoteEditorPublicSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:id="@+id/musicTrackVoteEditorPublicSwitch"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="32dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
-            app:layout_constraintHorizontal_bias="1.0" android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/musicTrackVoteEditorInputLongitude"
-            app:layout_constraintVertical_bias="0.0"/>
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:checked="true"
+            android:text="public"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/musicTrackVoteEditorLocAndSchRestrictionSwitch"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/musicTrackVoteEditorInputLongitude"
+            app:layout_constraintVertical_bias="0.0" />
+
+    <Switch
+            android:id="@+id/musicTrackVoteEditorLocAndSchRestrictionSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="8dp"
+            android:checked="true"
+            android:text="locAndSchRestriction"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/musicTrackVoteEditorInputLongitude"
+            app:layout_constraintVertical_bias="0.0" />
+
     <Button
             android:text="Del"
             android:layout_width="wrap_content"
@@ -144,10 +166,10 @@
             android:text="latitude:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView11" app:layout_constraintEnd_toStartOf="@+id/musicTrackvoteEditorLatitude"
+            android:id="@+id/textView11" app:layout_constraintEnd_toStartOf="@+id/musicTrackvoteEditorInputLatitude"
             android:layout_marginEnd="16dp"
-            app:layout_constraintTop_toTopOf="@+id/musicTrackvoteEditorLatitude"
-            app:layout_constraintBottom_toBottomOf="@+id/musicTrackvoteEditorLatitude" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/musicTrackvoteEditorInputLatitude"
+            app:layout_constraintBottom_toBottomOf="@+id/musicTrackvoteEditorInputLatitude" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="1.0"/>
     <TextView
             android:text="longitude:"

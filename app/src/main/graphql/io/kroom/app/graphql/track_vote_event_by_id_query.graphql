@@ -1,26 +1,31 @@
-query TrackVoteEventByIdQuery($id: Int!){
-    TrackVoteEventById(id: $id){
-        trackVoteEvent{
+query TrackVoteEventByIdQuery($id: Int!) {
+    TrackVoteEventById(id: $id) {
+        trackVoteEvent {
             id
-            userMaster{
+            userMaster {
                 userName
             }
             name
             public
-            currentTrack{
+            locAndSchRestriction
+            currentTrack {
                 id
                 title
-                album{coverSmall
+                album {
+                    coverSmall
                 }
             }
-            trackWithVote{
-                track{
+            trackWithVote {
+                track {
                     id
-                    album{coverSmall
+                    album {
+                        coverSmall
                     }
                     title
-                    artist{id
-                        name}
+                    artist {
+                        id
+                        name
+                    }
                 }
                 score
                 nb_vote_up
@@ -30,9 +35,11 @@ query TrackVoteEventByIdQuery($id: Int!){
             scheduleEnd
             latitude
             longitude
-            userInvited{id
+            userInvited {
+                id
                 userName
-                email}
+                email
+            }
         }
         errors {
             field
@@ -40,4 +47,3 @@ query TrackVoteEventByIdQuery($id: Int!){
         }
     }
 }
-
