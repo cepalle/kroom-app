@@ -191,4 +191,39 @@ class TrackVoteEventRepo(private val client: ApolloClient) {
         return data
     }
 
+    fun addUser(
+        eventId: Int,
+        userId: Int
+    ): LiveData<Result<TrackVoteEventAddUserMutation.Data>> {
+        val data: MutableLiveData<Result<TrackVoteEventAddUserMutation.Data>> =
+            MutableLiveData()
+
+        client.mutate(
+            TrackVoteEventAddUserMutation.builder()
+                .eventId(eventId)
+                .userId(userId)
+                .build()
+        ).enqueue(CallBackHandler { data.postValue(it) })
+
+        return data
+    }
+
+    fun delUser(
+        eventId: Int,
+        userId: Int
+    ): LiveData<Result<TrackVoteEventDelUserMutation.Data>> {
+        val data: MutableLiveData<Result<TrackVoteEventDelUserMutation.Data>> =
+            MutableLiveData()
+
+        client.mutate(
+            TrackVoteEventDelUserMutation.builder()
+                .eventId(eventId)
+                .userId(userId)
+                .build()
+        ).enqueue(CallBackHandler { data.postValue(it) })
+
+        return data
+    }
+
+
 }
