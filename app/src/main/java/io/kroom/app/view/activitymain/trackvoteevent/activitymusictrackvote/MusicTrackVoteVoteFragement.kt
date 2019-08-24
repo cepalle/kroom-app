@@ -30,12 +30,11 @@ class MusicTrackVoteVoteFragement(val eventId:Int) : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Music tracks vote"
         val view: View? = inflater.inflate(R.layout.fragment_music_track_vote_event_public, container, false)
-        recyclerViewTrackVote = view?.findViewById(R.id.musicTrackVoteList)
+        recyclerViewTrackVote = view?.findViewById(R.id.listTrackVoteEvent)
 
         if (adapterTrackVote != null) {
             adapterTrackVote!!.setTrackList(trackVoteList)
         }
-
         return view
     }
 
@@ -50,15 +49,19 @@ class MusicTrackVoteVoteFragement(val eventId:Int) : Fragment() {
           activity?.let {
                trackVoteViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)
                 trackVoteViewModel.getTrackVoteEventById(eventId).observe(viewLifecycleOwner, Observer {
-                    it.let {
-                        trackVoteEvent  = it
 
-                        trackVoteList = trackVoteEvent?.trackWithVote as List<TrackWithVote>
+                  //  var i : Int = 0
+
+                  //  while (i <  it!!.trackWithVote?.size - 1)
+                   // {
+                        trackVoteList.toList()
+
+                   //     }
 
                            /* .let { TrackModel(
                             it.id()
                         ) }*/
-                    }
+
                     //  eventsPublicViewModel.getSelectedTrackVoteEvent()?.postValue(eventItem)
                     adapterTrackVote?.setTrackList(trackVoteList)
                 })
