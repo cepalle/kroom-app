@@ -16,14 +16,14 @@ import io.kroom.app.view.activitymain.trackvoteevent.model.TrackVoteEvent
 import io.kroom.app.view.activitymain.trackvoteevent.model.TrackWithVote
 
 
-class MusicTrackVoteVoteFragement(val eventId:Int) : Fragment() {
-  /*  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_music_track_vote_vote, container, false)
-    }*/
-  private var adapterTrackVote: RecyclerViewAdapterMusicTrackVote? = null
+class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
+    /*  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+          return inflater.inflate(R.layout.fragment_music_track_vote_vote, container, false)
+      }*/
+    private var adapterTrackVote: RecyclerViewAdapterMusicTrackVote? = null
     private var recyclerViewTrackVote: RecyclerView? = null
-    private var trackVoteList: List<TrackWithVote> = listOf()
-    lateinit var trackItem: TrackModel
+    private val trackVoteList: MutableList<TrackWithVote>? = null
+    lateinit var trackItem: TrackWithVote
     private var trackVoteEvent: TrackVoteEvent? = null
     lateinit var trackVoteViewModel: TrackVoteEventsViewModel
 
@@ -33,42 +33,46 @@ class MusicTrackVoteVoteFragement(val eventId:Int) : Fragment() {
         recyclerViewTrackVote = view?.findViewById(R.id.listTrackVoteEvent)
 
         if (adapterTrackVote != null) {
-            adapterTrackVote!!.setTrackList(trackVoteList)
+            if (trackVoteList != null) {
+                adapterTrackVote!!.setTrackList(trackVoteList)
+            }
         }
         return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        recyclerViewTrackVote?.setLayoutManager(context?.let { CustomLayoutManager(it) })
+        recyclerViewTrackVote?.layoutManager = (context?.let { CustomLayoutManager(it) })
         recyclerViewTrackVote?.setHasFixedSize(true)
-        adapterTrackVote = RecyclerViewAdapterMusicTrackVote(trackVoteList,
-            { trackItem: TrackModel -> OnTrackVoteSelected(trackItem) })
-        recyclerViewTrackVote?.setAdapter(adapterTrackVote)
-
-          activity?.let {
-               trackVoteViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)
-                trackVoteViewModel.getTrackVoteEventById(eventId).observe(viewLifecycleOwner, Observer {
-
-                  //  var i : Int = 0
-
-                  //  while (i <  it!!.trackWithVote?.size - 1)
-                   // {
-                        trackVoteList.toList()
-
-                   //     }
-
-                           /* .let { TrackModel(
-                            it.id()
-                        ) }*/
-
-                    //  eventsPublicViewModel.getSelectedTrackVoteEvent()?.postValue(eventItem)
-                    adapterTrackVote?.setTrackList(trackVoteList)
-                })
-                //    Toast.makeText(this.context, "click", Toast.LENGTH_SHORT).show()
+        adapterTrackVote = trackVoteList?.let {
+            RecyclerViewAdapterMusicTrackVote(it){
+                OnTrackVoteSelected(it)
             }
+        }
+        recyclerViewTrackVote?.adapter = adapterTrackVote
+
+        activity?.let {
+            trackVoteViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)
+            trackVoteViewModel.getTrackVoteEventById(eventId).observe(viewLifecycleOwner, Observer {
+                trackVoteEvent = it
+                trackVoteList?.clear()
+                trackVoteEvent?.trackWithVote?.forEach {
+                    if (it != null) {
+                        trackVoteList?.add(it)
+                    }
+                }
+                //  eventsPublicViewModel.getSelectedTrackVoteEvent()?.postValue(eventItem)
+                if (trackVoteList != null) {
+                    adapterTrackVote?.setTrackList(trackVoteList)
+                }
+                adapterTrackVote?.notifyDataSetChanged()
+            })
+        }
     }
-    fun OnTrackVoteSelected(trackVoteItem: TrackModel) {
+
+    fun OnTrackVoteSelected(trackVoteItem: TrackWithVote) {
         trackItem = trackVoteItem
     }
 }
+
+
