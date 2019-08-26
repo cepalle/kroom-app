@@ -1,8 +1,6 @@
 package io.kroom.app.repo
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.ApolloClient
@@ -11,7 +9,7 @@ import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import io.kroom.app.graphql.*
 import kotlin.Result.Companion.failure
-import kotlin.coroutines.coroutineContext
+import kotlin.Result.Companion.success
 
 class TrackVoteEventRepo(private val client: ApolloClient) {
 
@@ -50,43 +48,46 @@ class TrackVoteEventRepo(private val client: ApolloClient) {
         return data
     }
 
-    /*  data class getTracVoteEventById(
-          val trackVoteEventById: LiveData<Result<TrackVoteEventByIdQuery.Data>>,
-          val subTrackVote: ApolloSubscriptionCall<TrackVoteEventByIdQuery.Data>
-      )
-      fun subById(
-          trackwithVoteId : Int
-      ): getTracVoteEventById{
-          val data: MutableLiveData<Result<TrackVoteEventByIdQuery.Data>> = MutableLiveData()
-          val subTrackVote: ApolloSubscriptionCall<TrackVoteEventByIdQuery.Data> = client.subscribe(
-              TrackVoteEventByIdQuery.builder()
-                  .id(trackwithVoteId)
-                  .build()
-          )
-          subTrackVote.execute(object : ApolloSubscriptionCall.Callback<TrackVoteEventByIdQuery.Data>{
-              override fun onResponse(response: Response<TrackVoteEventByIdQuery.Data>){
-                  data.postValue(
-                      if (response.errors().isEmpty()){
-                          val dataResponse = response.data()
-                          if (dataResponse != null) Result.success(dataResponse)
-                          else failure(Throwable("Empty Response"))
-                      } else failure(Throwable(response.errors()[0].message()))
-                  )
-              }
-              override fun onConnected() {}
-              override fun onTerminated() {}
-              override fun onCompleted() {}
+    data class trackVoteEventSubRes(
+        val lData: LiveData<Result<TrackVoteEventByIdSubscription.Data>>,
+        val subCall: ApolloSubscriptionCall<TrackVoteEventByIdSubscription.Data>
+    )
 
-              override fun onFailure(e: ApolloException) {
-                  Log.e("ERROR", e.toString())
-                  data.postValue(failure(e))
-              }
+    fun subById(
+        eventId: Int
+    ): trackVoteEventSubRes {
+        val data: MutableLiveData<Result<TrackVoteEventByIdSubscription.Data>> =
+            MutableLiveData()
 
-          })
+        val subCall: ApolloSubscriptionCall<TrackVoteEventByIdSubscription.Data> = client.subscribe(
+            TrackVoteEventByIdSubscription.builder()
+                .id(eventId)
+                .build()
+        )
+        subCall.execute(object : ApolloSubscriptionCall.Callback<TrackVoteEventByIdSubscription.Data> {
+            override fun onResponse(response: Response<TrackVoteEventByIdSubscription.Data>) {
+                data.postValue(
+                    if (response.errors().isEmpty()) {
+                        val dataRep = response.data()
+                        if (dataRep != null) success(dataRep)
+                        else failure(Throwable("Empty Response"))
+                    } else failure(Throwable(response.errors()[0].message()))
+                )
+            }
 
-          return getTracVoteEventById(data,subTrackVote)
-      }*/
+            override fun onConnected() {}
+            override fun onTerminated() {}
+            override fun onCompleted() {}
 
+            override fun onFailure(e: ApolloException) {
+                Log.e("ERROR", e.toString())
+                data.postValue(failure(e))
+            }
+
+        })
+
+        return trackVoteEventSubRes(data, subCall)
+    }
 
     fun getTrackVoteEventByUserId(
         userId: Int
@@ -224,6 +225,5 @@ class TrackVoteEventRepo(private val client: ApolloClient) {
 
         return data
     }
-
 
 }
