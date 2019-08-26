@@ -35,6 +35,7 @@ class MusicTrackVoteEditorFragement(private val eventId: Int) : Fragment() {
         })
 
         model.getInputMusicEditor().observe(this, Observer {
+            it ?: return@Observer
             musicTrackVoteEventEditorInputName.setText(it.name)
             musicTrackVoteEditorInputBegin.setText(it.begin)
             musicTrackVoteEditorInputEnd.setText(it.end)

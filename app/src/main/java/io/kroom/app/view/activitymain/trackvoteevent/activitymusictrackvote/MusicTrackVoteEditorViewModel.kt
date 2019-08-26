@@ -55,10 +55,10 @@ class MusicTrackVoteEditorViewModel(app: Application, private val eventId: Int) 
                     inputMusicEditor.postValue(
                         InputMusicEditor(
                             info.name(),
-                            info.scheduleBegin() ?: return@addSource,
-                            info.scheduleEnd() ?: return@addSource,
-                            info.latitude() ?: return@addSource,
-                            info.longitude() ?: return@addSource,
+                            info.scheduleBegin() ?: "None",
+                            info.scheduleEnd() ?: "None",
+                            info.latitude() ?: 0.0,
+                            info.longitude() ?: 0.0,
                             info.public_(),
                             info.locAndSchRestriction()
                         )
