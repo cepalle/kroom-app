@@ -12,8 +12,8 @@ import java.util.concurrent.TimeUnit
 
 // private const val baseUrl = "https://d932c9a7.ngrok.io/graphql"
 // private const val subscriptionBaseUrl = "ws://d932c9a7.ngrok.io/graphql"
-private const val baseUrl = "http://192.168.168.37:8080/graphql"
-private const val subscriptionBaseUrl = "ws://192.168.168.37/graphql"
+private const val baseUrl = "http://192.168.43.217:8080/graphql"
+private const val subscriptionBaseUrl = "ws://192.168.43.217/graphql"
 
 class GraphClient(private val getToken: () -> String?) {
 
