@@ -31,19 +31,24 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
         val view: View? = inflater.inflate(R.layout.fragment_music_track_vote_event_vote, container, false)
         recyclerViewTrackVote = view?.findViewById(R.id.listTrackVoteEvent)
 
-        music_track_vote_button_search_add_track.setOnClickListener {
-            val musicTrackVoteSearchAddActivityIntent = Intent(activity, MusciTrackVoteSearchAddTrackActivity::class.java).apply {
-                putExtra(EXTRA_EVENT_ID, eventId)
-            }
-            startActivity(musicTrackVoteSearchAddActivityIntent)
-        }
-
         if (adapterTrackVote != null) {
             if (trackVoteList != null) {
                 adapterTrackVote!!.setTrackList(trackVoteList)
             }
         }
+
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        music_track_vote_button_search_add_track.setOnClickListener {
+        val musicTrackVoteSearchAddActivityIntent = Intent(activity, MusciTrackVoteSearchAddTrackActivity::class.java).apply {
+            putExtra(EXTRA_EVENT_ID, eventId)
+        }
+        startActivity(musicTrackVoteSearchAddActivityIntent)
+    }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

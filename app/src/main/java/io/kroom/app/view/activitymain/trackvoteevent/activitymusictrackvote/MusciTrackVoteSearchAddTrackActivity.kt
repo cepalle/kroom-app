@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import io.kroom.app.R
 
 
-class MusciTrackVoteSearchAddTrackActivity(val eventId:Int) : AppCompatActivity()  {
+class MusciTrackVoteSearchAddTrackActivity : AppCompatActivity()  {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
