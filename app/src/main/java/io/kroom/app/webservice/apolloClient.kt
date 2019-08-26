@@ -9,7 +9,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Response
 import java.util.concurrent.TimeUnit
 
-// /!\ socker need port as well
+// /!\ socket need port as well
 // private const val baseUrl = "https://d932c9a7.ngrok.io/graphql"
 // private const val subscriptionBaseUrl = "ws://d932c9a7.ngrok.io/graphql"
 private const val baseUrl = "http://192.168.43.37:8080/graphql"

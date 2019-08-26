@@ -46,7 +46,19 @@ class MusicTrackVoteEditorFragement(private val eventId: Int) : Fragment() {
         })
 
         musicTrackVoteEventEditorButtonDel.setOnClickListener {
-            model.delTrackVote(eventId)
+            model.delTrackVote(eventId).observe(this, Observer {
+                it.onFailure {
+                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                }
+                it.onSuccess {
+                    if (it.TrackVoteEventDel().errors().isNotEmpty()) {
+                        Toast.makeText(context, it.TrackVoteEventDel().errors()[0].messages()[0], Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        activity?.finish()
+                    }
+                }
+            })
         }
 
         musicTrackVoteEventEditorButtonUser.setOnClickListener {
