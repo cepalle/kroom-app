@@ -2,8 +2,11 @@ package io.kroom.app.view.activitymain.trackvoteevent
 
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.lifecycle.Transformations.map
+import io.kroom.app.graphql.DeezerSearchQuery
+import io.kroom.app.repo.DeezerRepo
 import io.kroom.app.repo.TrackVoteEventRepo
 import io.kroom.app.util.Session
 import io.kroom.app.view.activitymain.trackvoteevent.model.*
@@ -15,7 +18,13 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
     private val client = GraphClient {
         Session.getToken(getApplication())
     }.client
+
     private val trackVoteEventRepo = TrackVoteEventRepo(client)
+    private val deezerSearchRepo = DeezerRepo(client)
+    private val autoCompletion: MediatorLiveData<List<TrackDictionaryModel>> = MediatorLiveData()
+    private val errorMessage: MediatorLiveData<String> = MediatorLiveData()
+    private val cacheAutoComplet: MutableMap<String, Int> = mutableMapOf()
+
 
     fun getTrackVoteEventById(id: Int): LiveData<TrackVoteEvent?> {
         return map(trackVoteEventRepo.getTrackVoteEventById(id)) {
@@ -39,9 +48,9 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
                                     TrackModel(
                                         it.id(),
                                         it.title(),
-                                        it.album()?.coverSmall()?: return@map null,
+                                        it.album()?.coverSmall() ?: return@map null,
                                         2,
-                                    ""
+                                        ""
                                     )
                                 },
                                 it.score(),
@@ -126,5 +135,26 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
             return@map listOf<EventModel>()
         }
     }
+
+    fun updateTrackDictionary(str: String) {
+        autoCompletion.addSource(deezerSearchRepo.search(str)) { r ->
+            r.onFailure {
+                errorMessage.postValue(it.message)
+                autoCompletion.postValue(null)
+            }
+            r.onSuccess {
+                autoCompletion.postValue(
+                    it.DeezerSearch().search()?.mapNotNull {
+                        TrackDictionaryModel("${it.title()} / ${it.artistName()}", it.id())
+                    }?.map {
+                        cacheAutoComplet[it.str] = it.id
+                        it
+                    }
+                )
+            }
+        }
+    }
+
+
 
 }

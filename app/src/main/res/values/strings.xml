@@ -58,18 +58,21 @@
     <string name="new_event_name">Name</string>
     <string name="new_event_public_Private">public</string>
     <string name="create_an_event">Create an Event</string>
-    <string name="video_container">videoContainer</string>
-    <string name="add_existing_playlist">Add Existing Playlist</string>
     <string name="add_new_event">Add New Event</string>
     <string name="new_event_public_private">public</string>
     <string name="event_tab_public">public</string>
     <string name="event_tab_private">private</string>
     <string name="event_tab_add">add</string>
+
+    <!-- row_item_music_track_vote-->
+    <string name="cover_container">coverContainer</string>
+    <string name="add_existing_playlist">Add Existing Playlist</string>
     <string name="public_music_track_vote_editor">Public</string>
     <string name="private_music_track_vote_editor">Private</string>
     <string name="add_music_track_vote_editor">Add</string>
     <string name="search_track_vote">search</string>
     <string name="music_track_vote_add">add</string>
+    <string name="infoTrackSearch">Artist name or track title</string>
 
     <string-array name="array_privacy">
         <item>Private</item>
