@@ -1,8 +1,11 @@
 package io.kroom.app.view.activitymain.user.activityuserfriends.activityfriendsmanagement
 
+import android.annotation.TargetApi
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -77,6 +80,12 @@ class UserFriendsManagementActivity : AppCompatActivity() {
                 }
             }
         }
+        disableAutofill()
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private fun disableAutofill() {
+        window.decorView.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
     }
 
     private fun updateAutoCompletion(ls: List<Pair<String, Int>>?) {

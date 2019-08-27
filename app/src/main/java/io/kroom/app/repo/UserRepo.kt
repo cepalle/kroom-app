@@ -1,6 +1,5 @@
 package io.kroom.app.repo
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.apollographql.apollo.ApolloClient
@@ -108,6 +107,57 @@ class UserRepo(private val client: ApolloClient) {
                 .friendId(friendId)
                 .build()
         ).enqueue(CallBackHandler { data.postValue(it) })
+
+        return data
+    }
+
+    fun addGenre(
+        userId: Int,
+        genreId: Int
+    ): LiveData<Result<UserAddMusicalPreferenceMutation.Data>> {
+        val data: MutableLiveData<Result<UserAddMusicalPreferenceMutation.Data>> =
+            MutableLiveData()
+
+        client.mutate(
+            UserAddMusicalPreferenceMutation.builder()
+                .userId(userId)
+                .genreId(genreId)
+                .build()
+        ).enqueue(CallBackHandler { data.postValue(it) })
+
+        return data
+    }
+
+    fun deleteGenre(
+        userId: Int,
+        genreId: Int
+    ): LiveData<Result<UserDelMusicalPreferenceMutation.Data>> {
+        val data: MutableLiveData<Result<UserDelMusicalPreferenceMutation.Data>> =
+            MutableLiveData()
+
+        client.mutate(
+            UserDelMusicalPreferenceMutation.builder()
+                .userId(userId)
+                .genreId(genreId)
+                .build()
+        ).enqueue(CallBackHandler { data.postValue(it) })
+
+        return data
+    }
+
+    fun byIdGenres(
+        id: Int
+    ): LiveData<Result<UserGetMusicalPreferencesQuery.Data>> {
+        val data: MutableLiveData<Result<UserGetMusicalPreferencesQuery.Data>> =
+            MutableLiveData()
+
+        client.query(
+            UserGetMusicalPreferencesQuery.builder()
+                .id(id)
+                .build()
+        ).enqueue(CallBackHandler {
+            data.postValue(it)
+        })
 
         return data
     }

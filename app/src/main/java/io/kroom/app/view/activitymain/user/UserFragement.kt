@@ -16,8 +16,7 @@ import com.deezer.sdk.network.connect.SessionStore
 import io.kroom.app.view.activitymain.MainActivity
 import io.kroom.app.view.activitymain.user.activitydeezersignin.DeezerSigninActivity
 import io.kroom.app.view.activitymain.user.activityuserfriends.UserFriendsActivity
-import io.kroom.app.view.activitymain.user.activityuserfriends.activityfriendsmanagement.UserFriendsManagementActivity
-import io.kroom.app.view.activitymain.user.activityusermusicpreference.MusicPreferenceActivity
+import io.kroom.app.view.activitymain.user.activityusermusicpreference.UserMusicPreferencesActivity
 import kotlinx.android.synthetic.main.fragment_user.*
 
 
@@ -45,7 +44,7 @@ class UserFragement : Fragment() {
 
 
         userPreferenceMusical.setOnClickListener {
-            val intent = Intent(context, MusicPreferenceActivity::class.java)
+            val intent = Intent(context, UserMusicPreferencesActivity::class.java)
             startActivity(intent)
         }
 
