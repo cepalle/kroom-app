@@ -68,6 +68,8 @@
     <string name="public_music_track_vote_editor">Public</string>
     <string name="private_music_track_vote_editor">Private</string>
     <string name="add_music_track_vote_editor">Add</string>
+    <string name="search_track_vote">search</string>
+    <string name="music_track_vote_add">add</string>
 
     <string-array name="array_privacy">
         <item>Private</item>
