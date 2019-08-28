@@ -2,11 +2,15 @@ package io.kroom.app.view.activitymain.trackvoteevent
 
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.lifecycle.Transformations.map
+import com.apollographql.apollo.ApolloSubscriptionCall
 import io.kroom.app.graphql.DeezerSearchQuery
+import io.kroom.app.graphql.PlayListEditorByIdSubscription
 import io.kroom.app.graphql.TrackVoteEventAddOrUpdateVoteMutation
+import io.kroom.app.graphql.TrackVoteEventByIdSubscription
 import io.kroom.app.repo.DeezerRepo
 import io.kroom.app.repo.TrackVoteEventRepo
 import io.kroom.app.util.Session
@@ -25,8 +29,9 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
     private val autoCompletion: MediatorLiveData<List<TrackDictionaryModel>> = MediatorLiveData()
     private val errorMessage: MediatorLiveData<String> = MediatorLiveData()
     private val cacheAutoComplet: MutableMap<String, Int> = mutableMapOf()
+    private var sCall: ApolloSubscriptionCall<TrackVoteEventByIdSubscription.Data>? = null
 
-
+    /*
     fun getTrackVoteEventById(id: Int): LiveData<TrackVoteEvent?> {
         return map(trackVoteEventRepo.byId(id)) {
             it.onSuccess {
@@ -80,7 +85,72 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
             return@map null
         }
     }
+    */
 
+    override fun onCleared() {
+        super.onCleared()
+        sCall?.cancel()
+    }
+
+    fun subTrackVoteByid(id: Int): LiveData<TrackVoteEvent?> {
+        sCall?.cancel()
+        val (live, sub) = trackVoteEventRepo.subById(id)
+        sCall = sub
+        return map(live) {
+            it.onSuccess {
+                return@map it.TrackVoteEventById().trackVoteEvent().let {
+                    Log.e("SUB", it.toString())
+
+                    TrackVoteEvent(
+                        it?.id() ?: return@map null,
+                        it.userMaster()?.userName() ?: return@map null,
+                        it.name(),
+                        it.public_(),
+                        it.currentTrack().let {
+                            if (it == null) null
+                            else CurrentTrack(
+                                it.id(),
+                                it.title(),
+                                it.album()!!.coverMedium()
+                            )
+                        },
+                        it.trackWithVote()!!.map {
+                            TrackWithVote(
+                                it.track().let {
+                                    TrackModel(
+                                        it.id(),
+                                        it.title(),
+                                        it.album()?.coverSmall() ?: return@map null,
+                                        2,
+                                        ""
+                                    )
+                                },
+                                it.score(),
+                                it.nb_vote_up(),
+                                it.nb_vote_down()
+                            )
+                        },
+                        0,
+                        0,
+                        0F,
+                        0F,
+                        it.userInvited()!!.map {
+                            User(
+                                it.id()!!,
+                                it.userName(),
+                                it.email()!!
+                            )
+                        }
+                    )
+                }
+            }
+            it.onFailure {
+                errorMessage.postValue(it.message)
+                return@map null
+            }
+            return@map null
+        }
+    }
 
     fun getTrackVoteEventPublicList(): LiveData<List<EventModel>> {
         return map(trackVoteEventRepo.getTrackVoteEventsPublic()) {
@@ -100,7 +170,7 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
                 }.filterNotNull()
             }
             it.onFailure {
-                // TODO
+                errorMessage.postValue(it.message)
                 return@map listOf<EventModel>()
             }
             return@map listOf<EventModel>()
@@ -130,7 +200,7 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
                 }?.filterNotNull()
             }
             it.onFailure {
-                // TODO
+                errorMessage.postValue(it.message)
                 return@map listOf<EventModel>()
             }
             return@map listOf<EventModel>()
@@ -140,7 +210,8 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
     fun getTrackVoteEventAddOrUpdateVote(
         eventId: Int,
         inputMusic: String,
-        up: Boolean): LiveData<Result<TrackVoteEventAddOrUpdateVoteMutation.Data>>?  {
+        up: Boolean
+    ): LiveData<Result<TrackVoteEventAddOrUpdateVoteMutation.Data>>? {
 
         val userId = Session.getId(getApplication())
         userId ?: return null
@@ -169,8 +240,12 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun getAutoCompletion() : LiveData<List<TrackDictionaryModel>> {
+    fun getAutoCompletion(): LiveData<List<TrackDictionaryModel>> {
         return autoCompletion
+    }
+
+    fun getErrorMsg(): LiveData<String> {
+        return errorMessage
     }
 
 }
