@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_music_track_vote_event_vote.*
 class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
     private var adapterTrackVote: RecyclerViewAdapterMusicTrackVote? = null
     private var recyclerViewTrackVote: RecyclerView? = null
-    private val trackVoteList: MutableList<TrackWithVote>? = null
+    private val trackVoteList: MutableList<TrackWithVote> = mutableListOf()
     lateinit var trackItem: TrackWithVote
     private var trackVoteEvent: TrackVoteEvent? = null
     lateinit var trackVoteViewModel: TrackVoteEventsViewModel
@@ -80,16 +80,14 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
             Log.e("SUB", it.toString())
 
             trackVoteEvent = it
-            trackVoteList?.clear()
+            trackVoteList.clear()
             trackVoteEvent?.trackWithVote?.forEach {
                 if (it != null) {
-                    trackVoteList?.add(it)
+                    trackVoteList.add(it)
                 }
             }
             //  eventsPublicViewModel.getSelectedTrackVoteEvent()?.postValue(eventItem)
-            if (trackVoteList != null) {
-                adapterTrackVote?.setTrackList(trackVoteList)
-            }
+            adapterTrackVote?.setTrackList(trackVoteList)
             adapterTrackVote?.notifyDataSetChanged()
         })
     }

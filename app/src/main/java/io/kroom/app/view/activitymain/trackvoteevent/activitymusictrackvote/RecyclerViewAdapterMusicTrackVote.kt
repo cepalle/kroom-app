@@ -46,7 +46,7 @@ class RecyclerViewAdapterMusicTrackVote(
         var clickableItem1 = itemView.linearlayout1
         var clickableItem2 = itemView.linearlayout2
         fun bind(trackWithVote: TrackWithVote) {
-         //   itemView.itemMusicTrackVoteCoverSmall.drawable
+            // itemView.itemMusicTrackVoteCoverSmall.drawable = trackWithVote.track.coverSmall
             itemView.itemMusicTrackVoteArtist.text = trackWithVote.track.artist
             itemView.itemMusicTrackVoteUp.text = trackWithVote.nb_vote_up.toString()
             itemView.itemMusicTrackVoteDown.text = trackWithVote.nb_vote_down.toString()
