@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.lifecycle.Transformations.map
 import io.kroom.app.graphql.DeezerSearchQuery
+import io.kroom.app.graphql.TrackVoteEventAddOrUpdateVoteMutation
 import io.kroom.app.repo.DeezerRepo
 import io.kroom.app.repo.TrackVoteEventRepo
 import io.kroom.app.util.Session
@@ -136,6 +137,19 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    fun getTrackVoteEventAddOrUpdateVote(
+        eventId: Int,
+        inputMusic: String,
+        up: Boolean): LiveData<Result<TrackVoteEventAddOrUpdateVoteMutation.Data>>?  {
+
+        val userId = Session.getId(getApplication())
+        userId ?: return null
+        val musicId = cacheAutoComplet[inputMusic]
+        musicId ?: return null
+
+        return trackVoteEventRepo.trackVoteEventAddOrUpdateVote(eventId, userId, musicId, true)
+    }
+
     fun updateTrackDictionary(str: String) {
         autoCompletion.addSource(deezerSearchRepo.search(str)) { r ->
             r.onFailure {
@@ -155,6 +169,8 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-
+    fun getAutoCompletion() : LiveData<List<TrackDictionaryModel>> {
+        return autoCompletion
+    }
 
 }
