@@ -80,13 +80,14 @@ class UserFriendsManagementActivity : AppCompatActivity() {
                 }
             }
         }
-        disableAutofill()
+        //disableAutofill()
     }
-
+    /*
     @TargetApi(Build.VERSION_CODES.O)
     private fun disableAutofill() {
         window.decorView.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
     }
+    */
 
     private fun updateAutoCompletion(ls: List<Pair<String, Int>>?) {
         ls ?: return

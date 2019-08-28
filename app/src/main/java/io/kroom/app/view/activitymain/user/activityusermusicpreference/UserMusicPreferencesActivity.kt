@@ -66,13 +66,14 @@ class UserMusicPreferencesActivity : AppCompatActivity() {
             }
         }
 
-        disableAutofill()
+        // disableAutofill()
     }
-
+    /*
     @TargetApi(Build.VERSION_CODES.O)
     private fun disableAutofill() {
         window.decorView.importantForAutofill = IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
     }
+    */
 
     private fun updateAutoCompletion() {
         adapterAutocompletion.clear()
