@@ -29,7 +29,6 @@ class GraphClient(private val getToken: () -> String?) {
                 .build()
         )
     }
-
     private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
         .writeTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)

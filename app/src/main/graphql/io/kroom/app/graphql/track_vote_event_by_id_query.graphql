@@ -13,6 +13,7 @@ query TrackVoteEventByIdQuery($id: Int!) {
                 title
                 album {
                     coverSmall
+                    coverMedium
                 }
             }
             trackWithVote {
