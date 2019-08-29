@@ -73,7 +73,11 @@
     <string name="search_track_vote">search</string>
     <string name="music_track_vote_add">add</string>
     <string name="infoTrackSearch">Artist name or track title</string>
-
+    <string name="musicTrackVoteVideo"></string>
+    <string name="add_new_track">Add new track</string>
+    <string name="music_track_vote_score">score</string>
+    <string name="duration">Duration</string>
+    <string name="score">Score</string>
     <string-array name="array_privacy">
         <item>Private</item>
         <item>Friends</item>

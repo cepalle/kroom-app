@@ -37,18 +37,21 @@ class RecyclerViewAdapterTrackEventPrivate(
     override fun onBindViewHolder(holder: TrackEventVoteHolder, position: Int) {
 
         holder.bind(_trackVoteEventList[position])
-        holder.clickableItem.setOnClickListener { onTrackVoteEventListener(_trackVoteEventList[position]) }
+        holder.clickableItem1.setOnClickListener { onTrackVoteEventListener(_trackVoteEventList[position]) }
+        holder.clickableItem2.setOnClickListener { onTrackVoteEventListener(_trackVoteEventList[position]) }
 
     }
 
     class TrackEventVoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val clickableItem = itemView.linearlayoutEvent
+        val clickableItem1 = itemView.linearlayoutEvent1
+        var clickableItem2 = itemView.linearlayoutEvent2
         fun bind(trackVoteEvent: EventModel) {
-            itemView.itemTrackVoteEventUserMaster.text = trackVoteEvent.userMasterName
-            itemView.itemTrackVoteEventName.text = trackVoteEvent.name
-            itemView.itemTrackVoteEventSchedule.text = trackVoteEvent.scheduleBegin.toString()
+            itemView.itemTrackVoteEventUserMaster.text = "By " + trackVoteEvent.userMasterName
+            itemView.itemTrackVoteEventName.text = "Event: " + trackVoteEvent.name
+            itemView.itemTrackVoteEventScheduleBegin.text =  "Begin " + trackVoteEvent.scheduleBegin.toString()
+            itemView.itemTrackVoteEventScheduleEnd.text =  "End " + trackVoteEvent.scheduleEnd.toString()
             itemView.itemTrackVoteEventLocation.text =
-                "long: " + trackVoteEvent.longitude.toString() + " lat: " + trackVoteEvent.latitude.toString()
+                "long: " + trackVoteEvent.longitude.toString() + " / lat: " + trackVoteEvent.latitude.toString()
 
         }
     }

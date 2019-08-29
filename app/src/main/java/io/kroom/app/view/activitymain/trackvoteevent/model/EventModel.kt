@@ -7,8 +7,8 @@ data class EventModel constructor(
     val userMasterName: String,
     val name: String,
     val public: Boolean,
-    val scheduleBegin: Long,
-    val scheduleEnd: Long,
-    val latitude: Float,
-    val longitude:Float
+    val scheduleBegin: String?,
+    val scheduleEnd:String?,
+    val latitude: Double?,
+    val longitude: Double?
 )

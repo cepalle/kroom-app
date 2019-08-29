@@ -1,5 +1,6 @@
 package io.kroom.app.view.activitymain.trackvoteevent.activitymusictrackvote
 
+import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,12 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import io.kroom.app.R
 import androidx.recyclerview.widget.RecyclerView
+import com.deezer.sdk.player.TrackPlayer
+import com.deezer.sdk.player.networkcheck.WifiAndMobileNetworkStateChecker
+import io.kroom.app.view.activitymain.MainActivity
 import io.kroom.app.view.activitymain.trackvoteevent.CustomLayoutManager
 import io.kroom.app.view.activitymain.trackvoteevent.TrackVoteEventsViewModel
 import io.kroom.app.view.activitymain.trackvoteevent.model.TrackVoteEvent
@@ -27,6 +32,9 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
     lateinit var trackItem: TrackWithVote
     private var trackVoteEvent: TrackVoteEvent? = null
     lateinit var trackVoteViewModel: TrackVoteEventsViewModel
+    private lateinit var trackPlayer: TrackPlayer
+    var idCurrent: Int = 0
+    var scCurent: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().title = "Music tracks vote"
@@ -56,6 +64,7 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        trackPlayer = TrackPlayer(Application(), MainActivity.deezerConnect, WifiAndMobileNetworkStateChecker())
 
         activity?.let {
             trackVoteViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)
@@ -69,23 +78,42 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
         })
 
         adapterTrackVote = trackVoteList?.let {
-            RecyclerViewAdapterMusicTrackVote(it) {
-                OnTrackVoteSelected(it)
+            this.context?.let { it1 ->
+                RecyclerViewAdapterMusicTrackVote(it1, it) {
+                    OnTrackVoteSelected(it)
+                }
             }
         }
         recyclerViewTrackVote?.adapter = adapterTrackVote
 
         trackVoteViewModel.subTrackVoteByid(eventId).observe(viewLifecycleOwner, Observer {
-            Toast.makeText(this.context, "SUB", Toast.LENGTH_SHORT).show()
-            Log.e("SUB", it.toString())
-
+            // Toast.makeText(this.context, "SUB", Toast.LENGTH_SHORT).show()
+            // Log.e("SUB", it.toString())
             trackVoteEvent = it
+            val coverMedium = trackVoteEvent.let {
+                it?.currentTrack?.coverMedium
+            }
+            if (it?.currentTrack?.coverMedium != null) {
+                val imageResource = this.context!!.getResources()!!.getIdentifier(coverMedium, null, "io.kroom.app")
+                val res = ContextCompat.getDrawable(context!!, imageResource)
+                musicTrackVoteCoverMedium.setImageDrawable(res)
+            }
+
             trackVoteList.clear()
             trackVoteEvent?.trackWithVote?.forEach {
                 if (it != null) {
                     trackVoteList.add(it)
+
+                    trackVoteList.let { r ->
+                        var scor = trackItem.score
+                        if (scor > scCurent) {
+                            scCurent = scor
+                            idCurrent = trackItem.track.id
+                        }
+                    }
                 }
             }
+            trackPlayer.playTrack(idCurrent.toLong())
             //  eventsPublicViewModel.getSelectedTrackVoteEvent()?.postValue(eventItem)
             adapterTrackVote?.setTrackList(trackVoteList)
             adapterTrackVote?.notifyDataSetChanged()
@@ -94,9 +122,8 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
 
     fun OnTrackVoteSelected(trackVoteItem: TrackWithVote) {
 
-
-
-        trackItem = trackVoteItem
+        /*   if ( trackVoteItem.nb_vote_down == true)
+       {}*/
     }
 }
 

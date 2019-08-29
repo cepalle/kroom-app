@@ -10,10 +10,10 @@ data class TrackVoteEvent(
     val public: Boolean,
     val currentTrack: CurrentTrack?,
     val trackWithVote:List<TrackWithVote?>,
-    val scheduleBegin: Long,
-    val scheduleEnd: Long,
-    val latitude: Float,
-    val longitude: Float,
+    val scheduleBegin: String?,
+    val scheduleEnd:String?,
+    val latitude: Double?,
+    val longitude: Double?,
     val  userInvited : List<User>
 
 )

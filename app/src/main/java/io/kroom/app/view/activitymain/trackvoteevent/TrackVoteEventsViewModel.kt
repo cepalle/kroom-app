@@ -122,7 +122,7 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
                                         it.title(),
                                         it.album()?.coverSmall() ?: return@map null,
                                         2,
-                                        ""
+                                        it.artist()?.name() ?: return@map null
                                     )
                                 },
                                 it.score(),
@@ -130,10 +130,10 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
                                 it.nb_vote_down()
                             )
                         },
-                        0,
-                        0,
-                        0F,
-                        0F,
+                        it.scheduleBegin(),
+                        it.scheduleBegin(),
+                        it.latitude(),
+                        it.longitude(),
                         it.userInvited()!!.map {
                             User(
                                 it.id()!!,
@@ -162,10 +162,10 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
                         it.userMaster()?.userName() ?: return@map null,
                         it.name(),
                         it.public_(),
-                        0,
-                        0,
-                        8888888F,
-                        99999999F
+                        it.scheduleBegin(),
+                        it.scheduleBegin(),
+                        it.latitude(),
+                        it.longitude()
                     )
                 }.filterNotNull()
             }
@@ -191,11 +191,10 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
                         it.userMaster()?.userName() ?: return@map null,
                         it.name(),
                         it.public_(),
-                        0,
-                        0,
-                        0F,
-                        0F
-
+                        it.scheduleBegin(),
+                        it.scheduleBegin(),
+                        it.latitude(),
+                        it.longitude()
                     )
                 }?.filterNotNull()
             }
