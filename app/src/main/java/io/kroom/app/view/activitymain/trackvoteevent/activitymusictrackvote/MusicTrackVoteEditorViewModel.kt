@@ -74,7 +74,6 @@ class MusicTrackVoteEditorViewModel(app: Application, private val eventId: Int) 
 
     fun update(
         eventId: Int,
-        userIdMaster: Int,
         name: String,
         publc: Boolean,
         locAndSchRestriction: Boolean,
@@ -83,10 +82,12 @@ class MusicTrackVoteEditorViewModel(app: Application, private val eventId: Int) 
         latitude: Double,
         longitude: Double
     ) {
+        val userId = Session.getId(getApplication())
+        userId ?: return
         inputMusicEditor.addSource(
             repoTrack.update(
                 eventId,
-                userIdMaster,
+                userId,
                 name,
                 publc,
                 locAndSchRestriction,

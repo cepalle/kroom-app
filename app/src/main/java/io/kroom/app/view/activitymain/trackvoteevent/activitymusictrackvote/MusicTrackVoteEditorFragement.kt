@@ -71,7 +71,6 @@ class MusicTrackVoteEditorFragement(private val eventId: Int) : Fragment() {
         musicTrackVoteEventEditorButtonUpdate.setOnClickListener {
             model.update(
                 eventId,
-                1,
                 musicTrackVoteEventEditorInputName.text.toString(),
                 musicTrackVoteEditorPublicSwitch.isChecked,
                 musicTrackVoteEditorLocAndSchRestrictionSwitch.isChecked,
