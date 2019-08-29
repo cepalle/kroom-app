@@ -105,10 +105,10 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
                     trackVoteList.add(it)
 
                     trackVoteList.let { r ->
-                        var scor = trackItem.score
+                        var scor = it.score
                         if (scor > scCurent) {
                             scCurent = scor
-                            idCurrent = trackItem.track.id
+                            idCurrent = it.track.id
                         }
                     }
                 }
@@ -121,7 +121,7 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
     }
 
     fun OnTrackVoteSelected(trackVoteItem: TrackWithVote) {
-trackItem = trackVoteItem
+        trackItem = trackVoteItem
         /*   if ( trackVoteItem.nb_vote_down == true)
        {}*/
     }
