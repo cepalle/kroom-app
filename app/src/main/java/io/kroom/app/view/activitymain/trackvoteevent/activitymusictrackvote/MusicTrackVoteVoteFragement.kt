@@ -24,6 +24,9 @@ import io.kroom.app.view.activitymain.trackvoteevent.model.TrackVoteEvent
 import io.kroom.app.view.activitymain.trackvoteevent.model.TrackWithVote
 import kotlinx.android.synthetic.main.fragment_music_track_vote_event_vote.*
 import java.lang.Exception
+import android.graphics.BitmapFactory
+import android.graphics.Bitmap
+import java.net.URL
 
 
 class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
@@ -94,17 +97,6 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
             // Log.e("SUB", it.toString())
             it ?: return@Observer
 
-            val coverMedium = it.currentTrack?.coverMedium
-            if (it.currentTrack?.coverMedium != null) {
-                /*
-                val imageResource = this.context?.getResources()?.getIdentifier(coverMedium, null, "io.kroom.app")
-                if (context != null && imageResource != null) {
-                    val res = ContextCompat.getDrawable(context!!, imageResource)
-                    musicTrackVoteCoverMedium.setImageDrawable(res)
-                }
-                */
-            }
-
             trackVoteList.clear()
             it.trackWithVote.sortedBy { it?.score }.reversed().forEach {
                 if (it != null) {
@@ -127,15 +119,44 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
             } else if (it.currentTrack?.id != trackItemCurrentId) {
                 val id = it.currentTrack?.id
                 id ?: return@Observer
+
                 trackPlayer?.playTrack(it.currentTrack.id.toLong())
                 trackItemCurrentId = it.currentTrack.id
+                val thread = Thread(Runnable {
+                    try {
+                        val url = URL(it.currentTrack.coverMedium)
+                        val bmp: Bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+                        upImge(bmp)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                })
+                thread.start()
             }
 
             // trackPlayer.playTrack(idCurrent.toLong())
             //  eventsPublicViewModel.getSelectedTrackVoteEvent()?.postValue(eventItem)
             adapterTrackVote?.setTrackList(trackVoteList)
             adapterTrackVote?.notifyDataSetChanged()
+            recyclerViewTrackVote?.invalidate()
+            musicTrackVoteList?.invalidate()
+            list_track_vote?.invalidate()
+            getView()?.invalidate()
         })
     }
 
+    fun upImge(bmp: Bitmap) {
+        this.activity?.runOnUiThread {
+            musicTrackVoteCoverMedium.setImageBitmap(bmp)
+            musicTrackVoteCoverMedium.invalidate()
+            coverMediumcontainer.invalidate()
+            getView()?.invalidate()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        trackPlayer?.stop()
+        trackPlayer?.release()
+    }
 }
