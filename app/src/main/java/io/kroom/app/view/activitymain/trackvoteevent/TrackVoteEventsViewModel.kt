@@ -9,10 +9,7 @@ import androidx.lifecycle.Transformations.map
 import com.apollographql.apollo.ApolloSubscriptionCall
 import com.deezer.sdk.player.TrackPlayer
 import com.deezer.sdk.player.networkcheck.WifiAndMobileNetworkStateChecker
-import io.kroom.app.graphql.DeezerSearchQuery
-import io.kroom.app.graphql.PlayListEditorByIdSubscription
-import io.kroom.app.graphql.TrackVoteEventAddOrUpdateVoteMutation
-import io.kroom.app.graphql.TrackVoteEventByIdSubscription
+import io.kroom.app.graphql.*
 import io.kroom.app.repo.DeezerRepo
 import io.kroom.app.repo.TrackVoteEventRepo
 import io.kroom.app.util.Session
@@ -206,6 +203,10 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun makePlayer(): TrackPlayer {
         return TrackPlayer(getApplication(), MainActivity.deezerConnect, WifiAndMobileNetworkStateChecker())
+    }
+
+    fun nextTrack(id: Int): LiveData<Result<TrackVoteEventNextTrackMutation.Data>> {
+        return trackVoteEventRepo.nextTrack(id)
     }
 
 }

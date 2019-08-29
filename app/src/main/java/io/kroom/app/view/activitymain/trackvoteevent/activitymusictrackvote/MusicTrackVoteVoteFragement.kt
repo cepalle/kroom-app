@@ -13,7 +13,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import io.kroom.app.R
 import androidx.recyclerview.widget.RecyclerView
+import com.deezer.sdk.model.PlayableEntity
 import com.deezer.sdk.player.TrackPlayer
+import com.deezer.sdk.player.event.PlayerWrapperListener
 import com.deezer.sdk.player.networkcheck.WifiAndMobileNetworkStateChecker
 import io.kroom.app.view.activitymain.MainActivity
 import io.kroom.app.view.activitymain.trackvoteevent.CustomLayoutManager
@@ -21,14 +23,14 @@ import io.kroom.app.view.activitymain.trackvoteevent.TrackVoteEventsViewModel
 import io.kroom.app.view.activitymain.trackvoteevent.model.TrackVoteEvent
 import io.kroom.app.view.activitymain.trackvoteevent.model.TrackWithVote
 import kotlinx.android.synthetic.main.fragment_music_track_vote_event_vote.*
+import java.lang.Exception
 
 
 class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
     private var adapterTrackVote: RecyclerViewAdapterMusicTrackVote? = null
     private var recyclerViewTrackVote: RecyclerView? = null
     private val trackVoteList: MutableList<TrackWithVote> = mutableListOf()
-    private var trackItem: TrackWithVote? = null
-    private var trackVoteEvent: TrackVoteEvent? = null
+    private var trackItemCurrentId: Int? = null
     private var trackVoteViewModel: TrackVoteEventsViewModel? = null
     private var trackPlayer: TrackPlayer? = null
     var idCurrent: Int = 0
@@ -61,6 +63,15 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
 
         trackPlayer = trackVoteViewModel?.makePlayer()
 
+        trackPlayer?.addPlayerListener(object : PlayerWrapperListener {
+            override fun onAllTracksEnded() {}
+            override fun onPlayTrack(p0: PlayableEntity?) {}
+            override fun onRequestException(p0: Exception?, p1: Any?) {}
+            override fun onTrackEnded(p0: PlayableEntity?) {
+                trackVoteViewModel?.nextTrack(eventId)
+            }
+        })
+
         recyclerViewTrackVote?.layoutManager = (context?.let { CustomLayoutManager(it) })
         recyclerViewTrackVote?.setHasFixedSize(true)
 
@@ -81,18 +92,21 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
         trackVoteViewModel?.subTrackVoteByid(eventId)?.observe(viewLifecycleOwner, Observer {
             // Toast.makeText(this.context, "SUB", Toast.LENGTH_SHORT).show()
             // Log.e("SUB", it.toString())
-            trackVoteEvent = it
-            val coverMedium = trackVoteEvent?.currentTrack?.coverMedium
-            if (it?.currentTrack?.coverMedium != null) {
+            it ?: return@Observer
+
+            val coverMedium = it.currentTrack?.coverMedium
+            if (it.currentTrack?.coverMedium != null) {
+                /*
                 val imageResource = this.context?.getResources()?.getIdentifier(coverMedium, null, "io.kroom.app")
                 if (context != null && imageResource != null) {
                     val res = ContextCompat.getDrawable(context!!, imageResource)
                     musicTrackVoteCoverMedium.setImageDrawable(res)
                 }
+                */
             }
 
             trackVoteList.clear()
-            trackVoteEvent?.trackWithVote?.sortedBy { it?.score }?.reversed()?.forEach {
+            it.trackWithVote.sortedBy { it?.score }.reversed().forEach {
                 if (it != null) {
                     trackVoteList.add(it)
 
@@ -105,6 +119,18 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
                     }
                 }
             }
+
+            if (it.currentTrack?.id == null && it.trackWithVote.isNotEmpty()) {
+                // Toast.makeText(this.context, "CUR", Toast.LENGTH_SHORT).show()
+                trackItemCurrentId = null
+                trackVoteViewModel?.nextTrack(eventId)
+            } else if (it.currentTrack?.id != trackItemCurrentId) {
+                val id = it.currentTrack?.id
+                id ?: return@Observer
+                trackPlayer?.playTrack(it.currentTrack.id.toLong())
+                trackItemCurrentId = it.currentTrack.id
+            }
+
             // trackPlayer.playTrack(idCurrent.toLong())
             //  eventsPublicViewModel.getSelectedTrackVoteEvent()?.postValue(eventItem)
             adapterTrackVote?.setTrackList(trackVoteList)

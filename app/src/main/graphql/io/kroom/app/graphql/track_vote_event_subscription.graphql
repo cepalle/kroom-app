@@ -4,6 +4,7 @@ subscription TrackVoteEventByIdSubscription($id: Int!){
             id
             userMaster {
                 userName
+                id
             }
             name
             public
