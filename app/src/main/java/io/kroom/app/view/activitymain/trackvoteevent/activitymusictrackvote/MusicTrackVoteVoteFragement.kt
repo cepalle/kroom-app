@@ -84,8 +84,12 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
 
         adapterTrackVote = trackVoteList.let {
             this.context?.let { it1 ->
-                RecyclerViewAdapterMusicTrackVote(it1, it) {
-                    trackVoteViewModel?.getTrackVoteEventAddOrUpdateVote(eventId, it.track.id, true)
+                RecyclerViewAdapterMusicTrackVote(it1, it) { t, up ->
+                    if (up) {
+                        trackVoteViewModel?.getTrackVoteEventAddOrUpdateVote(eventId, t.track.id, true)
+                    } else {
+                        trackVoteViewModel?.delVote(eventId, t.track.id)
+                    }
                 }
             }
         }

@@ -174,6 +174,15 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
         return trackVoteEventRepo.trackVoteEventAddOrUpdateVote(eventId, userId, trackId, up)
     }
 
+    fun delVote(
+        eventId: Int,
+        trackId: Int
+    ): LiveData<Result<TrackVoteEventDelVoteMutation.Data>>? {
+        val userId = Session.getId(getApplication())
+        userId ?: return null
+        return trackVoteEventRepo.trackVoteEventDelVote(eventId, userId, trackId)
+    }
+
     fun updateTrackDictionary(str: String) {
         autoCompletion.addSource(deezerSearchRepo.search(str)) { r ->
             r.onFailure {

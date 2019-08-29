@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.row_item_music_track_vote.view.*
 class RecyclerViewAdapterMusicTrackVote(
     val context: Context,
     val trackVoteList: MutableList<TrackWithVote>,
-    val onTrackVoteListener: (TrackWithVote) -> Unit
+    val onTrackVoteListener: (TrackWithVote, up: Boolean) -> Unit
 ) : RecyclerView.Adapter<RecyclerViewAdapterMusicTrackVote.TrackVoteHolder>() {
 
 
@@ -42,24 +42,15 @@ class RecyclerViewAdapterMusicTrackVote(
     override fun onBindViewHolder(holder: TrackVoteHolder, position: Int) {
 
         holder.bind(_trackVoteList[position])
-        holder.clickableItem1.setOnClickListener {
-            onTrackVoteListener(_trackVoteList[position])
-        }
-        holder.clickableItem2.setOnClickListener {
-            onTrackVoteListener(_trackVoteList[position])
-        }
         if (_trackVoteList[position].track.coverSmall != null) {
             val imageResource =
                 _context.getResources()!!.getIdentifier(_trackVoteList[position].track.coverSmall, null, "io.kroom.app")
             // holder.res = ContextCompat.getDrawable(_context, imageResource)!!
         }
-
     }
 
-    class TrackVoteHolder(itemView: View, val onTrackVoteListener: (TrackWithVote) -> Unit) :
+    class TrackVoteHolder(itemView: View, val onTrackVoteListener: (TrackWithVote, up: Boolean) -> Unit) :
         RecyclerView.ViewHolder(itemView) {
-        var clickableItem1 = itemView.linearlayout1
-        var clickableItem2 = itemView.linearlayout2
         //  lateinit var res : Drawable
         fun bind(trackWithVote: TrackWithVote) {
             //      itemView.itemMusicTrackVoteCoverSmall.setImageDrawable(res)
@@ -68,9 +59,12 @@ class RecyclerViewAdapterMusicTrackVote(
             itemView.itemMusicTrackVoteTitle.text = trackWithVote.track.title
             itemView.itemMusicTrackVoteTitle.text = trackWithVote.track.title
             itemView.itemMusicTrackVoteScore.text = trackWithVote.score.toString()
-            itemView.itemMusicTrackVoteDuration.text = trackWithVote.track.duration.toString()
+            itemView.itemMusicTrackVoteDuration.text = "Duration " + trackWithVote.track.duration.toString()
             itemView.itemMusicTrackVoteUp.setOnClickListener {
-                onTrackVoteListener(trackWithVote)
+                onTrackVoteListener(trackWithVote, true)
+            }
+            itemView.itemMusicTrackVoteDel.setOnClickListener {
+                onTrackVoteListener(trackWithVote, false)
             }
         }
     }
