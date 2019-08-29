@@ -64,7 +64,7 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        trackPlayer = TrackPlayer(Application(), MainActivity.deezerConnect, WifiAndMobileNetworkStateChecker())
+      //  trackPlayer = TrackPlayer(Application(), MainActivity.deezerConnect, WifiAndMobileNetworkStateChecker())
 
         activity?.let {
             trackVoteViewModel = ViewModelProviders.of(it).get(TrackVoteEventsViewModel::class.java)
@@ -113,7 +113,7 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
                     }
                 }
             }
-            trackPlayer.playTrack(idCurrent.toLong())
+           // trackPlayer.playTrack(idCurrent.toLong())
             //  eventsPublicViewModel.getSelectedTrackVoteEvent()?.postValue(eventItem)
             adapterTrackVote?.setTrackList(trackVoteList)
             adapterTrackVote?.notifyDataSetChanged()
@@ -121,7 +121,7 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
     }
 
     fun OnTrackVoteSelected(trackVoteItem: TrackWithVote) {
-
+trackItem = trackVoteItem
         /*   if ( trackVoteItem.nb_vote_down == true)
        {}*/
     }
