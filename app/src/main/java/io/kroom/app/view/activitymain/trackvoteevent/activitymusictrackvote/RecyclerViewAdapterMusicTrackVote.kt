@@ -59,7 +59,6 @@ class RecyclerViewAdapterMusicTrackVote(
             itemView.itemMusicTrackVoteTitle.text = trackWithVote.track.title
             itemView.itemMusicTrackVoteTitle.text = trackWithVote.track.title
             itemView.itemMusicTrackVoteScore.text = trackWithVote.score.toString()
-            itemView.itemMusicTrackVoteDuration.text = "Duration " + trackWithVote.track.duration.toString()
             itemView.itemMusicTrackVoteUp.setOnClickListener {
                 onTrackVoteListener(trackWithVote, true)
             }

@@ -130,7 +130,12 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
                     try {
                         val url = URL(it.currentTrack.coverMedium)
                         val bmp: Bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-                        upImge(bmp)
+                        this.activity?.runOnUiThread {
+                            musicTrackVoteCoverMedium.setImageBitmap(bmp)
+                            musicTrackVoteCoverMedium.invalidate()
+                            coverMediumcontainer.invalidate()
+                            getView()?.invalidate()
+                        }
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -144,18 +149,9 @@ class MusicTrackVoteVoteFragement(val eventId: Int) : Fragment() {
             adapterTrackVote?.notifyDataSetChanged()
             recyclerViewTrackVote?.invalidate()
             musicTrackVoteList?.invalidate()
-            list_track_vote?.invalidate()
+            //list_track_vote?.invalidate()
             getView()?.invalidate()
         })
-    }
-
-    fun upImge(bmp: Bitmap) {
-        this.activity?.runOnUiThread {
-            musicTrackVoteCoverMedium.setImageBitmap(bmp)
-            musicTrackVoteCoverMedium.invalidate()
-            coverMediumcontainer.invalidate()
-            getView()?.invalidate()
-        }
     }
 
     override fun onDestroy() {
