@@ -7,6 +7,8 @@ import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.lifecycle.Transformations.map
 import com.apollographql.apollo.ApolloSubscriptionCall
+import com.deezer.sdk.player.TrackPlayer
+import com.deezer.sdk.player.networkcheck.WifiAndMobileNetworkStateChecker
 import io.kroom.app.graphql.DeezerSearchQuery
 import io.kroom.app.graphql.PlayListEditorByIdSubscription
 import io.kroom.app.graphql.TrackVoteEventAddOrUpdateVoteMutation
@@ -14,6 +16,7 @@ import io.kroom.app.graphql.TrackVoteEventByIdSubscription
 import io.kroom.app.repo.DeezerRepo
 import io.kroom.app.repo.TrackVoteEventRepo
 import io.kroom.app.util.Session
+import io.kroom.app.view.activitymain.MainActivity
 import io.kroom.app.view.activitymain.trackvoteevent.model.*
 
 import io.kroom.app.webservice.GraphClient
@@ -30,62 +33,6 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
     private val errorMessage: MediatorLiveData<String> = MediatorLiveData()
     private val cacheAutoComplet: MutableMap<String, Int> = mutableMapOf()
     private var sCall: ApolloSubscriptionCall<TrackVoteEventByIdSubscription.Data>? = null
-
-    /*
-    fun getTrackVoteEventById(id: Int): LiveData<TrackVoteEvent?> {
-        return map(trackVoteEventRepo.byId(id)) {
-            it.onSuccess {
-                return@map it.TrackVoteEventById().trackVoteEvent().let {
-                    TrackVoteEvent(
-                        it?.id() ?: return@map null,
-                        it.userMaster()?.userName() ?: return@map null,
-                        it.name(),
-                        it.public_(),
-                        it.currentTrack().let {
-                            CurrentTrack(
-                                it?.id() ?: return@map null,
-                                it?.title(),
-                                it.album()!!.coverMedium()// TODO change coverMedium
-                            )
-                        },
-                        it.trackWithVote()!!.map {
-                            TrackWithVote(
-                                it.track().let {
-                                    TrackModel(
-                                        it.id(),
-                                        it.title(),
-                                        it.album()?.coverSmall() ?: return@map null,
-                                        2,
-                                        ""
-                                    )
-                                },
-                                it.score(),
-                                it.nb_vote_up(),
-                                it.nb_vote_down()
-                            )
-                        },
-                        0,
-                        0,
-                        0F,
-                        0F,
-                        it.userInvited()!!.map {
-                            User(
-                                it.id()!!,
-                                it.userName(),
-                                it.email()!!
-                            )
-                        }
-                    )
-                }
-            }
-            it.onFailure {
-                //TODO
-                return@map null
-            }
-            return@map null
-        }
-    }
-    */
 
     override fun onCleared() {
         super.onCleared()
@@ -111,10 +58,10 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
                             else CurrentTrack(
                                 it.id(),
                                 it.title(),
-                                it.album()!!.coverMedium()
+                                it.album()?.coverMedium() ?: ""
                             )
                         },
-                        it.trackWithVote()!!.map {
+                        it.trackWithVote()?.map {
                             TrackWithVote(
                                 it.track().let {
                                     TrackModel(
@@ -129,18 +76,18 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
                                 it.nb_vote_up(),
                                 it.nb_vote_down()
                             )
-                        },
+                        } ?: listOf(),
                         it.scheduleBegin(),
                         it.scheduleBegin(),
                         it.latitude(),
                         it.longitude(),
-                        it.userInvited()!!.map {
+                        it.userInvited()?.map {
                             User(
-                                it.id()!!,
+                                it.id() ?: -1,
                                 it.userName(),
-                                it.email()!!
+                                it.email() ?: ""
                             )
-                        }
+                        } ?: listOf()
                     )
                 }
             }
@@ -217,7 +164,17 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
         val musicId = cacheAutoComplet[inputMusic]
         musicId ?: return null
 
-        return trackVoteEventRepo.trackVoteEventAddOrUpdateVote(eventId, userId, musicId, true)
+        return trackVoteEventRepo.trackVoteEventAddOrUpdateVote(eventId, userId, musicId, up)
+    }
+
+    fun getTrackVoteEventAddOrUpdateVote(
+        eventId: Int,
+        trackId: Int,
+        up: Boolean
+    ): LiveData<Result<TrackVoteEventAddOrUpdateVoteMutation.Data>>? {
+        val userId = Session.getId(getApplication())
+        userId ?: return null
+        return trackVoteEventRepo.trackVoteEventAddOrUpdateVote(eventId, userId, trackId, up)
     }
 
     fun updateTrackDictionary(str: String) {
@@ -245,6 +202,10 @@ class TrackVoteEventsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun getErrorMsg(): LiveData<String> {
         return errorMessage
+    }
+
+    fun makePlayer(): TrackPlayer {
+        return TrackPlayer(getApplication(), MainActivity.deezerConnect, WifiAndMobileNetworkStateChecker())
     }
 
 }

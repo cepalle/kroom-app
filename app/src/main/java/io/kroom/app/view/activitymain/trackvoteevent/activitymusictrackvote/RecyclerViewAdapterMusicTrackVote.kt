@@ -14,26 +14,27 @@ import io.kroom.app.view.activitymain.trackvoteevent.model.TrackWithVote
 import kotlinx.android.synthetic.main.fragment_music_track_vote_event_vote.*
 import kotlinx.android.synthetic.main.row_item_music_track_vote.view.*
 
-class RecyclerViewAdapterMusicTrackVote(val context: Context,
-    val trackVoteList:  MutableList<TrackWithVote>,
+class RecyclerViewAdapterMusicTrackVote(
+    val context: Context,
+    val trackVoteList: MutableList<TrackWithVote>,
     val onTrackVoteListener: (TrackWithVote) -> Unit
 ) : RecyclerView.Adapter<RecyclerViewAdapterMusicTrackVote.TrackVoteHolder>() {
 
 
-    private var _trackVoteList:  MutableList<TrackWithVote> = trackVoteList
+    private var _trackVoteList: MutableList<TrackWithVote> = trackVoteList
     private var _context = context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackVoteHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val itemView = layoutInflater.inflate(R.layout.row_item_music_track_vote, parent, false)
-        return TrackVoteHolder(itemView)
+        return TrackVoteHolder(itemView, onTrackVoteListener)
     }
 
     override fun getItemCount(): Int {
         return _trackVoteList.size
     }
 
-    fun setTrackList(tracVotetList:  MutableList<TrackWithVote>) {
+    fun setTrackList(tracVotetList: MutableList<TrackWithVote>) {
         _trackVoteList = tracVotetList
         notifyDataSetChanged()
     }
@@ -41,33 +42,36 @@ class RecyclerViewAdapterMusicTrackVote(val context: Context,
     override fun onBindViewHolder(holder: TrackVoteHolder, position: Int) {
 
         holder.bind(_trackVoteList[position])
-        holder.clickableItem1.setOnClickListener{
+        holder.clickableItem1.setOnClickListener {
             onTrackVoteListener(_trackVoteList[position])
         }
-        holder.clickableItem2.setOnClickListener{
+        holder.clickableItem2.setOnClickListener {
             onTrackVoteListener(_trackVoteList[position])
         }
-        if (_trackVoteList[position].track.coverSmall != null )
-        {
-            val imageResource = _context.getResources()!!.getIdentifier(_trackVoteList[position].track.coverSmall, null, "io.kroom.app")
-           // holder.res = ContextCompat.getDrawable(_context, imageResource)!!
+        if (_trackVoteList[position].track.coverSmall != null) {
+            val imageResource =
+                _context.getResources()!!.getIdentifier(_trackVoteList[position].track.coverSmall, null, "io.kroom.app")
+            // holder.res = ContextCompat.getDrawable(_context, imageResource)!!
         }
 
     }
 
-     class TrackVoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView)  {
+    class TrackVoteHolder(itemView: View, val onTrackVoteListener: (TrackWithVote) -> Unit) :
+        RecyclerView.ViewHolder(itemView) {
         var clickableItem1 = itemView.linearlayout1
         var clickableItem2 = itemView.linearlayout2
-      //  lateinit var res : Drawable
-         fun bind(trackWithVote: TrackWithVote) {
-       //      itemView.itemMusicTrackVoteCoverSmall.setImageDrawable(res)
+        //  lateinit var res : Drawable
+        fun bind(trackWithVote: TrackWithVote) {
+            //      itemView.itemMusicTrackVoteCoverSmall.setImageDrawable(res)
             // itemView.itemMusicTrackVoteCoverSmall.drawable = trackWithVote.track.coverSmall
             itemView.itemMusicTrackVoteArtist.text = trackWithVote.track.artist.toString()
             itemView.itemMusicTrackVoteTitle.text = trackWithVote.track.title
             itemView.itemMusicTrackVoteTitle.text = trackWithVote.track.title
             itemView.itemMusicTrackVoteScore.text = trackWithVote.score.toString()
             itemView.itemMusicTrackVoteDuration.text = trackWithVote.track.duration.toString()
-
+            itemView.itemMusicTrackVoteUp.setOnClickListener {
+                onTrackVoteListener(trackWithVote)
+            }
         }
     }
 }
